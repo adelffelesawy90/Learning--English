@@ -4,6 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>رحلة الإنجليزية: 10 مستويات</title>
+<!-- =====================================================================
+     إعدادات Firebase لمشروع learning-english-1e3fb
+     FIREBASE SETTINGS (Project settings > Your apps > learning-english-web)
+     ===================================================================== -->
+<script>
+window.FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDKX-eroyAORDL4LBboovA_v7U3CYrcWoA",
+  authDomain: "learning-english-1e3fb.firebaseapp.com",
+  projectId: "learning-english-1e3fb",
+  storageBucket: "learning-english-1e3fb.firebasestorage.app",
+  messagingSenderId: "349664886737",
+  appId: "1:349664886737:web:2a2904e8e5a198d0f6eaf0"
+};
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -345,7 +362,7 @@ audio{width:100%;margin-top:8px}
  .side{width:72px;padding-inline:6px}
  .side .brand span,.nav .badge,.me{display:none}
  .side .brand{justify-content:center;padding-inline:0}
- .nav button{flex-direction:column;gap:2px;padding:8px 2px;font-size:.62rem;text-align:center}
+ .nav button{flex-direction:column;gap:2px;padding:8px 2px;font-size:.6rem;text-align:center;word-break:break-word;hyphens:auto}
  .nav .ic{width:auto}
  .main{margin-right:72px}
  .actionbar{right:72px}
@@ -447,6 +464,131 @@ textarea.essay{width:100%;min-height:220px;direction:ltr;text-align:left;font-fa
 .pagehead p{color:var(--muted);margin-top:4px}
 .s-exam .dot{background:var(--paper);border-color:var(--lv);border-style:dashed;font-size:1.6rem}
 .s-exam.s-cur .dot{border-style:solid}
+
+/* ---- language switch ---- */
+.langbtn{margin:10px 6px 0;border:2px solid var(--line);background:var(--paper2);border-radius:12px;padding:8px 10px;font-weight:800;color:var(--ink);display:flex;align-items:center;justify-content:center;gap:6px}
+.langbtn:hover{border-color:var(--ink)}
+@media (max-width:760px){.langbtn{margin:8px 0 0;padding:6px 2px;font-size:.7rem;flex-direction:column;gap:0}}
+
+/* ---- Arabic hints (ع) ---- */
+.arbtn,.arbtn2{display:none}
+:root[lang="en"] .arbtn{display:inline-grid;font-family:var(--body);font-weight:800}
+:root[lang="en"] .arbtn2{display:inline-flex}
+:root[lang="en"] .arh{display:none!important}
+:root[lang="en"] .show-ar .arh{display:block!important}
+:root[lang="en"] .show-ar .arbtn,:root[lang="en"] .show-ar .arbtn2{border-color:var(--ink);background:color-mix(in srgb,var(--ink) 12%,var(--paper))}
+.enx{display:none}
+.show-en .enx{display:block}
+:root[lang="en"] .enx{display:block}
+:root[lang="en"] .enbtn{display:none}
+.arh{direction:rtl;text-align:right}
+.enx{direction:ltr;text-align:left;font-family:var(--disp);line-height:1.9;margin-bottom:6px}
+.whyw{margin-top:6px}
+.whyw .arbtn2{margin-top:6px}
+
+/* ---- lens (tap a word to translate) ---- */
+#lens{position:fixed;z-index:80;bottom:calc(88px + env(safe-area-inset-bottom,0px));left:14px;border:0;border-radius:99px;height:52px;padding:0 16px;font-weight:800;font-size:1.05rem;background:var(--sun);color:#3a2a00;box-shadow:0 4px 0 rgba(0,0,0,.25);display:flex;align-items:center;gap:6px}
+#lens[aria-pressed="true"]{background:var(--ink);color:var(--bg);outline:3px solid var(--sun)}
+:root[dir="ltr"] #lens{left:auto;right:14px}
+body.lens-on .main{cursor:help}
+body.lens-on .main *{cursor:help!important}
+.lpop{position:fixed;z-index:90;max-width:min(340px,92vw);background:var(--paper);color:var(--text);border:2px solid var(--ink);border-radius:16px;padding:12px 14px 12px;box-shadow:0 10px 30px rgba(0,0,0,.25);direction:rtl;text-align:right;display:grid;gap:6px}
+.lpop .lw{display:flex;align-items:center;gap:8px;direction:ltr;justify-content:flex-start}
+.lpop .lw b{font-family:var(--disp);font-size:1.3rem;color:var(--ink)}
+.lpop .lw .say{margin:0;width:34px;height:34px}
+.lpop .lar{font-weight:800;font-size:1.15rem}
+.lpop .lsent{border-top:1.5px dashed var(--line);padding-top:6px;font-weight:600}
+.lpop .lsent small{color:var(--muted);font-weight:700}
+.lpop .lx{position:absolute;top:6px;left:8px;border:0;background:none;font-size:1rem;color:var(--muted)}
+.lpop .ibtn{height:36px;font-size:.9rem}
+
+/* ---- left-to-right layout for the English interface ---- */
+:root[dir="ltr"] .side{right:auto;left:0;border-left:0;border-right:2px solid var(--line)}
+:root[dir="ltr"] .main{margin-right:0;margin-left:240px}
+:root[dir="ltr"] .actionbar{right:0;left:240px}
+:root[dir="ltr"] body.focus .main{margin-left:0}
+:root[dir="ltr"] body.focus .actionbar{left:0}
+:root[dir="ltr"] .lbl{direction:ltr}
+:root[dir="ltr"] .mission::before{inset-inline-start:0}
+@media (max-width:760px){:root[dir="ltr"] .main{margin-left:72px;margin-right:0}:root[dir="ltr"] .actionbar{left:72px;right:0}:root[dir="ltr"] body.focus .main{margin-left:0}}
+:root[lang="en"] .lhead .ar{display:none}
+
+/* ===== fill wide screens ===== */
+html{font-size:clamp(16px,calc(9px + .55vw),20px)}
+body{font-size:1rem}
+.wrap{max-width:1680px;padding:0 clamp(14px,2.6vw,48px) 130px}
+.wrap.test{max-width:1100px}
+.wrap.welcome{max-width:900px}
+/* home: dashboard beside the map */
+.panels{display:grid;gap:14px;margin-bottom:24px}
+.panel h3.sec{margin-top:0}
+.chipgrid{display:flex;flex-wrap:wrap;gap:8px}
+.wchip2{border:2px solid var(--line);background:var(--paper2);border-radius:12px;padding:6px 14px;font-family:var(--disp);font-weight:700;font-size:1.05rem;color:var(--ink)}
+.wchip2:hover{border-color:var(--ink)}
+.quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.quick .act{padding:12px;text-align:center;justify-items:center}
+@media (min-width:1250px){
+ .homegrid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(20px,2.5vw,44px);align-items:start}
+ .homeleft{position:sticky;top:14px}
+ .homegrid .map{margin-top:18px}
+ .homegrid .stats{margin-bottom:18px}
+ .panels{grid-template-columns:1fr 1fr}
+ .panels .panel:last-child{grid-column:1/-1}
+ .panels .wlist{grid-template-columns:1fr}
+}
+/* lesson */
+.lgrid{grid-template-columns:clamp(220px,17vw,300px) 1fr;gap:clamp(16px,2vw,32px)}
+.vsteps button{padding:11px 12px;font-size:1rem}
+.lhead{padding:clamp(18px,2vw,32px)}
+.cards{grid-template-columns:repeat(auto-fill,minmax(clamp(170px,13vw,240px),1fr));gap:14px}
+.fc{height:clamp(170px,12vw,220px)}
+.face.front b{font-size:clamp(1.4rem,1.6vw,2rem)}
+@media (min-width:1250px){
+ .split2{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+ .split2>.gcard{margin-top:0!important}
+ .vsplit{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
+ .vsplit .vq{margin-top:0}
+ .gsplit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}
+ .gsplit .exs{margin-top:0}
+ .acts{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+}
+@media (max-width:1249px){.split2>.gcard+.gcard{margin-top:14px}}
+/* lists fill the width */
+@media (min-width:1100px){
+ .wlist{grid-template-columns:repeat(auto-fill,minmax(380px,1fr))}
+ .sched{grid-template-columns:repeat(auto-fill,minmax(460px,1fr))}
+ .wrongs{columns:2;column-gap:28px}
+ .wrongs .wi{break-inside:avoid}
+ .vlib{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+}
+.side{width:clamp(220px,14vw,270px)}
+.main{margin-right:clamp(220px,14vw,270px)}
+.actionbar{right:clamp(220px,14vw,270px)}
+.actionbar .inner{max-width:1680px}
+:root[dir="ltr"] .main{margin-right:0;margin-left:clamp(220px,14vw,270px)}
+:root[dir="ltr"] .actionbar{right:0;left:clamp(220px,14vw,270px)}
+.me{font-size:.85rem}
+@media (max-height:760px){.nav button{padding:7px 12px}.me{display:none}}
+@media (max-width:760px){.side{width:72px}.main{margin-right:72px}.actionbar{right:72px}:root[dir="ltr"] .main{margin-left:72px;margin-right:0}:root[dir="ltr"] .actionbar{left:72px;right:0}}
+body.focus .main{margin-right:0}body.focus .actionbar{right:0}
+:root[dir="ltr"] body.focus .main{margin-left:0}:root[dir="ltr"] body.focus .actionbar{left:0}
+
+.stamp b{font-size:.78rem;letter-spacing:-.02em}
+.stamp small{font-size:.55rem}
+@media (min-width:1250px){.vsplit>div:first-child{position:sticky;top:14px}}
+
+/* ---- accounts ---- */
+.authcard{max-width:460px}
+.authcard .field input{font-size:1.05rem;padding:12px 14px}
+.aerr{min-height:1.4em;color:var(--bad);font-weight:700;margin:4px 0 10px}
+.aerr.ok{color:var(--ok)}
+.orline{display:flex;align-items:center;gap:10px;color:var(--muted);font-weight:700;margin:16px 0}
+.orline::before,.orline::after{content:"";flex:1;border-top:2px dashed var(--line)}
+.gbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--paper)}
+.gbtn .g{font-family:Arial,sans-serif;font-size:1.2rem;background:conic-gradient(#EA4335 0 25%,#FBBC05 0 50%,#34A853 0 75%,#4285F4 0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.linkbtn{border:0;background:none;color:var(--ink);text-decoration:underline;font-weight:700;padding:4px 0;cursor:pointer;text-align:start}
+.me .sync{font-size:.78rem;color:var(--muted)}
+.me .acct{font-size:.75rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr;text-align:start}
 </style>
 </head>
 <body>
@@ -982,6 +1124,212 @@ const LX=[
  W:["اكتب مقالًا إقناعيًا (180 كلمة على الأقل): هل يجب أن تكون المدارس بلا هواتف؟ استخدم التحوّط (arguably / tend to)، والتسمية (nominalisation)، وشرطًا مختلطًا، وأسلوبًا رسميًا.","Write a persuasive essay: phone-free schools?",180,["arguably","tend to","would","however"]]}
 ];
 
+const VQEN={
+0:[["What is the boy's name?","Omar",["Sami","Ali","Huda"]],["How does Sara feel?","happy",["sad","tired","angry"]],["Who is Miss Huda?","the teacher",["Sara's sister","Omar's friend","their mother"]]],
+1:[["How old is Grandpa?","seventy",["seventeen","twelve","twenty"]],["How many people are at the party?","twelve",["ten","twenty","seven"]],["How many balloons has Ali got?","ten",["twelve","two","seventy"]]],
+2:[["What colour is the bike?","red and black",["blue and white","green","yellow"]],["What colour is the cat?","white",["black","red","yellow"]],["Where do they go?","to a big park",["to school","to the kitchen","to the beach"]]],
+3:[["Who shows the photo?","Mona",["Khaled","Grandma","Max"]],["What is her brother's name?","Khaled",["Max","Omar","Ali"]],["Who is Max?","the family dog",["the father","the grandfather","Khaled's friend"]]],
+4:[["Where is the box?","in the classroom",["in the kitchen","in the garden","in the car"]],["How many pens are there?","three",["two","one","five"]],["Who is the present for?","the children",["the teacher","Dad","the cat"]]],
+5:[["Where is Lina?","at the zoo",["at school","at home","at the market"]],["What does the animal eat?","leaves",["fish","meat","bread"]],["What is the animal?","a giraffe",["a horse","a cat","a bird"]]],
+6:[["When does Adam wake up?","at six",["at nine","at seven","at eight"]],["How does he go to school?","by bus",["on foot","by car","by bike"]],["When does he sleep?","at nine",["at six","very late","after lunch"]]],
+7:[["What does Laila do on Monday?","She swims.",["She reads.","She cooks.","She sleeps."]],["When is her birthday?","on Friday",["on Monday","on Wednesday","on Saturday"]],["What does she do at night?","She writes in her diary.",["She swims.","She goes to the library.","She plays football."]]],
+8:[["What is the cat's name?","Mimi",["Max","Lina","Sara"]],["Where do they find her?","in a box next to the window",["under the bed","on the sofa","in the bathroom"]],["What is she doing?","sleeping",["eating","playing","running"]]],
+9:[["How many eggs are there?","four",["three","two","none"]],["What isn't there?","vegetables",["rice","bread","eggs"]],["How is dinner?","delicious",["bad","cold","small"]]],
+10:[["What can Nora do?","sing",["draw","jump","swim"]],["What does Faisal draw?","a horse",["a cat","a house","a bird"]],["What can't Salem do?","sing",["tell jokes","run","speak"]]],
+11:[["What does Tariq love?","camping",["swimming","cooking","drawing"]],["What does Reem love?","reading stories",["playing chess","singing","sleeping"]],["What does Tariq hate?","mosquitoes",["stars","chess","camping"]]],
+12:[["What is the weather like?","rainy",["sunny","snowy","hot"]],["What is Dad doing?","cooking soup",["watching TV","running","sleeping"]],["What colour is Dana's jacket?","yellow",["red","blue","black"]]],
+13:[["Where was the class yesterday?","at the museum",["at the zoo","at the beach","at the park"]],["What was in the museum?","dinosaur bones",["cars","paintings of cats","fish"]],["When were they home?","at five o'clock",["at nine o'clock","at one o'clock","at midnight"]]],
+14:[["When did they clean the house?","last Saturday",["yesterday","on Friday","this morning"]],["What did Sami do?","He washed the dishes.",["He watered the plants.","He cooked lunch.","He called Grandma."]],["Who invited them to lunch?","Grandma",["Mom","Sami","a friend"]]]
+};
+const GEN={
+"Hello! Meeting people":"Use <b>am</b> with I, <b>is</b> with he / she / it, and <b>are</b> with you / we / they.<br>Negative: add <b>not</b>: I am not tired.<br>Question: put the verb first: <b>Are</b> you a student?",
+"Numbers and age":"Ask about age with <b>How old</b> + is / are...? Answer: I am 10 (years old).<br>13 to 19 end in <b>-teen</b>; 20, 30, 40 end in <b>-ty</b>.<br>Write compound numbers with a hyphen: twenty-one.",
+"Colors and describing things":"Adjectives come <b>before</b> the noun: a red car.<br>Adjectives never take -s: two big houses.<br>They can also come after <i>be</i>: The car is red.",
+"My family":"Possessive adjectives come before a noun: <b>my, your, his, her, its, our, their</b>.<br>For names, add <b>'s</b>: Ali's book.",
+"Things around me":"Use <b>a</b> before a consonant sound (a pen) and <b>an</b> before a vowel sound (an apple, an hour).<br>Plurals usually add -s; after s, x, ch, sh add -es (boxes). Irregular: child → children, man → men.<br><b>this / that</b> for one thing, <b>these / those</b> for more.",
+"My body and animals":"Use <b>have got</b> with I / you / we / they and <b>has got</b> with he / she / it.<br>Negative: haven't got / hasn't got. Question: Have you got...? Has it got...?",
+"My day":"Use the present simple for habits and facts. With he / she / it add <b>-s</b>: she plays, he watches.<br>Negative: don't / doesn't + base verb. Question: Do / Does + subject + base verb.<br>Frequency adverbs (always, usually, never) go <b>before</b> the main verb.",
+"Days, months and time":"<b>at</b> + clock times: at 7 o'clock, at night.<br><b>on</b> + days and dates: on Monday, on 5 May.<br><b>in</b> + months, years, seasons and parts of the day: in May, in summer, in the morning.",
+"My house":"Prepositions of place: <b>in, on, under, next to, between, behind, in front of</b>.<br>Ask with Where is...? / Where are...?",
+"In the kitchen":"<b>There is</b> + one thing or an uncountable noun; <b>There are</b> + plural.<br>Use <b>some</b> in positive sentences and <b>any</b> in negatives and questions.",
+"What can you do?":"<b>can</b> shows ability and never changes: she can swim.<br>After can, use the base verb without <i>to</i>. Negative: <b>can't</b>. Question: Can you...? Yes, I can. / No, I can't.",
+"Hobbies and free time":"After <b>like / love / hate / enjoy</b> use verb + <b>-ing</b>: I like reading.<br>Questions: Do you like...? Does she like...?",
+"What's happening now?":"Use <b>am / is / are + -ing</b> for actions happening now.<br>Spelling: make → making, run → running.<br>State verbs (like, know, want) don't usually take -ing.",
+"Where were you yesterday?":"The past of am / is is <b>was</b>; the past of are is <b>were</b>.<br>Negative: wasn't / weren't. Question: Was she...? Were you...?<br>We say: I was born in...",
+"Last weekend":"Past simple for finished actions: add <b>-ed</b> (played). Verbs ending in e add -d (liked); consonant + y becomes -ied (studied); some verbs double the last letter (stopped).<br>Negative and question: <b>didn't / Did</b> + base verb.",
+"A trip to remember":"Irregular verbs have special past forms: go → went, see → saw, buy → bought, eat → ate, take → took, have → had.<br>With did / didn't, use the base verb: I didn't go.",
+"At the shop":"<b>How many</b> + countable nouns (apples). <b>How much</b> + uncountable nouns (water, money) and prices.<br>Count uncountable things with units: a bottle of water, a kilo of rice.",
+"Finding the way":"Imperatives start with the base verb: Turn left. Negative: <b>Don't</b> run.<br>Object pronouns come after the verb: me, you, him, her, it, us, them.",
+"Cities and places":"Short adjectives: <b>-er</b> / <b>the -est</b> (tall, taller, the tallest). Long adjectives: <b>more</b> / <b>the most</b>.<br>Irregular: good → better → the best; bad → worse → the worst. Use <b>than</b> after a comparative.",
+"How do you do it?":"Adverbs of manner say <b>how</b>: add -ly to the adjective (quick → quickly).<br>Irregular: good → well; fast and hard don't change.<br>Adjectives describe nouns (a slow car); adverbs describe verbs (drive slowly).",
+"What were you doing?":"<b>was / were + -ing</b> for an action in progress at a past moment.<br>Use <b>when</b> for a short action that interrupts it, and <b>while</b> for two actions in progress at the same time.",
+"Plans for the future":"<b>be going to</b> for plans and for predictions with clear evidence.<br><b>will</b> for instant decisions, promises and opinions. Negative: <b>won't</b>.",
+"Shopping for clothes":"<b>too + adjective</b> = more than you want (too big).<br><b>adjective + enough</b> = as much as needed (big enough). <b>enough + noun</b> (enough money).",
+"Asking good questions":"Question word + auxiliary + subject + verb: Where <b>do</b> you live?<br>If the question word is the subject, don't use do / does / did: Who called you?",
+"Have you ever...?":"<b>have / has + past participle</b> for experiences and past actions with a result now.<br><b>just / already</b> in positives; <b>yet</b> in negatives and questions. With a finished time (yesterday), use the past simple.",
+"How long?":"<b>for</b> + a period (for three weeks); <b>since</b> + a starting point (since 2019).<br>Present perfect for time up to now; past simple for finished, specific times.",
+"Health advice":"<b>should</b> = advice. <b>must</b> / <b>have to</b> = obligation.<br><b>mustn't</b> = not allowed; <b>don't have to</b> = not necessary.<br>After modals use the base verb without <i>to</i>.",
+"How do you feel?":"<b>-ed</b> adjectives describe feelings (I'm bored).<br><b>-ing</b> adjectives describe the thing that causes the feeling (a boring film).",
+"A lot, a few, a little":"<b>a lot of</b> works with any noun. <b>a few</b> + plural countable nouns; <b>a little</b> + uncountable nouns.<br><b>many</b> (countable) and <b>much</b> (uncountable) are common in negatives and questions.",
+"When I was little":"<b>used to + base verb</b> for past habits or states that are not true now.<br>Negative: didn't <b>use</b> to. Question: Did you <b>use</b> to...?",
+"I've been waiting!":"<b>have / has been + -ing</b> for an activity that started in the past and is still going on, or has just stopped.<br>It focuses on the duration; the present perfect focuses on the result.",
+"The future of technology":"From most to least certain: <b>will definitely</b>, <b>will probably / is likely to</b>, <b>may / might</b>, <b>probably won't</b>, <b>definitely won't</b>.<br>After may / might use the base verb.",
+"Save the planet":"<b>First conditional</b> (real future): If + present simple, will + verb.<br><b>Second conditional</b> (imaginary now): If + past simple, would + verb. Say <b>If I were</b>.",
+"Great inventions":"Passive = <b>be + past participle</b>, when the action matters more than who did it: is made, was invented, will be built.<br>Add <b>by</b> + the doer only if it matters.",
+"Jobs and people":"<b>who</b> for people, <b>which</b> for things, <b>where</b> for places, <b>whose</b> for possession.<br><b>that</b> can replace who / which in defining clauses.",
+"Isn't it?":"Positive sentence → negative tag; negative sentence → positive tag, with the same auxiliary: You're tired, aren't you? He didn't call, did he?<br>Special case: I'm right, <b>aren't I</b>?",
+"In the news":"In reported speech, move the tense back: am → was, will → would, can → could.<br>Change pronouns and time words (tomorrow → the next day). <b>said</b> has no object; <b>told</b> + a person.",
+"Regrets and wishes":"<b>Third conditional</b> (an unreal past): If + had + past participle, would have + past participle.<br><b>I wish + past simple</b> = a wish about now. <b>I wish + had + past participle</b> = a regret about the past.",
+"Phrasal verbs in real life":"Verb + particle with a new meaning: look after = take care of.<br>With separable ones, a pronoun goes in the middle: turn <b>it</b> down.",
+"Telling a story":"<b>Past simple</b> for the main events. <b>Past continuous</b> for background or interrupted actions. <b>Past perfect</b> (had + past participle) for an action before another past action.",
+"Likes, choices and plans":"Verbs + <b>-ing</b>: enjoy, avoid, finish, mind, suggest.<br>Verbs + <b>to</b>: want, decide, refuse, afford, manage.<br>After prepositions always use -ing: good at drawing, look forward to seeing.",
+"Around the world":"<b>a / an</b> for something mentioned for the first time. <b>the</b> for specific or unique things, and for seas, rivers and deserts (the Nile).<br><b>No article</b> for most countries, cities and general ideas (Water is important).",
+"This time next year":"<b>will be + -ing</b>: in progress at a future moment.<br><b>will have + past participle</b>: completed before a future time, often with <b>by</b>.",
+"Getting things done":"<b>have / get + object + past participle</b> when someone else does the job for you: I had my hair cut.",
+"It is said that...":"News style: <b>It is said / believed that...</b> or <b>subject + is said to + verb</b>.<br>For the past: <b>to have + past participle</b> (He is said to have escaped).",
+"Adding detail":"Non-defining clauses add extra information between commas, and never use <i>that</i>.<br>Shorten relative clauses with <b>-ing</b> (active) or the <b>past participle</b> (passive).",
+"Despite everything":"<b>although / even though</b> + a full clause.<br><b>despite / in spite of</b> + a noun or -ing.",
+"Really, really!":"Emphasise with <b>do / does / did</b> + base verb (I do like it).<br><b>so</b> + adjective; <b>such (a)</b> + adjective + noun.",
+"Inversion for emphasis":"After a negative or limiting word at the start, invert like a question: Never <b>have I</b> seen..., Rarely <b>does he</b>..., No sooner <b>had I</b>... than...",
+"Cleft sentences":"Focus on one part: <b>It is / was ... that / who</b>... or <b>What ... is / was</b>... (What I need is time).",
+"Solving mysteries":"Present: <b>must</b> (sure it's true), <b>might / may / could</b> (possible), <b>can't</b> (sure it's not true).<br>Past: add <b>have + past participle</b> (must have left).",
+"Writing like a pro":"Adding: moreover, furthermore. Contrast: however, nevertheless, whereas. Result: therefore, consequently.<br><b>although</b> joins two clauses; <b>however</b> usually starts a new sentence.",
+"Words that belong together":"Collocations are natural word partners: make a mistake, do homework, heavy rain, pay attention.<br>Learn words in chunks, not alone.",
+"Building words":"Prefixes change meaning: un-, in-, im-, dis- (opposite), re- (again), mis- (wrongly).<br>Suffixes change the word type: -ness, -ment, -tion (nouns); -ful, -less, -able, -ous (adjectives); -ly (adverbs).",
+"Idioms like a native":"Idioms mean more than their words: under the weather = a little ill.<br>Use them in informal speech; avoid them in academic writing.",
+"Formal English":"Formal choices: commence, inquire, regarding, obtain.<br>After suggest, insist, recommend, request and <i>It is essential that</i>, use the <b>base verb</b> for every subject: he be, she study.",
+"Shades of meaning":"Words can share a meaning but carry different feelings: determined (positive) vs stubborn (negative).<br>Your word choice shows your attitude.",
+"What if...?":"Mixed conditionals link past and present: If I had studied medicine, I would be a doctor now.<br>Hypothetical phrases: Suppose..., It's high time we left, I'd rather you didn't..., provided that.",
+"The art of persuasion":"Hedge your claims to be precise: It could be argued..., tends to..., arguably.<br>Persuade by acknowledging the other side, then answering it with evidence.",
+"Academic style":"Turn verbs and adjectives into nouns in academic writing: prices increased → an increase in prices.<br>Link them with led to, resulted in, contributed to."
+};
+
+const GLOSS_RAW=`a=أداة نكرة (واحد)|an=أداة نكرة قبل صوت متحرك|the=أداة التعريف (الـ)|and=و|or=أو|but=لكن|so=لذلك / جدًا|because=لأن|if=إذا / لو|then=ثم / إذن|than=من (للمقارنة)|as=كـ / بينما|of=من / لـ|to=إلى / لـ|in=في|on=على / في|at=عند / في|by=بواسطة / بحلول|for=لـ / لمدة|from=من|with=مع|without=بدون|about=عن / حوالي|into=إلى داخل|over=فوق / أكثر من|under=تحت|up=لأعلى|down=لأسفل|out=خارج|off=مطفأ / بعيد|after=بعد|before=قبل|during=خلال|until=حتى|again=مرة أخرى|also=أيضًا|too=أيضًا / أكثر من اللازم|very=جدًا|really=حقًا|only=فقط|just=فقط / للتو|not=لا / ليس|no=لا|yes=نعم|all=كل|every=كل|each=كل واحد|some=بعض|any=أي|many=كثير (معدود)|much=كثير (غير معدود)|more=أكثر|most=معظم / الأكثر|other=آخر|another=آخر / واحد آخر|same=نفس|different=مختلف|new=جديد|old=قديم / كبير في السن|good=جيد|bad=سيئ|great=رائع / عظيم|big=كبير|small=صغير|little=صغير / قليل|long=طويل|short=قصير|high=عالٍ|low=منخفض|first=أول / أولًا|last=آخر / الماضي|next=التالي / القادم|best=الأفضل|better=أفضل|easy=سهل|hard=صعب / بجد|right=صحيح / يمين|wrong=خطأ|correct=صحيح|true=صحيح / حقيقي|false=خطأ|full=ممتلئ|empty=فارغ|free=مجاني / حر|ready=جاهز|sure=متأكد|happy=سعيد|sad=حزين|tired=متعب|angry=غاضب|kind=لطيف|funny=مضحك|strange=غريب|real=حقيقي|huge=ضخم|amazing=مذهل|perfect=مثالي|special=مميز|clear=واضح|quiet=هادئ|busy=مشغول|lovely=جميل|nice=لطيف|warm=دافئ|clean=نظيف|dark=مظلم|famous=مشهور|dangerous=خطير|important=مهم|interesting=مثير للاهتمام|i=أنا|me=ني / لي (مفعول)|my=ـي (ملكية)|you=أنت / أنتم|your=ـك (ملكية)|he=هو|him=ـه (مفعول)|his=ـه (ملكية)|she=هي|her=ـها|it=هو / هي (لغير العاقل)|its=ـه / ـها (لغير العاقل)|we=نحن|us=نا (مفعول)|our=ـنا (ملكية)|they=هم|them=ـهم (مفعول)|their=ـهم (ملكية)|this=هذا|that=ذلك / أنّ|these=هؤلاء / هذه|those=أولئك|what=ماذا / ما|who=مَن|where=أين|when=متى / عندما|why=لماذا|how=كيف|which=أيّ / الذي|whose=لمن|there=هناك|here=هنا|now=الآن|today=اليوم|tonight=الليلة|tomorrow=غدًا|yesterday=أمس|always=دائمًا|never=أبدًا|sometimes=أحيانًا|often=غالبًا|soon=قريبًا|later=لاحقًا|ago=منذ|still=ما زال|already=بالفعل|be=يكون|am=أكون (مع I)|is=يكون (مفرد)|are=يكونون|was=كان|were=كانوا|been=كان (تصريف ثالث)|being=كونه|have=يملك / لديه|has=يملك (مفرد)|had=كان لديه|do=يفعل|does=يفعل (مفرد)|did=فعل|done=منتهٍ / مفعول|will=سوف|would=كان سـ / سوف (شرطي)|can=يستطيع|could=استطاع / يمكن|should=ينبغي|must=يجب|may=قد / ربما|might=قد|go=يذهب|goes=يذهب|went=ذهب|gone=ذهب (تصريف ثالث)|come=يأتي|came=جاء|get=يحصل على|got=حصل على|give=يعطي|gave=أعطى|take=يأخذ|took=أخذ|make=يصنع|made=صنع|see=يرى|saw=رأى|seen=رأى (تصريف ثالث)|look=ينظر|watch=يشاهد|listen=يستمع|hear=يسمع|say=يقول|said=قال|tell=يخبر|told=أخبر|ask=يسأل|answer=يجيب / إجابة|speak=يتكلم|talk=يتحدث|read=يقرأ|write=يكتب|wrote=كتب|spell=يتهجّى|type=يكتب (بلوحة المفاتيح) / نوع|know=يعرف|knew=عرف|think=يعتقد / يفكر|thought=اعتقد|learn=يتعلم|study=يذاكر / يدرس|teach=يعلّم|taught=علّم|understand=يفهم|remember=يتذكر|forget=ينسى|find=يجد|found=وجد|lose=يفقد|lost=فقد / تائه|want=يريد|need=يحتاج|like=يحب / مثل|love=يحب جدًا|help=يساعد / مساعدة|try=يحاول|use=يستخدم|work=يعمل / عمل|play=يلعب / تشغيل|start=يبدأ|begin=يبدأ|finish=ينهي|end=نهاية / ينتهي|stop=يتوقف / إيقاف|open=يفتح / مفتوح|close=يغلق|opens=يُفتح|closed=مغلق|live=يعيش|feel=يشعر|felt=شعر|put=يضع|keep=يحتفظ|bring=يُحضر|buy=يشتري|pay=يدفع|sell=يبيع|eat=يأكل|drink=يشرب|sleep=ينام|walk=يمشي|run=يركض|sit=يجلس|stand=يقف|move=ينتقل / يتحرك|wait=ينتظر|call=يتصل / يسمّي|show=يُظهر / يعرض|choose=يختار|pick=يختار|check=يتحقق|pass=ينجح / يجتاز|fail=يرسب|win=يفوز|won=فاز|press=يضغط|tap=اضغط|click=اضغط|save=يحفظ / يوفّر|change=يغيّر / تغيير|translate=يترجم|practise=يتدرب|practice=تدريب|review=مراجعة|repeat=يكرر|match=يطابق / مباراة|build=يبني|arrange=يرتب|guess=يخمّن|people=ناس|person=شخص|man=رجل|woman=امرأة|boy=ولد|girl=بنت|child=طفل|children=أطفال|friend=صديق|family=عائلة|mother=أم|mom=ماما|father=أب|dad=بابا|brother=أخ|sister=أخت|grandma=جدة|grandpa=جد|uncle=عم / خال|aunt=عمة / خالة|cousin=ابن العم / الخال|teacher=معلم|student=طالب|doctor=طبيب|name=اسم|day=يوم|days=أيام|week=أسبوع|month=شهر|year=سنة|time=وقت|hour=ساعة|minute=دقيقة|minutes=دقائق|morning=صباح|afternoon=بعد الظهر|evening=مساء|night=ليل|home=البيت / الرئيسية|house=بيت|room=غرفة|school=مدرسة|class=فصل / حصة|classroom=فصل دراسي|city=مدينة|street=شارع|place=مكان|world=العالم|country=دولة|sea=بحر|beach=شاطئ|park=حديقة|garden=حديقة منزلية|shop=محل|market=سوق|car=سيارة|bus=حافلة|plane=طائرة|train=قطار|bike=دراجة|water=ماء|food=طعام|book=كتاب|story=قصة|stories=قصص|photo=صورة|picture=صورة|phone=هاتف|money=مال|thing=شيء|things=أشياء|way=طريق / طريقة|part=جزء|idea=فكرة|problem=مشكلة|question=سؤال|questions=أسئلة|word=كلمة|words=كلمات|sentence=جملة|sentences=جمل|letter=حرف / رسالة|letters=حروف|meaning=معنى|mean=يعني|english=الإنجليزية|arabic=العربية|language=لغة|lesson=درس|lessons=دروس|level=مستوى|levels=مستويات|step=خطوة|steps=خطوات|grammar=القواعد|listening=الاستماع|reading=القراءة|writing=الكتابة|speaking=التحدث|vocabulary=المفردات|video=فيديو|quiz=اختبار قصير|test=اختبار|exam=امتحان|score=نتيجة / درجة|points=نقاط|mistake=خطأ|mistakes=أخطاء|result=نتيجة|results=نتائج|games=ألعاب|game=لعبة|settings=الإعدادات|schedule=جدول|plan=خطة|today's=اليوم|journey=رحلة|stamp=ختم|stamps=أختام|streak=أيام متتالية|certificate=شهادة|map=خريطة|translation=ترجمة|explanation=شرح|example=مثال|examples=أمثلة|dialogue=محادثة|conversation=محادثة|scene=مشهد|scenes=مشاهد|subtitles=الترجمة النصية|slow=بطيء|slowly=ببطء|normal=عادي|fast=سريع|sound=صوت|voice=صوت|record=يسجّل|microphone=ميكروفون|locked=مقفل|unlocked=مفتوح|done=تم|next=التالي|back=رجوع|continue=تابع|begin=ابدأ|well=جيدًا|done!=أحسنت|excellent=ممتاز|again!=مرة أخرى|one=واحد|two=اثنان|three=ثلاثة|four=أربعة|five=خمسة|six=ستة|seven=سبعة|eight=ثمانية|nine=تسعة|ten=عشرة|eleven=أحد عشر|twelve=اثنا عشر|hundred=مئة|thousand=ألف|million=مليون|red=أحمر|blue=أزرق|green=أخضر|yellow=أصفر|white=أبيض|black=أسود|brown=بني|purple=بنفسجي|colour=لون|color=لون|dog=كلب|cat=قطة|animal=حيوان|tree=شجرة|flower=وردة|sun=شمس|sky=سماء|rain=مطر|weather=طقس|cold=بارد|hot=حار|head=رأس|hand=يد|eye=عين|hair=شعر|body=جسم|rice=أرز|bread=خبز|egg=بيضة|milk=حليب|juice=عصير|tea=شاي|coffee=قهوة|breakfast=فطور|lunch=غداء|dinner=عشاء|kitchen=مطبخ|party=حفلة|gift=هدية|present=هدية / حاضر|birthday=عيد ميلاد|trip=رحلة|holiday=إجازة|museum=متحف|zoo=حديقة حيوان|library=مكتبة|hospital=مستشفى|job=وظيفة|team=فريق|prize=جائزة|race=سباق|news=أخبار|report=تقرير|reporter=مراسل|interview=مقابلة|future=مستقبل|past=الماضي|present=الحاضر / هدية|life=حياة|world's=العالم|together=معًا|everyone=الجميع|everything=كل شيء|something=شيء ما|nothing=لا شيء|someone=شخص ما|nobody=لا أحد|inside=داخل|outside=خارج|near=قريب|far=بعيد|left=يسار / غادر|straight=مستقيم|around=حول|between=بين|behind=خلف|front=أمام|top=أعلى|bottom=أسفل|side=جانب|end=نهاية|middle=منتصف|high=عالٍ|deep=عميق|few=قليل|enough=كافٍ|almost=تقريبًا|maybe=ربما|probably=على الأرجح|perhaps=ربما|however=ومع ذلك|although=مع أن|while=بينما|since=منذ|until=حتى|already=بالفعل|yet=بعد|ever=أبدًا / من قبل|once=مرة|twice=مرتين|suddenly=فجأة|finally=أخيرًا|eventually=في النهاية|really=حقًا|welcome=أهلًا|hello=مرحبًا|hi=أهلًا|goodbye=مع السلامة|please=من فضلك|thanks=شكرًا|thank=يشكر|sorry=آسف|okay=حسنًا|ok=حسنًا|mr=السيد|miss=الآنسة / يفوّت|mrs=السيدة|traveller=مسافر|passport=جواز سفر|required=مطلوب|minimum=حد أدنى|least=الأقل|total=المجموع|section=قسم|sections=أقسام|submit=يسلّم|task=مهمة|topic=موضوع|essay=مقال|paragraph=فقرة|passage=نص|text=نص|audio=صوت|replay=إعادة تشغيل|times=مرات|remaining=المتبقية|left=المتبقي / يسار|open=مفتوح|opens=يُفتح|hours=ساعات|parent=ولي الأمر|mode=وضع|theme=المظهر|light=فاتح / ضوء|dark=داكن|auto=تلقائي|progress=التقدم|code=رمز|copy=نسخ|import=استيراد|reset=إعادة ضبط|start=ابدأ|again=مرة أخرى|ask=اسأل|tutor=المعلم|smart=ذكي|notebook=دفتر|library=مكتبة|watch=شاهد|watched=شاهدت|happened=حدث|happen=يحدث|what's=ما هو|it's=إنه|i'm=أنا|you're=أنت|don't=لا (نفي)|doesn't=لا (نفي مفرد)|didn't=لم|can't=لا يستطيع|won't=لن|isn't=ليس|aren't=ليسوا|wasn't=لم يكن|weren't=لم يكونوا|haven't=لم (مع have)|hasn't=لم (مع has)|i've=لقد (أنا)|you've=لقد (أنت)|we've=لقد (نحن)|they've=لقد (هم)|i'll=سوف (أنا)|you'll=سوف (أنت)|let's=هيا بنا|that's=هذا|there's=يوجد|here's=ها هو|wouldn't=ما كان سـ|couldn't=لم يستطع|shouldn't=لا ينبغي|mustn't=يجب ألا|he's=هو|she's=هي|we're=نحن|they're=هم|i'd=كنت سـ / أود|number=رقم|numbers=أرقام|age=عمر|meet=يقابل|meeting=مقابلة / لقاء|describe=يصف|describing=وصف|colors=ألوان|colours=ألوان|animals=حيوانات|months=شهور|finding=إيجاد|cities=مدن|places=أماكن|plans=خطط|shopping=تسوق|clothes=ملابس|asking=سؤال / طرح|jobs=وظائف|regrets=ندم|wishes=أمنيات|telling=رواية / إخبار|choices=اختيارات|happening=يحدث|weekend=عطلة نهاية الأسبوع|inventions=اختراعات|planet=كوكب|technology=تقنية|persuasion=إقناع|style=أسلوب|academic=أكاديمي|formal=رسمي|shades=درجات / ظلال|idioms=تعابير اصطلاحية|native=أصلي / ناطق أصلي|building=بناء / مبنى|belong=ينتمي|detail=تفصيل|adding=إضافة|despite=رغم|emphasis=توكيد|mysteries=ألغاز|mystery=لغز|solving=حل|success=نجاح|secret=سر|around=حول|free=حر / مجاني|hobbies=هوايات|mine=لي / ملكي|yours=لك|done=تم|able=قادر|also=أيضًا|else=آخر|such=مثل هذا|both=كلاهما|either=أيٌّ من|neither=لا هذا ولا ذاك|own=خاص / يملك|may=قد|able=قادر|become=يصبح|became=أصبح|decide=يقرر|decided=قرر|try=يحاول|tried=حاول|visit=يزور|visited=زار|travel=يسافر|arrive=يصل|arrived=وصل|leave=يغادر|left=غادر / يسار|cook=يطبخ|cooked=طبخ|clean=ينظف|cleaned=نظّف|wash=يغسل|washed=غسل|laugh=يضحك|laughs=يضحك|cry=يبكي|cried=بكى|smile=يبتسم|jump=يقفز|swim=يسبح|fly=يطير|ride=يركب|draw=يرسم|sing=يغني|dance=يرقص|climb=يتسلق|climbed=تسلق|break=يكسر|broke=كسر|broken=مكسور|fix=يصلح|fixed=أصلح|grow=ينمو|grew=نما|happened=حدث|appear=يظهر|disappear=يختفي|disappeared=اختفى|surprise=مفاجأة|problem=مشكلة|answer=إجابة|correct=صحيح|choose=اختر|pick=اختر|right=صحيح|cloud=سحابة|clouds=سحب|storm=عاصفة|wind=رياح|snow=ثلج|sand=رمل|desert=صحراء|mountain=جبل|mountains=جبال|river=نهر|lake=بحيرة|island=جزيرة|ocean=محيط|sea=بحر|boat=قارب|ship=سفينة|window=نافذة|door=باب|table=طاولة|chair=كرسي|bed=سرير|box=صندوق|bag=حقيبة|pen=قلم|toy=لعبة|ball=كرة|shirt=قميص|shoes=حذاء|jacket=سترة|hat=قبعة|fish=سمك|bird=طائر|horse=حصان|camel=جمل|elephant=فيل|giraffe=زرافة|owl=بومة|owls=بوم|ant=نملة|ants=نمل|turtle=سلحفاة|turtles=سلاحف|robot=روبوت|rocket=صاروخ|space=الفضاء|star=نجمة|stars=نجوم|moon=قمر|light=ضوء|lights=أنوار|power=كهرباء / قوة|candle=شمعة|candles=شموع|radio=راديو|oven=فرن|tools=أدوات|tool=أداة|poster=ملصق|posters=ملصقات|campaign=حملة|debate=مناظرة|judge=حكم / قاضٍ|judges=حكّام|evidence=دليل|argument=حجة|opinion=رأي|reason=سبب|result=نتيجة|goal=هدف|dream=حلم|dreams=أحلام|wedding=زفاف|married=متزوج|suit=بدلة|castle=قلعة|ghost=شبح|village=قرية|farm=مزرعة|chicken=دجاجة|chickens=دجاج|tomato=طماطم|tomatoes=طماطم|kilo=كيلو|riyals=ريالات|bottle=زجاجة|bottles=زجاجات|sweets=حلويات|medicine=دواء|fever=حمى|headache=صداع|meal=وجبة|meals=وجبات|minute=دقيقة|second=ثانية|seconds=ثوانٍ|hour=ساعة|o'clock=تمامًا (للساعة)|noon=الظهر|midnight=منتصف الليل|summer=الصيف|winter=الشتاء|spring=الربيع|monday=الإثنين|friday=الجمعة|saturday=السبت|sunday=الأحد|wednesday=الأربعاء|thursday=الخميس|tuesday=الثلاثاء`;
+const GLOSS=new Map();GLOSS_RAW.split("|").forEach(p=>{const i=p.indexOf("=");if(i>0){const k=p.slice(0,i).trim().toLowerCase();if(!GLOSS.has(k))GLOSS.set(k,p.slice(i+1).trim())}});
+
+const LVEN=[["Starter","First words: greetings, numbers, colours and family"],["Beginner","Your day, home, food and abilities"],["High beginner","The past, shopping and directions"],["Elementary","Comparing, the future and describing events"],["High elementary","Experiences, feelings and old habits"],["Intermediate","Predictions, conditionals and the passive"],["High intermediate","Reporting speech and telling stories"],["Upper intermediate","Future perfect and news style"],["Advanced","Formal style and powerful writing"],["Mastery","The precision and feel of native speakers"]];
+const STEPEN=["Words","Grammar","Listening","Video of the day","Today's quiz","Practice & games","Lesson exam"];
+const I18N={
+"مفتاح apiKey في إعدادات Firebase غير صحيح. راجع قيمة apiKey في أول ملف index.html.":"The Firebase apiKey is wrong. Check the apiKey value at the top of index.html.",
+"☁ جارٍ الحفظ...":"☁ Saving...","☁ لم يُحفظ أونلاين (سيُعاد المحاولة)":"☁ Not saved online yet (will retry)","☁ بدون إنترنت: محفوظ على الجهاز":"☁ Offline: saved on this device","☁ محفوظ في حسابك":"☁ Saved to your account","تسجيل الخروج":"Sign out",
+"سجّل دخولك ليُحفظ تقدّمك في حسابك، وتكمل من أي جهاز من نفس المكان.":"Sign in to save your progress to your account and continue from any device.","تسجيل الدخول":"Sign in","حساب جديد":"New account","اسم الطالب":"Student's name","البريد الإلكتروني":"Email","كلمة المرور":"Password","6 حروف أو أرقام على الأقل":"At least 6 letters or numbers","إنشاء الحساب":"Create account","دخول":"Sign in","نسيت كلمة المرور؟":"Forgot your password?","أو":"or","الدخول بحساب جوجل":"Sign in with Google","كل طالب له حساب خاص، ولا يستطيع أحد رؤية بيانات غيره.":"Each student has a private account. Nobody can see anyone else's data.",
+"البريد الإلكتروني غير صحيح.":"The email address isn't valid.","البريد أو كلمة المرور غير صحيحة.":"Wrong email or password.","هذا البريد مسجّل بالفعل. سجّل دخولك بدلًا من إنشاء حساب.":"This email is already registered. Sign in instead.","كلمة المرور لازم تكون 6 حروف على الأقل.":"The password must be at least 6 characters.","لا يوجد اتصال بالإنترنت.":"No internet connection.","محاولات كثيرة. انتظر قليلًا ثم حاول مرة أخرى.":"Too many attempts. Wait a little and try again.","هذا الموقع غير مضاف في Firebase. أضف عنوان الموقع في Authorized domains.":"This site isn't added in Firebase. Add its address under Authorized domains.","طريقة الدخول هذه غير مفعّلة في Firebase.":"This sign-in method isn't enabled in Firebase.","تم إغلاق نافذة جوجل قبل إكمال الدخول.":"The Google window was closed before signing in.","اكتب كلمة المرور.":"Type your password.",
+"اكتب بريدك الإلكتروني أولًا ثم اضغط «نسيت كلمة المرور».":"Type your email first, then tap Forgot your password.","أرسلنا رابط تغيير كلمة المرور إلى بريدك.":"We sent a password reset link to your email.","هل تريد تسجيل الخروج؟ تقدّمك محفوظ في حسابك.":"Sign out? Your progress is saved in your account.","⏳ جارٍ التحميل...":"⏳ Loading...","لا يوجد اتصال بالإنترنت. اتصل بالإنترنت لتسجيل الدخول أول مرة.":"No internet connection. Connect to the internet to sign in for the first time.",
+"الحساب":"Account","تقدّمك محفوظ في حسابك تلقائيًا. سجّل الدخول بنفس الحساب من أي جهاز لتكمل من نفس المكان.":"Your progress is saved to your account automatically. Sign in with the same account on any device to continue where you left off.",
+"أجب عن أسئلة الفيديو، أو شاهده مرة أخرى":"Answer the video questions, or watch it again",
+"🃏 كلمات درس اليوم":"🃏 Today's lesson words","اضغط أي كلمة لتسمع نطقها.":"Tap any word to hear it.","📚 آخر كلمات تعلمتها":"📚 Words you learned recently","كل كلماتي":"All my words","كلماتك ستظهر هنا بعد أول امتحان تنجح فيه.":"Your words will appear here after your first passed exam.","⚡ وصول سريع":"⚡ Quick access",
+"جملة # من #":"Sentence # of #","كلمة # من #":"Word # of #","١. استمع للجملة ٢. انطقها بصوتك ٣. قارن وكرر":"1. Listen   2. Say it aloud   3. Compare and repeat",
+"تحتاج #":"You need #","على الأقل لتنتقل للدرس التالي فورًا":"or more to move to the next lesson straight away","يُفتح بعد ساعة":"Opens in 1 hour","يُفتح بعد # دقيقة":"Opens in # min",
+"نتيجتك #":"Your score is #","وتحتاج #":"and you need #","راجع أخطاءك":"Review your mistakes","ثم راجع الدرس من الخطوة الأولى":"then go through the lesson again from step 1","وبعدها أعد الامتحان":"and then retake the exam",
+"# كلمة تعلمتها حتى الآن من الدروس التي اجتزتها":"# words learned so far from the lessons you passed","لعبت # جولة مراجعة حتى الآن":"You have played # review rounds so far",
+"على الأقل. النجاح يفتح الدرس التالي فورًا":"or more. Passing opens the next lesson immediately","مكتبة الفيديوهات (#)":"Video library (#)","🎧 جمل الدرس (#)":"🎧 Lesson sentences (#)",
+"رحلة الإنجليزية":"English Journey","رحلة الإنجليزية: 10 مستويات":"English Journey: 10 levels","القائمة الرئيسية":"Main menu",
+"الرئيسية":"Home","درس اليوم":"Today's lesson","فيديو اليوم":"Video of the day","خطة المستوى":"Level plan","كلماتي":"My words","الألعاب":"Games","أخطائي":"My mistakes","الإعدادات":"Settings",
+"أيام متتالية":"days in a row","نقطة":"points","ختم من 60":"stamps out of 60",
+"صباح الخير":"Good morning","نهارك سعيد":"Good afternoon","مساء الخير":"Good evening",
+"أنت في المستوى # من #":"You are on level # of #","جوازك ممتلئ بالأختام":"Your passport is full of stamps",
+"ختم من #":"stamps out of #","كلمة تعلمتها":"words learned","مستواك الحالي":"your level",
+"خريطة الرحلة":"Journey map","كل مستوى 6 دروس ثم امتحان المستوى 🏆. المحطات تفتح بالترتيب.":"Each level has 6 lessons, then a level exam 🏆. Stops open in order.",
+"كل مستوى # دروس ثم امتحان المستوى 🏆":"Each level has # lessons, then a level exam 🏆","المحطات تفتح بالترتيب":"Stops open in order",
+"المستوى":"Level","المستوى #":"Level #","الدرس":"Lesson","الدرس #":"Lesson #","الدرس # من #":"Lesson # of #","من #":"of #","محطتك":"You are here","امتحان المستوى":"Level exam","امتحان المستوى #":"Level exam #",
+"هذه المحطة لم تُفتح بعد. انجح في امتحان الدرس السابق أولًا":"This stop isn't open yet. Pass the previous lesson exam first.",
+"امتحان المستوى يُفتح بعد إنهاء الدروس الستة":"The level exam opens after the six lessons",
+"الخطوة # من #":"Step # of #","الخطوة":"Step",
+"ذاكر 8 كلمات جديدة واقلب كل البطاقات.":"Study 8 new words and flip every card.","اقرأ شرح القاعدة واستمع للأمثلة.":"Read the grammar explanation and listen to the examples.","استمع للمحادثة كاملة ثم لجمل الدرس.":"Listen to the whole conversation, then to the lesson sentences.","شاهد فيديو اليوم وأجب عن أسئلته.":"Watch the video of the day and answer its questions.",
+"ابدأ الدرس":"Start the lesson","تابع":"Continue","ابدأ اختبار اليوم":"Start today's quiz","مراجعة سريعة":"Quick review","8 أسئلة وتحتاج 6.":"8 questions; you need 6.",
+"أكملت # من # أنشطة (المطلوب #)":"You finished # of # activities (# needed)","أكملت":"You finished","تابع التدريب":"Continue practising",
+"أحسنت! امتحان الدرس يُفتح بعد ساعة":"Well done! The lesson exam opens in one hour","يُفتح بعد":"Opens in","استغل الوقت: أعد مشاهدة الفيديو أو العب بكلمات الدرس":"Use the time: rewatch the video or play with the lesson words",
+"🎬 فيديو الدرس":"🎬 Lesson video","🎮 العب":"🎮 Play","امتحان الدرس جاهز":"The lesson exam is ready","تحتاج":"You need","٪ على الأقل. النجاح يفتح الدرس التالي فورًا.":"% or more. Passing opens the next lesson immediately.","على الأقل":"or more","النجاح يفتح الدرس التالي فورًا":"Passing opens the next lesson immediately",
+"ابدأ الامتحان":"Start the exam","راجع الدرس قبل إعادة الامتحان":"Review the lesson before retaking the exam","لم تصل لنسبة النجاح. ابدأ من الكلمات وراجع أخطاءك، ثم أعد الامتحان.":"You didn't reach the pass mark. Start again from the words, review your mistakes, then retake the exam.",
+"ابدأ المراجعة":"Start reviewing","📒 أخطائي":"📒 My mistakes","📚 كلماتي":"📚 My words","📚 راجع كلماتي":"📚 Review my words","📚 راجع كلمات المستوى":"📚 Review this level's words",
+"إعادة امتحان المستوى بعد قليل":"Level exam retake coming soon","تُفتح المحاولة الجديدة بعد":"The new attempt opens in","راجع كلماتك وأخطاءك الآن":"Review your words and mistakes now",
+"المحاولة السابقة لم تنجح. راجعت؟ جرّب مرة أخرى.":"The last attempt didn't pass. Ready? Try again.","قراءة، استماع، قواعد ومفردات، إملاء، وكتابة. تحتاج ٧٠٪ للانتقال للمستوى التالي.":"Reading, listening, grammar & vocabulary, spelling and writing. You need 70% to move to the next level.",
+"اذهب للامتحان":"Go to the exam","أتممت الرحلة كاملة":"You finished the whole journey","عشرة مستويات وستون ختمًا. راجع كلماتك والعب في صالة الألعاب متى شئت.":"Ten levels and sixty stamps. Review your words and play in the games room any time.","شهادة الإتقان":"Mastery certificate",
+"عشرة مستويات من أول كلمة":"Ten levels, from the first word","حتى الكتابة والإقناع بمستوى الناطقين. في كل مستوى 6 دروس، وفي النهاية امتحان مستوى قوي.":"to writing and persuading like a native speaker. Each level has 6 lessons and ends with a strong level exam.",
+"المستويات":"Levels","المذاكرة":"Study","كلمات، قاعدة، استماع، فيديو، اختبار قصير، ثم تدريب وألعاب.":"Words, grammar, listening, video, a short quiz, then practice and games.",
+"امتحان الدرس بعد ساعة":"Lesson exam after one hour","لو نجحت ينفتح الدرس التالي فورًا. لو زادت أخطاؤك عن الحد المسموح تراجع الدرس وتعيد الامتحان.":"If you pass, the next lesson opens immediately. If you make too many mistakes, you review the lesson and retake the exam.",
+"بعد الدروس الستة: قراءة، استماع، قواعد، إملاء، وكتابة. تحتاج ٧٠٪ لتنتقل للمستوى التالي.":"After the six lessons: reading, listening, grammar, spelling and writing. You need 70% to reach the next level.",
+"ما اسم المسافر؟":"What's the traveller's name?","اكتب الاسم":"Type your name","ابدأ الرحلة":"Start the journey",
+"لا يوجد فيديو جديد اليوم. يمكنك إعادة مشاهدة الفيديوهات السابقة بالأسفل.":"No new video right now. You can rewatch earlier videos below.","فيديو درس اليوم:":"Today's lesson video:","فيديو درس اليوم":"Today's lesson video","شاهد الفيديو":"Watch the video",
+"🎬 فيديو اليوم مقفل حاليًا":"🎬 The video of the day is locked for now","يُفتح بعد إنهاء خطوات الكلمات والقاعدة والاستماع في درس اليوم.":"It opens after the words, grammar and listening steps of today's lesson.","تابع درس اليوم":"Continue today's lesson",
+"بعد المشاهدة تجيب عن أسئلة حول ما حدث في الفيديو.":"After watching, you answer questions about what happened in the video.","مكتبة الفيديوهات":"Video library","الفيديوهات التي تشاهدها ستُحفظ هنا.":"Videos you watch will be saved here.",
+"خطة المستوى #":"Level plan #","كل درس: مذاكرة ثم امتحان بعد ساعة. تنتقل للدرس التالي فقط إذا نجحت، وفي النهاية امتحان المستوى.":"Each lesson: study, then an exam one hour later. You move on only if you pass. The level ends with the level exam.",
+"المستوى السابق":"Previous level","المستوى التالي":"Next level","مذاكرة":"Study","الكلمات والقاعدة والاستماع والفيديو واختبار اليوم والتدريب":"Words, grammar, listening, video, today's quiz and practice",
+"امتحان الدرس":"Lesson exam","يُفتح بعد ساعة من اختبار اليوم، والنجاح يفتح الدرس التالي":"Opens one hour after today's quiz; passing opens the next lesson","امتحان المستوى الكبير 🏆":"The big level exam 🏆","قراءة، استماع، قواعد ومفردات، إملاء، كتابة":"Reading, listening, grammar & vocabulary, spelling, writing","خطوة":"Step","الآن":"Now","قادم":"Coming",
+"كلمة تعلمتها حتى الآن من الدروس التي اجتزتها.":"words learned so far from the lessons you passed.","ابحث بالإنجليزي أو العربي":"Search in English or Arabic","بحث":"Search","كل المستويات":"All levels","🔊 استمع للكل":"🔊 Listen to all","🧩 اختبر نفسك":"🧩 Test yourself",
+"كلماتك ستظهر هنا بعد أن تجتاز امتحان مراجعة أول درس. كل درس تجتازه يضيف 8 كلمات.":"Your words will appear here after you pass your first lesson exam. Each lesson you pass adds 8 words.","لا توجد كلمات مطابقة.":"No matching words.",
+"الصوت لا يعمل هنا: تأكد أن الجهاز ليس على الصامت، أو افتح الصفحة في Chrome أو Safari":"Sound isn't working here: make sure the device isn't on silent, or open the page in Chrome or Safari","المتصفح لا يدعم النطق الصوتي، افتح الصفحة في Chrome أو Safari":"This browser can't speak. Open the page in Chrome or Safari",
+"استمع":"Listen","استمع ببطء":"Listen slowly","أكمل الخطوات السابقة بالترتيب أولًا":"Finish the earlier steps in order first",
+"بعد ساعة: الامتحان":"One hour later: the exam","💬 اسأل المعلم":"💬 Ask the tutor","(اضغط لعرض كل الخطوات)":"(tap to see all steps)","اضغط لعرض كل الخطوات":"tap to see all steps",
+"راجعت الكلمات":"You reviewed the words","التالي: القاعدة":"Next: Grammar","اقلب كل البطاقات":"Flip all the cards","حفظت الكلمات، التالي":"I learned the words, next","اقرأ الشرح واستمع لكل مثال":"Read the explanation and listen to each example","التالي: الاستماع":"Next: Listening","فهمت القاعدة، التالي":"I understand, next",
+"أحسنت، يمكنك المتابعة":"Well done, you can continue","شغّل المحادثة كاملة مرة واحدة على الأقل":"Play the whole conversation at least once","التالي: فيديو اليوم":"Next: Video of the day","أنهيت الاستماع، التالي":"I finished listening, next",
+"شاهدت الفيديو وأجبت ✓":"You watched the video and answered ✓","التالي: اختبار اليوم":"Next: Today's quiz","شاهد الفيديو ثم أجب عن سؤالين من 3 على الأقل":"Watch the video, then answer at least 2 of 3 questions correctly",
+"اجتزت اختبار اليوم بنتيجة":"You passed today's quiz with","التالي: تدريب وألعاب":"Next: Practice & games","8 أسئلة، تحتاج 6 إجابات صحيحة":"8 questions; you need 6 correct",
+"الدرس مختوم. العب وتدرّب كما تحب.":"This lesson is stamped. Play and practise as much as you like.","من # أنشطة ✓":"of # activities ✓","التالي: امتحان المراجعة":"Next: Lesson exam","أكمل نشاطين من 3":"Finish 2 of the 3 activities",
+"مختوم بتاريخ":"Stamped on","نتيجة":"score","اختبار تدريبي":"Practice test","امتحان الدرس يُفتح بعد":"The lesson exam opens in","انتظر قليلًا":"Please wait","امتحان الدرس جاهز (تحتاج":"The lesson exam is ready (you need","ابدأ امتحان الدرس":"Start the lesson exam",
+"اضغط البطاقة لترى المعنى والمثال، واضغط 🔊 لتسمع.":"Tap a card to see the meaning and an example; tap 🔊 to listen.","المعنى بالعربي":"Arabic meaning","ع الشرح بالعربي":"ع Explanation in Arabic","ع التعليمات بالعربي":"ع Instructions in Arabic",
+"🗣 محادثة الدرس":"🗣 Lesson conversation","▶ شغّل المحادثة":"▶ Play the conversation","🐢 بطيء":"🐢 Slow","عادي":"Normal","إظهار الترجمة":"Show translation",
+"شغّلها مرة وأنت تقرأ الترجمة، ثم أخفِ الترجمة وحاول الفهم بالسمع فقط، ثم كرر كل جملة بصوتك.":"Play it once while reading the translation, then hide the translation and try to understand by listening only. Then repeat each sentence aloud.",
+"🎧 جمل الدرس":"🎧 Lesson sentences","▶ استمع للكل":"▶ Listen to all","⏹ إيقاف":"⏹ Stop","▶ شغّل مرة أخرى":"▶ Play again",
+"مشاهد":"scenes","🎬 فيديو اليوم":"🎬 Video of the day","تشغيل الفيديو":"Play the video","تشغيل أو إيقاف":"Play or pause","من البداية":"From the start","إظهار النص":"Show subtitles","سرعة بطيئة":"Slow speed",
+"شاهد واستمع جيدًا ثم أجب عن الأسئلة. أخفِ النص (CC) إذا أردت أن تختبر أذنك فقط.":"Watch and listen carefully, then answer the questions. Hide the subtitles (CC) to test your ears only.",
+"🔒 الأسئلة تظهر بعد انتهاء الفيديو.":"🔒 The questions appear when the video ends.","انتهى الفيديو":"The video has ended","أجب عن الأسئلة بالأسفل، أو شاهده مرة أخرى":"Answer the questions below, or watch it again",
+"❓ ماذا حدث في الفيديو؟":"❓ What happened in the video?","من 3":"of 3","من 3 فقط":"of 3 only","فهمت الفيديو جيدًا.":"You understood the video well.","شاهد الفيديو مرة أخرى بتركيز، وجرّب السرعة البطيئة، ثم أجب من جديد.":"Watch the video again carefully, try the slow speed, then answer again.","شاهد مرة أخرى":"Watch again",
+"اختبار اليوم يقيس ما ذاكرته الآن.":"Today's quiz checks what you just studied.","4 أسئلة عن معاني الكلمات":"4 questions on word meanings","سؤال استماع":"1 listening question","3 أسئلة قواعد":"3 grammar questions","تحتاج 6 من 8. لو لم تنجح راجع وأعد؛ الأسئلة تتغير كل مرة.":"You need 6 of 8. If you don't pass, review and try again; the questions change every time.","اجتزت اختبار اليوم ✓":"You passed today's quiz ✓","بنتيجة":"with a score of",
+"ثبّت الدرس بالسمع والنطق واللعب. أكمل نشاطين على الأقل ليكتمل يوم المذاكرة.":"Fix the lesson in your memory by listening, speaking and playing. Finish at least 2 activities.",
+"اكتب ما تسمعه":"Write what you hear","إملاء 5 جمل بالسمع فقط":"Dictation: 5 sentences, by ear only","انطق وسجّل صوتك":"Speak and record your voice","استمع وكرر وقارن نطقك":"Listen, repeat and compare your pronunciation","✓ مكتمل":"✓ Done",
+"🎮 الألعاب":"🎮 Games","✓ النشاط الثالث مكتمل":"✓ Third activity done","(أي لعبة تكفي)":"(any game counts)","أي لعبة تكفي":"any game counts",
+"توصيل الكلمات":"Word match","صِل كل كلمة بمعناها بأسرع وقت":"Match each word with its meaning, fast","رتّب الجملة":"Sentence builder","كوّن الجملة من كلماتها":"Build the sentence from its words","الحروف المبعثرة":"Letter scramble","رتّب الحروف لتكتب الكلمة":"Put the letters in order","سباق الأذن":"Ear race","اسمع واختر المعنى قبل انتهاء الوقت":"Listen and pick the meaning before time runs out",
+"اجتزت امتحان الدرس ✓":"You passed the lesson exam ✓","امتحان الدرس (بعد ساعة من اختبار اليوم)":"Lesson exam (one hour after today's quiz)","إملاء كلمتين":"Spelling: 2 words","استماع لكلمتين":"Listening: 2 words","4 أسئلة قواعد و3 عن الكلمات":"4 grammar and 3 vocabulary questions","سؤال من درس سابق":"1 question from an earlier lesson",
+"٪ على الأقل لتنتقل للدرس التالي فورًا.":"% or more to move to the next lesson straight away.","أكمل خطوة التدريب والألعاب أولًا.":"Finish the practice & games step first.","أكمل خطوة التدريب والألعاب أولًا":"Finish the practice & games step first","الامتحان متاح الآن.":"The exam is open now.",
+"→ رجوع":"← Back","رجوع":"Back","العب مرة أخرى":"Play again","نجوم":"stars","من 3 نجوم":"of 3 stars",
+"ممتاز!":"Excellent!","أحسنت!":"Well done!","رائع!":"Great!","إجابة صحيحة!":"Correct!","بطل!":"Champion!",
+"جملة":"Sentence","استمع ثم اكتب الجملة بالإنجليزية كما سمعتها":"Listen, then type the sentence in English exactly as you hear it","🐢 استمع ببطء":"🐢 Listen slowly","اكتب ما سمعته":"Type what you heard","تحقّق":"Check","اكتب ما سمعته أولًا":"Type what you heard first",
+"راجع الكلمات الحمراء":"Check the red words","الأخضر كتبته صحيحًا، والأحمر فاتك أو كتبته خطأ.":"Green words are correct; red words are missing or wrong.","اعرض النتيجة":"Show the result","الجملة التالية":"Next sentence","انتهى الإملاء":"Dictation finished","متوسط دقتك":"Your average accuracy","٪ في":"% in","جمل.":"sentences.","جمل":"sentences",
+"١. استمع للجملة &nbsp; ٢. انطقها بصوتك &nbsp; ٣. قارن وكرر":"1. Listen   2. Say it aloud   3. Compare and repeat","١. استمع للجملة":"1. Listen","٢. انطقها بصوتك":"2. Say it aloud","٣. قارن وكرر":"3. Compare and repeat",
+"🔊 استمع":"🔊 Listen","🐢 ببطء":"🐢 Slowly","انطق ليقيّمك":"Speak to get scored","سجّل صوتك":"Record your voice","سجّل واسمع نفسك":"Record and hear yourself",
+"الميكروفون غير مدعوم هنا. استمع وكرر الجملة بصوت عالٍ ثلاث مرات.":"The microphone isn't supported here. Listen and repeat the sentence aloud three times.","إنهاء":"Finish",
+"أنا أسمعك... انطق الجملة الآن":"I'm listening... say the sentence now","نطق ممتاز!":"Excellent pronunciation!","جيد، حاول مرة أخرى":"Good, try again","استمع ببطء وكرر":"Listen slowly and repeat","سمعتك تقول:":"I heard:",
+"الميكروفون محجوب. اسمح للمتصفح باستخدامه أو افتح الصفحة في Chrome.":"The microphone is blocked. Allow the browser to use it, or open the page in Chrome.","لم أسمع شيئًا. اقترب من الميكروفون وحاول مرة أخرى.":"I didn't hear anything. Move closer to the microphone and try again.","تعذّر التعرف على الصوت الآن. جرّب زر التسجيل.":"Speech recognition failed. Try the record button.",
+"الميكروفون محجوب. اسمح للمتصفح باستخدامه ثم حاول مرة أخرى.":"The microphone is blocked. Allow the browser to use it, then try again.","قارن صوتك بالأصل":"Compare your voice with the original","🔊 الأصل":"🔊 Original","⏺ سجّل مرة أخرى":"⏺ Record again",
+"انتهى تدريب النطق":"Speaking practice finished","متوسط دقة نطقك":"Your average pronunciation accuracy","أحسنت! التكرار بصوت عالٍ أسرع طريق للطلاقة.":"Well done! Repeating aloud is the fastest road to fluency.",
+"اضغط كلمة إنجليزية ثم معناها بالعربي. الأسرع وبأقل أخطاء يأخذ 3 نجوم.":"Tap an English word, then its Arabic meaning. Be fast and accurate to get 3 stars.","أخطاء":"Mistakes","أنهيت في":"You finished in","ثانية بـ":"seconds with","أخطاء.":"mistakes.",
+"اضغط الكلمات بالترتيب الصحيح لتكوّن الجملة الإنجليزية":"Tap the words in the right order to build the English sentence","🔊 تلميح صوتي":"🔊 Audio hint","استخدم كل الكلمات أولًا":"Use all the words first","استمع للجملة وكررها بصوتك.":"Listen to the sentence and repeat it aloud.","الترتيب الصحيح:":"The correct order:",
+"ليس بعد. اضغط الكلمات في الأعلى لإرجاعها وحاول مرة أخرى.":"Not yet. Tap the words at the top to send them back, and try again.","رتّبت":"You built","جمل من أول محاولة.":"sentences on the first try.",
+"كلمة":"Word","⌫ امسح":"⌫ Delete","الكلمة الصحيحة:":"The correct word:","حاول مرة أخرى. استمع للتلميح الصوتي إذا احتجت.":"Try again. Use the audio hint if you need it.","الكلمة التالية":"Next word","كتبت":"You spelled","كلمات من أول محاولة.":"words on the first try.",
+"اسمع الكلمة واختر معناها قبل انتهاء الوقت":"Listen to the word and choose its meaning before time runs out","أعد الصوت":"Play again","ليست هي":"Not that one","انتهى الوقت":"Time's up","عرفت":"You knew","كلمات بالسمع.":"words by ear.",
+"صالة الألعاب":"Games room","تلعب بالكلمات والجمل التي تعلمتها فقط، فلا تتقدّم لدروس جديدة ولا يتغير ترتيب الخطوات.":"You play only with words and sentences you have learned, so you don't jump ahead and the order of steps stays the same.","لعبت":"You have played","جولة مراجعة حتى الآن.":"review rounds so far.",
+"💬 المعلم الذكي":"💬 Smart tutor","المعلم الذكي":"Smart tutor","إغلاق":"Close","اسأل عن أي شيء في درس":"Ask anything about the lesson","اشرح القاعدة بمثال من حياتي":"Explain the rule with an example from my life","أعطني ٣ جمل للتدريب مع الحل":"Give me 3 practice sentences with answers","كيف أحفظ هذه الكلمات بسهولة؟":"How can I remember these words easily?","اكتب سؤالك":"Type your question","سؤالك":"Your question","اسأل":"Ask","يفكر المعلم...":"The tutor is thinking...","المعلم مشغول الآن، جرّب بعد قليل.":"The tutor is busy; try again soon.","تعذّر الحصول على إجابة الآن. حاول مرة أخرى.":"Couldn't get an answer now. Try again.",
+"امتحان المراجعة":"Lesson exam","اختبار اليوم":"Today's quiz","هل تريد إنهاء الاختبار؟ لن تُحفظ هذه المحاولة.":"End the test? This attempt won't be saved.","إنهاء الاختبار":"End test",
+"ليست الإجابة الصحيحة":"Not the right answer","الإجابة الصحيحة:":"The correct answer:","السؤال التالي":"Next question","انتبه للإملاء الدقيق:":"Watch the exact spelling:","الكتابة الصحيحة:":"Correct spelling:","تعني:":"means:","سمعت:":"You heard:","اكتب الكلمة بالإنجليزية":"Type the word in English","شغّل الصوت مرة أخرى":"Play the sound again","إنهاء":"End",
+"اجتزت اختبار اليوم":"You passed today's quiz","الخطوة التالية: التدريب والألعاب لتثبيت الدرس. امتحان الدرس يُفتح بعد ساعة.":"Next step: practice and games to fix the lesson. The lesson exam opens in one hour.","الخطوة 6: تدريب وألعاب":"Step 6: Practice & games",
+"قريب جدًا، حاول مرة أخرى":"So close, try again","إجابات صحيحة من":"correct answers out of","راجع ثم أعد؛ الأسئلة تتغير كل مرة":"Review, then try again; the questions change every time","راجع الدرس":"Review the lesson","أعد الاختبار":"Retake the quiz",
+"حصلت على الختم! وأضيفت 8 كلمات إلى «كلماتي»":"You got the stamp! 8 words were added to My words","كلماتي":"My words","أنهيت دروس المستوى الستة! امتحان المستوى مفتوح الآن.":"You finished all six lessons! The level exam is open now.","الدرس التالي مفتوح الآن.":"The next lesson is open now.",
+"🏆 امتحان المستوى":"🏆 Level exam","ابدأ الدرس التالي":"Start the next lesson","نجحت مرة أخرى":"You passed again","هذا الدرس مختوم بالفعل.":"This lesson is already stamped.",
+"لم تصل لنسبة النجاح هذه المرة":"You didn't reach the pass mark this time","نتيجتك":"Your score","وتحتاج":"and you need","٪ وتحتاج":"% and you need","لن ينفتح الدرس التالي حتى تنجح":"The next lesson won't open until you pass","راجع أخطاءك، ثم راجع الدرس من الخطوة الأولى، وبعدها أعد الامتحان":"Review your mistakes, go through the lesson again from step 1, then retake the exam",
+"تدريب ممتاز":"Excellent practice","التدريب يصنع الإتقان":"Practice makes perfect","الاختبار التدريبي لا يغيّر تقدمك.":"A practice test doesn't change your progress.","تدريب آخر":"Another practice","الرئيسية":"Home","راجع هذه الأسئلة":"Review these questions","الصحيح:":"Correct:",
+"راجع الدرس من الخطوة الأولى قبل إعادة الامتحان":"Review the lesson from step 1 before retaking the exam","امتحان المراجعة يُفتح غدًا":"The lesson exam opens later",
+"القراءة":"Reading","الاستماع":"Listening","القواعد والمفردات":"Grammar & vocabulary","الإملاء":"Spelling","الكتابة":"Writing","المجموع":"Total",
+"اجتزت هذا الامتحان ✓":"You passed this exam ✓","بتاريخ":"on","٪ بتاريخ":"% on","🎓 الشهادة":"🎓 Certificate","هذه محاولة جديدة. ابدأ عندما تكون جاهزًا.":"This is a new attempt. Start when you're ready.","خصص 30 إلى 45 دقيقة بدون مقاطعة. لا يمكن الرجوع لقسم بعد تسليمه.":"Set aside 30 to 45 minutes without interruptions. You can't go back to a section after submitting it.",
+"ابدأ امتحان المستوى":"Start the level exam","إعادة المحاولة بعد":"Retake available in","يُفتح بعد النجاح في امتحانات الدروس الستة.":"Opens after you pass the six lesson exams.","تحتاج ٧٠ من ١٠٠ للانتقال للمستوى التالي.":"You need 70 out of 100 to reach the next level.",
+"اقرأ النص بعناية ثم أجب. (٥ درجات لكل سؤال)":"Read the text carefully, then answer. (5 points per question)","الأسئلة":"Questions","ستسمع نصًا بدون كتابة. يمكنك التشغيل 3 مرات فقط. (٥ درجات لكل سؤال)":"You will hear a text without subtitles. You can play it 3 times only. (5 points per question)","تشغيل":"Play","مرات التشغيل المتبقية:":"Plays left:",
+"أسئلة من الدروس الستة. (٣ درجات لكل سؤال)":"Questions from the six lessons. (3 points per question)","استمع لكل كلمة واكتبها بالإنجليزية. (٥ درجات لكل كلمة)":"Listen to each word and type it in English. (5 points per word)","🔊 الكلمة":"🔊 Word","الكلمة":"Word",
+"استخدم هذه الكلمات أو التراكيب:":"Use these words or structures:","اكتب هنا":"Write here","كلمة من":"words out of","سلّم القسم وانتقل للتالي":"Submit this section and continue","سلّم الامتحان":"Submit the exam","انتهت مرات التشغيل":"No plays left","أجب عن كل الأسئلة أولًا":"Answer all the questions first","استمع للنص أولًا":"Listen to the text first","اكتب نصك أولًا":"Write your text first",
+"كتبت":"You wrote","المطلوبة. هل تريد التسليم؟":"required. Submit anyway?",
+"نجحت في امتحان المستوى":"You passed the level exam","لم تصل لدرجة النجاح هذه المرة":"You didn't reach the pass mark this time","مفتوح الآن.":"is open now.","أتممت الرحلة كاملة!":"You finished the whole journey!","تحتاج 70 من 100. راجع كلمات المستوى وأخطاءك، ويمكنك إعادة الامتحان بعد ساعة.":"You need 70 out of 100. Review the level's words and your mistakes; you can retake the exam in one hour.",
+"تقييم الكتابة":"Writing score","عدد الكلمات:":"Word count:","الكلمات المطلوبة المستخدمة:":"Required words used:","من 10). الكلمات المطلوبة المستخدمة:":"of 10). Required words used:","💬 ملاحظات المعلم الذكي على كتابتي":"💬 Smart tutor feedback on my writing","يقرأ المعلم كتابتك...":"The tutor is reading your writing...","تعذّر الحصول على الملاحظات الآن.":"Couldn't get feedback now.","🎓 استلم الشهادة":"🎓 Get your certificate","أخطاؤك في الامتحان":"Your mistakes in the exam","إملاء:":"Spelling:",
+"الشهادة تُمنح بعد اجتياز امتحان المستوى":"The certificate is given after passing the level exam","شهادة إتمام المستوى":"Certificate of completion, level","تُمنح هذه الشهادة إلى":"This certificate is awarded to","لإتمامه ستة دروس واجتياز امتحان المستوى (قراءة، استماع، قواعد، إملاء، كتابة) بنتيجة":"for completing six lessons and passing the level exam (reading, listening, grammar, spelling, writing) with a score of","التاريخ:":"Date:","اطبع الشهادة":"Print the certificate",
+"دفتر أخطائي":"My mistakes notebook","كل خطأ هنا فرصة. راجعها قبل امتحان المراجعة وامتحان المستوى.":"Every mistake here is a chance to learn. Review them before your lesson and level exams.","امسح الدفتر":"Clear the notebook","مسح كل الأخطاء من الدفتر؟":"Clear all mistakes from the notebook?","الدفتر فارغ. الأخطاء التي تقع فيها في الاختبارات ستظهر هنا.":"The notebook is empty. Mistakes you make in tests will appear here.",
+"اسم المسافر":"Traveller's name","المظهر":"Theme","تلقائي":"Auto","فاتح":"Light","داكن":"Dark","اختبار الصوت":"Sound test","🔊 جرّب الصوت":"🔊 Test the sound","لو لم تسمع شيئًا: ارفع الصوت، ألغِ الوضع الصامت، أو افتح الصفحة في Chrome أو Safari.":"If you hear nothing: turn the volume up, turn off silent mode, or open the page in Chrome or Safari.",
+"وضع ولي الأمر":"Parent mode","نسبة النجاح في امتحان الدرس":"Pass mark for lesson exams","أخطاء أقل من 5٪":"Under 5% mistakes","أخطاء أقل من #":"Under #% mistakes","تجاوز انتظار الساعة قبل الامتحان (للتجربة). ترتيب الخطوات يبقى كما هو.":"Skip the one-hour wait before exams (for testing). The order of steps stays the same.",
+"نقل التقدّم لجهاز آخر":"Move progress to another device","التقدم محفوظ في هذا المتصفح. انسخ الرمز والصقه في الجهاز الآخر.":"Progress is saved in this browser. Copy the code and paste it on the other device.","رمز التقدم":"Progress code","انسخ رمز تقدّمي":"Copy my progress code","استورد الرمز":"Import code","ابدأ الرحلة من جديد":"Restart the journey","حفظ":"Save",
+"نُسخ الرمز":"Code copied","الرمز جاهز في المربع، انسخه يدويًا":"The code is in the box; copy it manually","تم استيراد التقدّم":"Progress imported","الرمز غير صالح. تأكد من نسخه كاملًا":"Invalid code. Make sure you copied all of it","سيُحذف كل التقدم والأختام. متأكد؟":"All progress and stamps will be deleted. Are you sure?","تم الحفظ":"Saved",
+"دقيقة":"min","# دقيقة":"# min","ساعة":"1 hour","الجملة كاملة:":"Whole sentence:","🌐 ترجم الكلمة":"🌐 Translate the word","🌐 ترجم الجملة كاملة":"🌐 Translate the whole sentence","تعذّرت الترجمة الآن (تحتاج اتصالًا بالإنترنت).":"Translation failed (you need an internet connection).",
+"اضغط على أي كلمة إنجليزية لترى معناها":"Tap any English word to see its meaning","اضغط ثم اختر كلمة لتعرف معناها":"Tap, then choose a word to see its meaning",
+"الكلمات":"Words","القاعدة":"Grammar","تدريب وألعاب":"Practice & games","الخطوة 6 من 7: تدريب وألعاب":"Step 6 of 7: Practice & games","الخطوة 5 من 7: اختبار اليوم":"Step 5 of 7: Today's quiz",
+"امتحان الدرس:":"Lesson exam:","مذاكرة:":"Study:","ع":"ع","الرمز":"Code","ختم من":"stamps out of","من":"of","# من #":"# of #","# أيام متتالية":"# days in a row","ع Explanation in Arabic":"ع Explanation in Arabic","ع Instructions in Arabic":"ع Instructions in Arabic","إجابة صحيحة":"Correct"
+};
+
 </script>
 <script>
 "use strict";
@@ -1000,7 +1348,8 @@ const LV=[
 const LN=6,NL=10;
 OLDL.forEach((l,i)=>l.d=D[i]);
 const L=ORDER.map(k=>typeof k==="number"?OLDL[k]:NEW[k]);
-L.forEach((l,i)=>l.vid=VID[i]);
+Object.keys(VQEN).forEach(k=>VID[k][2]=VQEN[k]);
+L.forEach((l,i)=>{l.vid=VID[i];l.gen=GEN[l.t]||""});
 const STEPS=[{n:"الكلمات",ic:"🃏"},{n:"القاعدة",ic:"📐"},{n:"الاستماع",ic:"🎧"},{n:"فيديو اليوم",ic:"🎬"},{n:"اختبار اليوم",ic:"📝"},{n:"تدريب وألعاب",ic:"🎮"},{n:"امتحان المراجعة",ic:"🛂"}];
 const NS=STEPS.length;
 const PASS=0.7,KEY="eng-journey-v3";
@@ -1016,10 +1365,11 @@ const pick=(a,n)=>shuffle(a).slice(0,n);
 const wc=s=>{s=String(s).trim();return s?s.split(/\s+/).length:0};
 
 /* ---------- storage ---------- */
-function def(){return{name:"",xp:0,streak:0,last:"",L:{},X:{},mist:[],skip:false,theme:"auto",rate:.9,arc:0}}
-function load(){try{const r=localStorage.getItem(KEY);if(r)return Object.assign(def(),JSON.parse(r))}catch(e){}return def()}
+function def(){return{name:"",xp:0,streak:0,last:"",L:{},X:{},mist:[],skip:false,theme:"auto",rate:.9,arc:0,lang:"ar",examPass:96}}
+let UID=null;const lkey=()=>UID?KEY+":"+UID:KEY;
+function load(){try{const r=localStorage.getItem(lkey());if(r)return Object.assign(def(),JSON.parse(r))}catch(e){}return def()}
 let S=load();
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function save(){S.ts=Date.now();try{localStorage.setItem(lkey(),JSON.stringify(S))}catch(e){}if(typeof cloudSave==="function")cloudSave()}
 function applyTheme(){const r=document.documentElement;if(S.theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",S.theme)}
 applyTheme();
 
@@ -1045,32 +1395,27 @@ const practiceDone=i=>passed(i)||pdone(i)>=2;
 function stepDone(i,k){const s=S.L[i]||{};if(s.passed)return true;return [!!(s.v||s.quiz),!!(s.g||s.quiz),!!(s.l||s.quiz),!!(s.vid||s.quiz),!!s.quiz,practiceDone(i),false][k]}
 function nowStep(i){for(let k=0;k<NS;k++)if(!stepDone(i,k))return k;return NS}
 const stepOpen=(i,k)=>passed(i)||k<=nowStep(i);
-const waitOver=i=>quizDone(i)&&(S.skip||S.L[i].quiz<today());
-const canExam=i=>quizDone(i)&&practiceDone(i)&&waitOver(i);
 const stampCount=()=>L.filter((_,i)=>passed(i)).length;
 const lessonSents=i=>L[i].v.map(w=>[w[2],""]).concat(L[i].g[2],L[i].d);
 const lessonSentsAr=i=>L[i].g[2].concat(L[i].d);
 const levelWords=r=>{let a=[];for(let k=0;k<LN;k++)a=a.concat(L[r*LN+k].v);return a};
 
-/* ---------- the 15-day level schedule ----------
- day 1 study L1 · 2 exam L1 · 3 study L2 · 4 exam L2 · 5 study L3 · 6 exam L3 · 7 rest
- day 8 study L4 · 9 exam L4 · 10 study L5 · 11 exam L5 · 12 study L6 · 13 exam L6 · 14 rest · 15 LEVEL EXAM */
-const studyDay=k=>2*k+1+(k>=3?1:0);
-const dateOk=d=>d!==null&&(S.skip||d<=today());
-function lessonOpenDate(i){if(i===0)return "0000-01-01";const r=lvIdx(i),k=i%LN;
- if(k===0){const x=S.X[r-1];return x&&x.passed?addDays(x.passed,1):null}
- const p=S.L[i-1];if(!p||!p.passed)return null;return addDays(p.passed,k===3?2:1)}
-function lxOpenDate(r){const p=S.L[r*LN+LN-1];if(!p||!p.passed)return null;let d=addDays(p.passed,2);const x=S.X[r];if(x&&x.failed&&!x.passed){const f=addDays(x.failed,1);if(f>d)d=f}return d}
-const lessonUnlocked=i=>passed(i)||!!(S.L[i]&&S.L[i].opened)||dateOk(lessonOpenDate(i));
+/* ---------- progression rules ----------
+ study → today's quiz → practice → the lesson exam opens 1 hour after the quiz.
+ Passing the exam (default: fewer than 5% mistakes) opens the next lesson immediately.
+ After the 6 lessons → level exam (a failed attempt can be retaken after 1 hour). */
+const HOUR=3600000;
+const examPassPct=()=>S.examPass||96;
+const waitMs=i=>{const s=S.L[i];if(!s||!s.quiz)return Infinity;if(S.skip)return 0;return Math.max(0,(s.qt||0)+HOUR-Date.now())};
+const waitOver=i=>quizDone(i)&&waitMs(i)<=0;
+const canExam=i=>quizDone(i)&&practiceDone(i)&&waitOver(i);
+const lessonUnlocked=i=>{if(i===0||passed(i)||(S.L[i]&&S.L[i].opened))return true;return i%LN===0?lxPassed(lvIdx(i)-1):passed(i-1)};
+const lxWait=r=>{const x=S.X[r];if(!x||x.passed||!x.failT||S.skip)return 0;return Math.max(0,x.failT+HOUR-Date.now())};
+const lxOpen=r=>passed(r*LN+LN-1)&&lxWait(r)<=0;
 function cursor(){for(let r=0;r<NL;r++){for(let k=0;k<LN;k++){const i=r*LN+k;if(!passed(i))return{t:"lesson",i,r}}if(!lxPassed(r))return{t:"lx",r}}return{t:"done",r:NL-1}}
-function todayState(){const c=cursor();
- if(c.t==="done")return c;
- if(c.t==="lx"){const d=lxOpenDate(c.r);if(dateOk(d))return{t:"lx",r:c.r};const prev=S.L[c.r*LN+LN-1].passed;return{t:today()===addDays(prev,1)?"rest":"wait",r:c.r,day:14}}
- const i=c.i;if(lessonUnlocked(i))return{t:"lesson",i,r:c.r};
- const k=i%LN;if(k===3&&S.L[i-1]&&today()===addDays(S.L[i-1].passed,1))return{t:"rest",i,r:c.r,day:7};
- return{t:"wait",i,r:c.r}}
-function dayOfLevel(ts){if(ts.t==="lx")return 15;if(ts.t==="rest")return ts.day;if(ts.t==="wait")return ts.i!=null?studyDay(ts.i%LN)-1:14;
- const i=ts.i,k=i%LN;return quizDone(i)&&waitOver(i)?studyDay(k)+1:studyDay(k)}
+function todayState(){const c=cursor();if(c.t==="done")return c;if(c.t==="lx")return lxOpen(c.r)?{t:"lx",r:c.r}:{t:"lxwait",r:c.r};return{t:"lesson",i:c.i,r:c.r}}
+function fmtWait(ms){const m=Math.max(1,Math.ceil(ms/60000));return m>=60?"ساعة":m+" دقيقة"}
+let RR=()=>home();
 
 /* ---------- speech ---------- */
 let V1=null,V2=null;
@@ -1102,9 +1447,9 @@ function clearTimers(){timers.forEach(t=>{clearInterval(t);clearTimeout(t)});tim
 function learnedWords(){const out=[],seen=new Set();for(let i=0;i<L.length;i++)if(passed(i))L[i].v.forEach(w=>{const k=w[0].toLowerCase();if(!seen.has(k)){seen.add(k);out.push({w,i})}});return out}
 function sidebar(r){const nw=learnedWords().length;
  const it=(key,ic,t,fn,badge)=>`<button onclick="${fn}" ${r===key?'aria-current="page"':""}><span class="ic" aria-hidden="true">${ic}</span><span class="nl">${t}</span>${badge?`<span class="badge">${badge}</span>`:""}</button>`;
- return `<aside class="side"><div class="brand"><i aria-hidden="true">✈</i><span>رحلة الإنجليزية</span></div>
- <nav class="nav" aria-label="القائمة الرئيسية">${it("home","🏠","الرئيسية","home()")}${it("today","📖","درس اليوم","goToday()")}${it("video","🎬","فيديو اليوم","pgVideo()")}${it("sched","🗓️","جدول المستوى","pgSchedule()")}${it("words","📚","كلماتي","pgWords()",nw)}${it("games","🎮","الألعاب","arcade()")}${it("mist","📒","أخطائي","showMistakes()")}${it("set","⚙","الإعدادات","settings()")}</nav>
- <div class="me"><b>${esc(S.name)}</b><span>🔥 ${streakNow()} أيام متتالية</span><span>⭐ ${S.xp} نقطة</span><span>🛂 ${stampCount()} ختم من 60</span></div></aside>`}
+ return `<aside class="side"><div class="brand"><i aria-hidden="true">✈</i><span>رحلة الإنجليزية</span></div><button class="langbtn" onclick="setLang(S.lang==='en'?'ar':'en')" aria-label="Language / اللغة">🌐 <span data-keep>${S.lang==="en"?"عربي":"English"}</span></button>
+ <nav class="nav" aria-label="القائمة الرئيسية">${it("home","🏠","الرئيسية","home()")}${it("today","📖","درس اليوم","goToday()")}${it("video","🎬","فيديو اليوم","pgVideo()")}${it("sched","🗓️","خطة المستوى","pgSchedule()")}${it("words","📚","كلماتي","pgWords()",nw)}${it("games","🎮","الألعاب","arcade()")}${it("mist","📒","أخطائي","showMistakes()")}${it("set","⚙","الإعدادات","settings()")}</nav>
+ <div class="me"><b data-keep>${esc(S.name)}</b><span>🔥 ${streakNow()} أيام متتالية</span><span>⭐ ${S.xp} نقطة</span><span>🛂 ${stampCount()} ختم من 60</span>${typeof acctHTML==="function"?acctHTML():""}</div></aside>`}
 function view(html,r){stopSay();cleanupMedia();clearTimers();VP=null;curL=null;route=r||"home";
  const focus=r==="focus";document.body.classList.toggle("focus",focus);
  app.innerHTML=(focus?"":sidebar(route))+`<main class="main"><div class="airmail" aria-hidden="true"></div>${html}</main>`;window.scrollTo(0,0)}
@@ -1113,16 +1458,16 @@ function lockedStep(){toast("أكمل الخطوات السابقة بالترت
 
 /* ---------- welcome ---------- */
 function welcome(){
- document.body.classList.add("focus");
+ document.body.classList.add("focus");RR=welcome;
  app.innerHTML=`<main class="main"><div class="airmail" aria-hidden="true"></div><div class="wrap welcome">
+ <div class="row" style="justify-content:flex-end;margin-bottom:8px"><button class="ibtn" onclick="setLang(S.lang==='en'?'ar':'en')">🌐 <span data-keep>${S.lang==="en"?"عربي":"English"}</span></button></div>
  <h1>رحلة الإنجليزية</h1>
- <p class="lead">عشرة مستويات من أول كلمة <span class="en">Hello</span> حتى الكتابة والإقناع بمستوى الناطقين. كل مستوى أسبوعان: 6 دروس، ويومان للراحة، وامتحان مستوى قوي في اليوم الخامس عشر.</p>
+ <p class="lead">عشرة مستويات من أول كلمة <span class="en">Hello</span> حتى الكتابة والإقناع بمستوى الناطقين. في كل مستوى 6 دروس، وفي النهاية امتحان مستوى قوي.</p>
  <div class="levels-strip" aria-label="المستويات" style="flex-wrap:wrap">${LV.map(l=>`<span style="background:${l.col};flex:1 0 18%">${l.c}</span>`).join("")}</div>
  <ol class="flow">
-  <li><div><b>يوم المذاكرة</b><br><span class="muted">كلمات، قاعدة، استماع، فيديو اليوم، اختبار، ثم تدريب وألعاب.</span></div></li>
-  <li><div><b>يوم المراجعة والامتحان</b><br><span class="muted">امتحان مراجعة الدرس. النجاح يعطيك ختمًا ويفتح الدرس التالي في اليوم الذي بعده.</span></div></li>
-  <li><div><b>يوم الراحة</b><br><span class="muted">اليوم السابع والرابع عشر من كل مستوى.</span></div></li>
-  <li><div><b>امتحان المستوى (اليوم 15)</b><br><span class="muted">قراءة، استماع، قواعد، إملاء، وكتابة. تحتاج ٧٠٪ لتنتقل للمستوى التالي.</span></div></li>
+  <li><div><b>المذاكرة</b><br><span class="muted">كلمات، قاعدة، استماع، فيديو، اختبار قصير، ثم تدريب وألعاب.</span></div></li>
+  <li><div><b>امتحان الدرس بعد ساعة</b><br><span class="muted">لو نجحت ينفتح الدرس التالي فورًا. لو زادت أخطاؤك عن الحد المسموح تراجع الدرس وتعيد الامتحان.</span></div></li>
+  <li><div><b>امتحان المستوى</b><br><span class="muted">بعد الدروس الستة: قراءة، استماع، قواعد، إملاء، وكتابة. تحتاج ٧٠٪ لتنتقل للمستوى التالي.</span></div></li>
  </ol>
  <form class="nameform" onsubmit="event.preventDefault();startJourney()">
   <label for="nm" class="muted" style="width:100%;font-weight:700">ما اسم المسافر؟</label>
@@ -1136,24 +1481,24 @@ function startJourney(){const v=$("#nm").value.trim();if(!v)return;S.name=v;save
 function missionHTML(){
  const ts=todayState();
  if(ts.t==="done")return `<div class="mission" style="--lv:${LV[9].col}"><div class="mbadge">🏆</div><div><h2>أتممت الرحلة كاملة</h2><p class="sub">عشرة مستويات وستون ختمًا. راجع كلماتك والعب في صالة الألعاب متى شئت.</p><button class="btn sun" onclick="cert(9)">شهادة الإتقان</button></div></div>`;
- const r=ts.r,lv=LV[r],day=dayOfLevel(ts);
- const head=`<p style="font-weight:800;color:var(--muted)">المستوى <span class="en">${lv.c}</span>، اليوم ${day} من 15</p>`;
- if(ts.t==="rest")return `<div class="mission" style="--lv:${lv.col}"><div class="mbadge">🌴</div><div>${head}<h2>اليوم يوم راحة</h2><p class="sub">${ts.day===14?"غدًا امتحان المستوى الكبير. ارتاح اليوم، ولو حبيت راجع كلماتك بهدوء.":"أنهيت نصف المستوى. ارتاح اليوم، والدرس التالي يُفتح غدًا."}</p><div class="row"><button class="btn ghost" onclick="pgWords()">📚 كلماتي</button><button class="btn ghost" onclick="arcade()">🎮 لعبة خفيفة</button></div></div></div>`;
- if(ts.t==="wait")return `<div class="mission" style="--lv:${lv.col}"><div class="mbadge">✓</div><div>${head}<h2>أحسنت! أنهيت امتحان اليوم</h2><p class="sub">${ts.i!=null?`الدرس التالي (${L[ts.i].a}) يُفتح غدًا.`:"امتحان المستوى يُفتح قريبًا."} يُفتح بعد <b id="cd">${untilMidnight()}</b>.</p><div class="row"><button class="btn ghost" onclick="pgVideo()">🎬 أعد مشاهدة الفيديوهات</button><button class="btn ghost" onclick="pgWords()">📚 كلماتي</button></div></div></div>`;
- if(ts.t==="lx"){const x=S.X[r]||{};return `<div class="mission" style="--lv:${lv.col}"><div class="mbadge">🏆</div><div>${head}<h2>امتحان المستوى ${lv.c}</h2><p class="sub">${x.failed?"المحاولة السابقة لم تكتمل بالنجاح. راجع كلماتك وأخطاءك ثم أعد الامتحان.":"امتحان قوي: قراءة، استماع، قواعد ومفردات، إملاء، وكتابة. تحتاج ٧٠٪ للانتقال للمستوى التالي."}</p><div class="row"><button class="btn sun" onclick="lxIntro(${r})">اذهب للامتحان</button><button class="btn ghost" onclick="pgWords()">📚 راجع كلماتي</button></div></div></div>`}
+ const r=ts.r,lv=LV[r];
+ if(ts.t==="lx"||ts.t==="lxwait"){const x=S.X[r]||{},head=`<p style="font-weight:800;color:var(--muted)">المستوى <span class="en">${lv.c}</span></p>`;
+  if(ts.t==="lxwait")return `<div class="mission" style="--lv:${lv.col}"><div class="mbadge">⏳</div><div>${head}<h2>إعادة امتحان المستوى بعد قليل</h2><p class="sub">تُفتح المحاولة الجديدة بعد <b class="cd" data-lx="${r}">${fmtWait(lxWait(r))}</b>. راجع كلماتك وأخطاءك الآن.</p><div class="row"><button class="btn sun" onclick="wordFilter.lv='${r}';pgWords()">📚 راجع كلمات المستوى</button><button class="btn ghost" onclick="showMistakes()">📒 أخطائي</button></div></div></div>`;
+  return `<div class="mission" style="--lv:${lv.col}"><div class="mbadge">🏆</div><div>${head}<h2>امتحان المستوى</h2><p class="sub">${x.failed?"المحاولة السابقة لم تنجح. راجعت؟ جرّب مرة أخرى.":"قراءة، استماع، قواعد ومفردات، إملاء، وكتابة. تحتاج ٧٠٪ للانتقال للمستوى التالي."}</p><div class="row"><button class="btn sun" onclick="lxIntro(${r})">اذهب للامتحان</button><button class="btn ghost" onclick="wordFilter.lv='${r}';pgWords()">📚 راجع كلماتي</button></div></div></div>`}
  const i=ts.i,s=S.L[i]||{},les=L[i],k=nowStep(i);
+ const head=`<p style="font-weight:800;color:var(--muted)">المستوى <span class="en">${lv.c}</span>، الدرس ${i%LN+1} من 6</p>`;
  let h,sub,btn;
- if(s.review){h="راجع الدرس قبل إعادة الامتحان";sub="لم تجتز المحاولة السابقة. ابدأ من الكلمات وراجع أخطاءك، ثم أعد الامتحان.";btn=`<button class="btn sun" onclick="lesson(${i},0)">ابدأ المراجعة</button>`}
- else if(k<4){h=`الخطوة ${k+1} من 7: ${STEPS[k].n}`;sub=["ذاكر 8 كلمات جديدة واقلب كل البطاقات.","اقرأ شرح القاعدة واستمع للأمثلة.","استمع للمحادثة كاملة ثم لجمل الدرس.","شاهد فيديو اليوم وأجب عن أسئلته."][k];btn=`<button class="btn sun" onclick="lesson(${i},${k})">${k===0&&!s.opened?"ابدأ درس اليوم":"تابع"}</button>`}
+ if(s.review){h="راجع الدرس قبل إعادة الامتحان";sub="لم تصل لنسبة النجاح. ابدأ من الكلمات وراجع أخطاءك، ثم أعد الامتحان.";btn=`<button class="btn sun" onclick="lesson(${i},0)">ابدأ المراجعة</button> <button class="btn ghost" onclick="showMistakes()">📒 أخطائي</button>`}
+ else if(k<4){h=`الخطوة ${k+1} من 7: ${STEPS[k].n}`;sub=["ذاكر 8 كلمات جديدة واقلب كل البطاقات.","اقرأ شرح القاعدة واستمع للأمثلة.","استمع للمحادثة كاملة ثم لجمل الدرس.","شاهد فيديو اليوم وأجب عن أسئلته."][k];btn=`<button class="btn sun" onclick="lesson(${i},${k})">${k===0&&!s.opened?"ابدأ الدرس":"تابع"}</button>`}
  else if(k===4){h="الخطوة 5 من 7: اختبار اليوم";sub="8 أسئلة وتحتاج 6.";btn=`<button class="btn sun" onclick="startTest(${i},'quiz')">ابدأ اختبار اليوم</button> <button class="btn ghost" onclick="lesson(${i},0)">مراجعة سريعة</button>`}
  else if(k===5){h="الخطوة 6 من 7: تدريب وألعاب";sub=`أكملت ${pdone(i)} من 3 أنشطة (المطلوب 2).`;btn=`<button class="btn sun" onclick="lesson(${i},5)">تابع التدريب</button>`}
- else if(!waitOver(i)){h="أنهيت يوم المذاكرة! امتحان المراجعة غدًا";sub=`يُفتح بعد <b id="cd">${untilMidnight()}</b>. قبل النوم أعد مشاهدة فيديو اليوم مرة.`;btn=`<button class="btn" onclick="lesson(${i},3)">🎬 فيديو اليوم</button> <button class="btn ghost" onclick="lesson(${i},5)">🎮 العب</button>`}
- else{h="يوم المراجعة: امتحان الدرس";sub="راجع سريعًا ثم ادخل الامتحان. النجاح يعطيك الختم، والدرس التالي يُفتح غدًا.";btn=`<button class="btn sun" onclick="startTest(${i},'exam')">ابدأ الامتحان</button> <button class="btn ghost" onclick="lesson(${i},0)">مراجعة سريعة</button>`}
+ else if(!waitOver(i)){h="أحسنت! امتحان الدرس يُفتح بعد ساعة";sub=`يُفتح بعد <b class="cd" data-i="${i}">${fmtWait(waitMs(i))}</b>. استغل الوقت: أعد مشاهدة الفيديو أو العب بكلمات الدرس.`;btn=`<button class="btn" onclick="lesson(${i},3)">🎬 فيديو الدرس</button> <button class="btn ghost" onclick="lesson(${i},5)">🎮 العب</button>`}
+ else{h="امتحان الدرس جاهز";sub=`تحتاج ${examPassPct()}٪ على الأقل. النجاح يفتح الدرس التالي فورًا.`;btn=`<button class="btn sun" onclick="startTest(${i},'exam')">ابدأ الامتحان</button> <button class="btn ghost" onclick="lesson(${i},0)">مراجعة سريعة</button>`}
  const steps=STEPS.map((t,j)=>`<span class="${j<k?"done":j===k?"on":""}">${j<k?"✓":t.ic} ${t.n}</span>`).join("");
- return `<div class="mission" style="--lv:${lv.col}"><div class="mbadge">${i%LN+1}</div><div>${head}<p style="font-weight:800">الدرس ${i%LN+1} من 6: ${les.a}</p>
+ return `<div class="mission" style="--lv:${lv.col}"><div class="mbadge">${i%LN+1}</div><div>${head}<p style="font-weight:800">${les.a}</p>
  <div class="steps3" style="margin-top:8px">${steps}</div><h2>${h}</h2><p class="sub">${sub}</p><div class="row">${btn}</div></div></div>`}
 function home(){
- if(!S.name)return welcome();
+ if(!S.name)return welcome();RR=home;
  const c=cursor(),lvl=LV[c.r];
  let regions="";
  LV.forEach((lv,r)=>{
@@ -1166,17 +1511,25 @@ function home(){
   const x=S.X[r]||{},isCur=c.t==="lx"&&c.r===r;
   stops+=`<button class="stop s-exam ${x.passed?"s-done":isCur?"s-cur":"s-lock"}" style="--x:${xs[6]}" onclick="${x.passed||isCur?`lxIntro(${r})`:"toast('امتحان المستوى يُفتح بعد إنهاء الدروس الستة')"}" aria-label="امتحان المستوى ${lv.c}"><span class="dot">${x.passed?`🏆<span class="stamp" aria-hidden="true"><span><b>${x.score}%</b><small>${shortDate(x.passed)}</small></span></span>`:"🏆"}</span>${isCur?'<span class="tag">محطتك</span>':""}<span class="lbl">امتحان المستوى</span></button>`;
   regions+=`<section class="region" style="--lv:${lv.col}"><div class="rhead"><span class="code">${lv.c}</span><div><h3>المستوى ${r+1}: ${lv.n}</h3><p>${lv.d}</p></div><span class="cnt">${done}/6</span>${x.passed?`<button class="ibtn cert-btn" onclick="cert(${r})" aria-label="شهادة ${lv.c}">🎓</button>`:""}</div><div class="stops">${stops}</div></section>`});
- view(`<div class="wrap"><section class="hero" style="margin-top:18px"><p class="hello">${greet()} يا ${esc(S.name)}</p>
+ view(`<div class="wrap"><div class="homegrid"><div class="homeleft"><section class="hero" style="margin-top:18px"><p class="hello">${greet()}، <span data-keep>${esc(S.name)}</span></p>
  <h1>${c.t==="done"?"جوازك ممتلئ بالأختام":`أنت في المستوى ${c.r+1} من 10`}</h1>${missionHTML()}</section>
  <div class="stats">
   <div class="stat"><b>${stampCount()}</b><small>ختم من 60</small></div>
   <div class="stat"><b>${learnedWords().length}</b><small>كلمة تعلمتها</small></div>
   <div class="stat"><b>${streakNow()} 🔥</b><small>أيام متتالية</small></div>
   <div class="stat"><b class="en" style="color:${lvl.col}">${lvl.c}</b><small>مستواك الحالي</small></div>
- </div>
+ </div>${homeExtras()}</div>
  <section class="map" id="map"><svg class="trail" aria-hidden="true"><path class="base"/><path class="prog"/></svg>
- <h2>خريطة الرحلة</h2><p class="muted">كل مستوى 6 دروس ثم امتحان المستوى 🏆. المحطات تفتح بالترتيب.</p>${regions}</section></div>`,"home");
+ <h2>خريطة الرحلة</h2><p class="muted">كل مستوى 6 دروس ثم امتحان المستوى 🏆. المحطات تفتح بالترتيب.</p>${regions}</section></div></div>`,"home");
  requestAnimationFrame(drawTrail)}
+function homeExtras(){const ts=todayState();const i=ts.i!=null?ts.i:null;const lw=learnedWords();
+ const words=i!=null?L[i].v:[];
+ const rec=lw.slice(-8).reverse();
+ return `<div class="panels">
+ ${i!=null?`<div class="card panel"><h3 class="sec">🃏 كلمات درس اليوم</h3><div class="chipgrid">${words.map(w=>`<button class="wchip2" data-say="${esc(w[0])}"><span class="en">${esc(w[0])}</span></button>`).join("")}</div><p class="muted" style="margin-top:8px;font-size:.9rem">اضغط أي كلمة لتسمع نطقها.</p></div>`:""}
+ <div class="card panel"><h3 class="sec">📚 آخر كلمات تعلمتها</h3>${rec.length?`<div class="wlist">${rec.map(o=>`<div class="wrow">${sayBtn(o.w[0])}<div class="w"><b>${esc(o.w[0])}</b></div><span class="m" data-keep>${esc(o.w[1])}</span></div>`).join("")}</div><button class="btn ghost" style="margin-top:10px" onclick="pgWords()">كل كلماتي</button>`:`<p class="muted">كلماتك ستظهر هنا بعد أول امتحان تنجح فيه.</p>`}</div>
+ <div class="card panel"><h3 class="sec">⚡ وصول سريع</h3><div class="quick"><button class="act" onclick="pgVideo()"><span class="ic">🎬</span><b>فيديو اليوم</b></button><button class="act" onclick="arcade()"><span class="ic">🎮</span><b>الألعاب</b></button><button class="act" onclick="pgSchedule()"><span class="ic">🗓️</span><b>خطة المستوى</b></button><button class="act" onclick="showMistakes()"><span class="ic">📒</span><b>أخطائي</b></button></div></div>
+ </div>`}
 function drawTrail(){const m=$("#map");if(!m)return;const svg=m.querySelector(".trail"),r=m.getBoundingClientRect();
  const stops=[...m.querySelectorAll(".stop")],pts=stops.map(s=>{const b=s.querySelector(".dot").getBoundingClientRect();return[b.left-r.left+b.width/2,b.top-r.top+b.height/2]});
  if(!pts.length)return;svg.setAttribute("viewBox",`0 0 ${r.width} ${r.height}`);svg.style.height=r.height+"px";
@@ -1184,40 +1537,38 @@ function drawTrail(){const m=$("#map");if(!m)return;const svg=m.querySelector(".
  svg.querySelector(".base").setAttribute("d",path(pts.length-1));let c=stops.findIndex(s=>s.classList.contains("s-cur"));if(c<0)c=stops.every(s=>s.classList.contains("s-done"))?pts.length-1:0;
  svg.querySelector(".prog").setAttribute("d",c>0?path(c):"")}
 addEventListener("resize",()=>{clearTimeout(window._rt);window._rt=setTimeout(drawTrail,120)});
-function openStop(i){if(lessonUnlocked(i))lesson(i);else toast("هذه المحطة لم تُفتح بعد. الدروس تفتح بالترتيب حسب جدول المستوى")}
-setInterval(()=>{const e=$("#cd");if(e){e.textContent=untilMidnight()}},30000);
+function openStop(i){if(lessonUnlocked(i))lesson(i);else toast("هذه المحطة لم تُفتح بعد. انجح في امتحان الدرس السابق أولًا")}
+setInterval(()=>{let re=false;document.querySelectorAll(".cd").forEach(e=>{const ms=e.dataset.i!=null?waitMs(+e.dataset.i):lxWait(+e.dataset.lx);if(ms<=0)re=true;else e.textContent=fmtWait(ms)});if(re&&route!=="focus")RR()},15000);
 
 /* ---------- today / video / schedule / words pages ---------- */
-function goToday(){const ts=todayState();
+function goToday(){RR=goToday;const ts=todayState();
  if(ts.t==="lesson")return lesson(ts.i);if(ts.t==="lx")return lxIntro(ts.r);
  view(page("درس اليوم","",`${missionHTML()}`),"today")}
-function pgVideo(){const ts=todayState();let top="";
- if(ts.t==="lesson"){const i=ts.i;top=stepOpen(i,3)?`<div class="card" style="--lv:${lvOf(i).col}"><h2 style="font-size:1.2rem">🎬 ${esc(L[i].vid[0])}</h2><p class="muted" style="margin:6px 0 12px">فيديو درس اليوم: ${L[i].a}</p><button class="btn sun" onclick="lesson(${i},3)">شاهد الفيديو</button></div>`:
+function pgVideo(){RR=pgVideo;const ts=todayState();let top="";
+ if(ts.t==="lesson"){const i=ts.i;top=stepOpen(i,3)?`<div class="card" style="--lv:${lvOf(i).col}"><h2 style="font-size:1.2rem" class="en">🎬 ${esc(L[i].vid[0])}</h2><p class="muted" style="margin:6px 0 12px">فيديو درس اليوم: ${L[i].a}</p><button class="btn sun" onclick="lesson(${i},3)">شاهد الفيديو</button></div>`:
   `<div class="card"><h2 style="font-size:1.2rem">🎬 فيديو اليوم مقفل حاليًا</h2><p class="muted" style="margin-top:6px">يُفتح بعد إنهاء خطوات الكلمات والقاعدة والاستماع في درس اليوم.</p><button class="btn" style="margin-top:12px" onclick="lesson(${i})">تابع درس اليوم</button></div>`}
  else top=`<div class="card"><p class="muted">لا يوجد فيديو جديد اليوم. يمكنك إعادة مشاهدة الفيديوهات السابقة بالأسفل.</p></div>`;
  const lib=L.map((l,i)=>({l,i})).filter(o=>passed(o.i)||(S.L[o.i]&&S.L[o.i].vid));
  view(page("فيديو اليوم","بعد المشاهدة تجيب عن أسئلة حول ما حدث في الفيديو.",`${top}<h3 class="sec" style="margin-top:22px">مكتبة الفيديوهات (${lib.length})</h3>
  ${lib.length?`<div class="vlib">${lib.map(o=>`<button class="vcard" style="--lv:${lvOf(o.i).col}" onclick="lesson(${o.i},3)"><span class="th">${o.l.vid[1][0][0]}</span><div><span class="en">${esc(o.l.vid[0])}</span><small>المستوى ${lvOf(o.i).c}، الدرس ${o.i%LN+1}</small></div></button>`).join("")}</div>`:`<p class="empty">الفيديوهات التي تشاهدها ستُحفظ هنا.</p>`}`),"video")}
 let schedR=null;
-function pgSchedule(r){const c=cursor();if(r==null)r=schedR!=null?schedR:c.r;schedR=r;const lv=LV[r],ts=todayState();
+function pgSchedule(r){const c=cursor();if(r==null)r=schedR!=null?schedR:c.r;schedR=r;RR=()=>pgSchedule(r);const lv=LV[r],ts=todayState();
  const items=[];
- for(let k=0;k<LN;k++){const i=r*LN+k,s=S.L[i]||{},les=L[i];
-  const cur=ts.t==="lesson"&&ts.i===i;
-  items.push({d:studyDay(k),t:`مذاكرة: ${les.a}`,sub:`الدرس ${k+1}، الكلمات والقاعدة والاستماع والفيديو واختبار اليوم`,done:quizDone(i),today:cur&&!quizDone(i),date:s.quiz,fn:lessonUnlocked(i)?`lesson(${i})`:""});
-  items.push({d:studyDay(k)+1,t:`مراجعة وامتحان: ${les.a}`,sub:"امتحان مراجعة الدرس للحصول على الختم",done:passed(i),today:cur&&quizDone(i)&&waitOver(i),date:s.passed,fn:lessonUnlocked(i)?`lesson(${i},6)`:""});
-  if(k===2||k===5)items.push({d:k===2?7:14,t:"يوم راحة 🌴",sub:k===2?"استرح، وراجع كلماتك إن أحببت":"استعد لامتحان المستوى غدًا",rest:1,done:k===2?lessonUnlocked(r*LN+3)&&!(ts.t==="rest"&&ts.i===r*LN+3):lxPassed(r)||(ts.t==="lx"&&ts.r===r),today:ts.t==="rest"&&ts.r===r&&ts.day===(k===2?7:14)})}
- const x=S.X[r]||{};items.push({d:15,t:"امتحان المستوى الكبير 🏆",sub:"قراءة، استماع، قواعد ومفردات، إملاء، كتابة",big:1,done:!!x.passed,today:ts.t==="lx"&&ts.r===r,date:x.passed,fn:x.passed||(ts.t==="lx"&&ts.r===r)?`lxIntro(${r})`:""});
- const nav=`<div class="row" style="justify-content:space-between;margin-bottom:12px"><button class="ibtn" ${r>0?`onclick="pgSchedule(${r-1})"`:"disabled"}>→ المستوى السابق</button><b class="en" style="color:${lv.col};font-size:1.2rem">${lv.c}</b><button class="ibtn" ${r<NL-1?`onclick="pgSchedule(${r+1})"`:"disabled"}>المستوى التالي ←</button></div>`;
- view(page(`جدول المستوى ${r+1}: ${lv.n}`,"أسبوعان: يوم مذاكرة ثم يوم مراجعة وامتحان، راحة في اليوم 7 و14، وامتحان المستوى في اليوم 15.",nav+`<ol class="sched">${items.map(o=>`<li class="${o.done?"done":""} ${o.today?"today":""} ${o.rest?"rest":""} ${o.big&&!o.done?"big":""}" ${o.fn?`style="cursor:pointer" onclick="${o.fn}"`:""}><span class="dn"><span>اليوم</span><b>${o.d}</b></span><div class="tx"><b>${o.t}</b><small>${o.sub}</small></div><span class="st">${o.done?`✓ ${o.date?shortDate(o.date):""}`:o.today?"اليوم":"قادم"}</span></li>`).join("")}</ol>`,lv.col),"sched")}
+ for(let k=0;k<LN;k++){const i=r*LN+k,s=S.L[i]||{},les=L[i],cur=ts.t==="lesson"&&ts.i===i,sd=quizDone(i)&&practiceDone(i);
+  items.push({n:2*k+1,t:`مذاكرة: ${les.a}`,sub:"الكلمات والقاعدة والاستماع والفيديو واختبار اليوم والتدريب",done:sd,today:cur&&!sd,date:s.quiz,fn:lessonUnlocked(i)?`lesson(${i})`:""});
+  items.push({n:2*k+2,t:`امتحان الدرس: ${les.a}`,sub:"يُفتح بعد ساعة من اختبار اليوم، والنجاح يفتح الدرس التالي",done:passed(i),today:cur&&sd,date:s.passed,fn:lessonUnlocked(i)?`lesson(${i},6)`:""})}
+ const x=S.X[r]||{};items.push({n:13,t:"امتحان المستوى الكبير 🏆",sub:"قراءة، استماع، قواعد ومفردات، إملاء، كتابة",big:1,done:!!x.passed,today:(ts.t==="lx"||ts.t==="lxwait")&&ts.r===r,date:x.passed,fn:x.passed||(ts.t==="lx"&&ts.r===r)?`lxIntro(${r})`:""});
+ const nav=`<div class="row" style="justify-content:space-between;margin-bottom:12px"><button class="ibtn" ${r>0?`onclick="pgSchedule(${r-1})"`:"disabled"}>المستوى السابق</button><b class="en" style="color:${lv.col};font-size:1.2rem">${lv.c}</b><button class="ibtn" ${r<NL-1?`onclick="pgSchedule(${r+1})"`:"disabled"}>المستوى التالي</button></div>`;
+ view(page(`خطة المستوى ${r+1}: ${lv.n}`,"كل درس: مذاكرة ثم امتحان بعد ساعة. تنتقل للدرس التالي فقط إذا نجحت، وفي النهاية امتحان المستوى.",nav+`<ol class="sched">${items.map(o=>`<li class="${o.done?"done":""} ${o.today?"today":""} ${o.big&&!o.done?"big":""}" ${o.fn?`style="cursor:pointer" onclick="${o.fn}"`:""}><span class="dn"><span>خطوة</span><b>${o.n}</b></span><div class="tx"><b>${o.t}</b><small>${o.sub}</small></div><span class="st">${o.done?`✓ ${o.date?shortDate(o.date):""}`:o.today?"الآن":"قادم"}</span></li>`).join("")}</ol>`,lv.col),"sched")}
 let wordFilter={q:"",lv:"all"};
-function pgWords(){const all=learnedWords();
+function pgWords(){RR=pgWords;const all=learnedWords();
  const body=all.length?`<div class="wtools"><input id="wq" placeholder="ابحث بالإنجليزي أو العربي" value="${esc(wordFilter.q)}" oninput="wordFilter.q=this.value;drawWords()" aria-label="بحث"><select id="wl" class="ibtn" onchange="wordFilter.lv=this.value;drawWords()" aria-label="المستوى"><option value="all">كل المستويات</option>${LV.map((l,r)=>`<option value="${r}" ${wordFilter.lv==r?"selected":""}>${l.c}</option>`).join("")}</select>${TTS?`<button class="ibtn" onclick="playSeq(filteredWords().map(o=>({t:o.w[0]})))">🔊 استمع للكل</button>`:""}<button class="ibtn" onclick="gMatch(null)">🧩 اختبر نفسك</button></div><div id="wl2"></div>`
  :`<div class="empty card">كلماتك ستظهر هنا بعد أن تجتاز امتحان مراجعة أول درس. كل درس تجتازه يضيف 8 كلمات.</div>`;
  view(page("كلماتي",`${all.length} كلمة تعلمتها حتى الآن من الدروس التي اجتزتها.`,body),"words");if(all.length)drawWords()}
 function filteredWords(){const q=wordFilter.q.trim().toLowerCase();return learnedWords().filter(o=>(wordFilter.lv==="all"||lvIdx(o.i)==wordFilter.lv)&&(!q||o.w[0].toLowerCase().includes(q)||o.w[1].includes(q)))}
 function drawWords(){const box=$("#wl2");if(!box)return;const list=filteredWords();let html="",last=-1;
  list.forEach(o=>{if(o.i!==last){last=o.i;html+=`<div class="wgroup" style="--lv:${lvOf(o.i).col}"><i>${lvOf(o.i).c}</i> الدرس ${o.i%LN+1}: ${L[o.i].a}</div>`}
-  html+=`<div class="wrow">${sayBtn(o.w[0])}<div class="w"><b>${esc(o.w[0])}</b><small>${esc(o.w[2])}</small></div><span class="m">${esc(o.w[1])}</span></div>`});
+  html+=`<div class="wrow">${sayBtn(o.w[0])}<div class="w"><b>${esc(o.w[0])}</b><small>${esc(o.w[2])}</small></div><span class="m" data-keep>${esc(o.w[1])}</span></div>`});
  box.innerHTML=list.length?`<div class="wlist">${html}</div>`:`<p class="empty">لا توجد كلمات مطابقة.</p>`}
 
 /* ---------- lesson (7 fixed steps, vertical) ---------- */
@@ -1229,9 +1580,9 @@ function lesson(i,k){
  if(s.review&&k===0&&!s.passed)s.review=false;
  save();
  if(lastL!==i){flipped=new Set();dlgHeard=false;lastL=i}
- curStep=k;const les=L[i],lv=lvOf(i),ns=nowStep(i),kk=i%LN;
+ curStep=k;RR=()=>lesson(i,k);const les=L[i],lv=lvOf(i),ns=nowStep(i),kk=i%LN;
  const stepList=`<ol class="vsteps">${STEPS.map((x,j)=>{const d=stepDone(i,j),o=stepOpen(i,j);
-  return `${j===0?`<li class="day">يوم المذاكرة (اليوم ${studyDay(kk)})</li>`:""}${j===6?`<li class="day">يوم المراجعة (اليوم ${studyDay(kk)+1})</li>`:""}<li><button class="${d?"done":""} ${j===ns&&!passed(i)?"now":""} ${o?"":"lock"}" ${j===k?'aria-current="step"':""} onclick="${o?`lesson(${i},${j})`:"lockedStep()"}"><span class="n">${d?"✓":j+1}</span>${x.ic} ${x.n}</button></li>`}).join("")}</ol>`;
+  return `${j===0?`<li class="day">المذاكرة</li>`:""}${j===6?`<li class="day">بعد ساعة: الامتحان</li>`:""}<li><button class="${d?"done":""} ${j===ns&&!passed(i)?"now":""} ${o?"":"lock"}" ${j===k?'aria-current="step"':""} onclick="${o?`lesson(${i},${j})`:"lockedStep()"}"><span class="n">${d?"✓":j+1}</span>${x.ic} ${x.n}</button></li>`}).join("")}</ol>`;
  const panels=[vocabTab,gramTab,listenTab,videoTab,quizTab,practiceTab,examTab];
  view(`<div class="wrap" style="--lv:${lv.col}">
  <div class="lhead" style="margin-top:18px"><div class="row" style="justify-content:space-between"><span class="back" style="cursor:default">المستوى ${lvIdx(i)+1}: <span class="en">${lv.c}</span></span>${AI?`<button class="back" onclick="openTutor(${i})">💬 اسأل المعلم</button>`:""}</div>
@@ -1251,26 +1602,29 @@ function abar(i,k){
  if(k===4)return s.quiz?`<p>اجتزت اختبار اليوم بنتيجة ${s.qs||""}٪</p><button class="btn" onclick="lesson(${i},5)">التالي: تدريب وألعاب</button>`:`<p>8 أسئلة، تحتاج 6 إجابات صحيحة</p><button class="btn sun" onclick="startTest(${i},'quiz')">ابدأ اختبار اليوم</button>`;
  if(k===5)return passed(i)?`<p>الدرس مختوم. العب وتدرّب كما تحب.</p>`:practiceDone(i)?`<p>أكملت ${pdone(i)} من 3 أنشطة ✓</p><button class="btn" onclick="lesson(${i},6)">التالي: امتحان المراجعة</button>`:`<p>أكمل نشاطين من 3 (${pdone(i)}/2)</p>`;
  if(passed(i))return `<p>مختوم بتاريخ ${shortDate(s.passed)}، نتيجة ${s.es||0}٪</p><button class="btn" onclick="startTest(${i},'practice')">اختبار تدريبي</button>`;
- if(!waitOver(i))return `<p>امتحان المراجعة غدًا، بعد ${untilMidnight()}</p><button class="btn" disabled>الامتحان غدًا</button>`;
- return `<p>يوم المراجعة: الامتحان جاهز</p><button class="btn sun" onclick="startTest(${i},'exam')">ابدأ امتحان المراجعة</button>`}
+ if(!waitOver(i))return `<p>امتحان الدرس يُفتح بعد <b class="cd" data-i="${i}">${fmtWait(waitMs(i))}</b></p><button class="btn" disabled>انتظر قليلًا</button>`;
+ return `<p>امتحان الدرس جاهز (تحتاج ${examPassPct()}٪)</p><button class="btn sun" onclick="startTest(${i},'exam')">ابدأ امتحان الدرس</button>`}
 function vocabTab(i){const v=L[i].v;
  return `<div class="row" style="justify-content:space-between;margin-bottom:12px"><p class="hint" style="margin:0">اضغط البطاقة لترى المعنى والمثال، واضغط 🔊 لتسمع.</p>
  ${TTS?`<button class="ibtn" onclick="playSeq(L[${i}].v.map(w=>({t:w[0]})))">🔊 استمع للكل</button>`:""}</div>
  <div class="cards">${v.map((w,k)=>`<div class="fc${flipped.has(k)?" flip":""}" tabindex="0" role="button" aria-label="${esc(w[0])}" onclick="flipCard(this,${k})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flipCard(this,${k})}">
  <div class="fc-in"><div class="face front"><b>${w[0]}</b><div class="row" style="justify-content:center;gap:6px">${sayBtn(w[0])}${sayBtn(w[0],{slow:1})}</div></div>
- <div class="face back"><b>${w[1]}</b><span class="en">${w[2]}</span>${sayBtn(w[2])}</div></div></div>`).join("")}</div>`}
+ <div class="face back"><b data-keep>${w[1]}</b><span class="en">${w[2]}</span>${sayBtn(w[2])}</div></div></div>`).join("")}</div>`}
 function flipCard(el,k){el.classList.toggle("flip");flipped.add(k);const c=$("#fcount"),b=$("#nextBtn");if(c)c.textContent=`اقلب كل البطاقات: ${flipped.size}/8`;if(b&&flipped.size>=8)b.disabled=false}
-function gramTab(i){const g=L[i].g;
- return `<div class="gcard"><h3>${g[0]}</h3><div class="exp">${g[1]}</div>
- <div class="exs">${g[2].map(e=>`<div class="ex"><div class="sb">${sayBtn(e[0])}${sayBtn(e[0],{slow:1})}</div><div style="flex:1"><span class="en">${e[0]}</span><small>${e[1]}</small></div></div>`).join("")}</div></div>`}
+const arBtn=()=>`<button class="say arbtn" data-keep onclick="event.stopPropagation();this.closest('[data-arw]').classList.toggle('show-ar')" aria-label="المعنى بالعربي">ع</button>`;
+const exRow=(en,ar)=>`<div class="ex" data-arw${ar?` data-ar="${esc(ar)}"`:""}><div class="sb">${sayBtn(en)}${sayBtn(en,{slow:1})}${ar?arBtn():""}</div><div style="flex:1"><span class="en">${en}</span>${ar?`<small class="arh" data-keep>${ar}</small>`:""}</div></div>`;
+function gramTab(i){const g=L[i].g,en=L[i].gen;
+ return `<div class="gcard gsplit" data-arw><div><h3>${g[0]}</h3>${en?`<div class="exp enx" data-keep>${en}</div>`:""}<div class="exp arh" data-keep>${g[1]}</div>
+ <div class="row" style="margin-top:10px">${en?`<button class="ibtn enbtn" onclick="this.closest('[data-arw]').classList.toggle('show-en')">EN <span data-keep>English explanation</span></button>`:""}<button class="ibtn arbtn2" onclick="this.closest('[data-arw]').classList.toggle('show-ar')">ع الشرح بالعربي</button></div></div>
+ <div class="exs">${g[2].map(e=>exRow(e[0],e[1])).join("")}</div></div>`}
 function listenTab(i){const d=L[i].d,ss=L[i].v.map(w=>[w[2],""]).concat(L[i].g[2]);
- return `<div class="gcard"><div class="row" style="justify-content:space-between"><h3 style="direction:rtl;text-align:right;margin:0">🗣 محادثة الدرس</h3><button class="btn sun" id="pdlg" onclick="playDialogue(${i})">▶ شغّل المحادثة</button></div>
+ return `<div class="split2"><div class="gcard"><div class="row" style="justify-content:space-between"><h3 style="margin:0">🗣 محادثة الدرس</h3><button class="btn sun" id="pdlg" onclick="playDialogue(${i})">▶ شغّل المحادثة</button></div>
  <div class="row" style="margin-top:12px;justify-content:space-between"><div class="seg" style="min-width:210px">${[[.65,"🐢 بطيء"],[.9,"عادي"]].map(([r,t])=>`<button aria-pressed="${(S.rate||.9)===r}" onclick="setRate(${r},this)">${t}</button>`).join("")}</div>
  <label class="check" style="margin:0"><input type="checkbox" checked onchange="$('#dlg').classList.toggle('hide-tr',!this.checked)"> إظهار الترجمة</label></div>
- <div class="dlg" id="dlg">${d.map((x,j)=>`<div class="line ${j%2?"b":"a"}" data-j="${j}"><span class="av" style="background:${j%2?"var(--coral)":"var(--lv)"}">${j%2?"B":"A"}</span><div class="bub"><span class="en">${x[0]}</span><small>${x[1]}</small><div class="row">${sayBtn(x[0],{b:j%2})}${sayBtn(x[0],{b:j%2,slow:1})}</div></div></div>`).join("")}</div>
+ <div class="dlg" id="dlg">${d.map((x,j)=>`<div class="line ${j%2?"b":"a"}" data-j="${j}" data-arw data-ar="${esc(x[1])}"><span class="av" style="background:${j%2?"var(--coral)":"var(--lv)"}">${j%2?"B":"A"}</span><div class="bub"><span class="en">${x[0]}</span><small class="arh" data-keep>${x[1]}</small><div class="row">${sayBtn(x[0],{b:j%2})}${sayBtn(x[0],{b:j%2,slow:1})}${arBtn()}</div></div></div>`).join("")}</div>
  <p class="hint" style="margin-top:12px">شغّلها مرة وأنت تقرأ الترجمة، ثم أخفِ الترجمة وحاول الفهم بالسمع فقط، ثم كرر كل جملة بصوتك.</p></div>
- <div class="gcard" style="margin-top:14px"><div class="row" style="justify-content:space-between"><h3 style="direction:rtl;text-align:right;margin:0">🎧 جمل الدرس (${ss.length})</h3>${TTS?`<button class="ibtn" onclick="playSeq(L[${i}].v.map(w=>({t:w[2]})).concat(L[${i}].g[2].map(x=>({t:x[0]}))))">▶ استمع للكل</button>`:""}</div>
- <div class="exs">${ss.map(e=>`<div class="ex"><div class="sb">${sayBtn(e[0])}${sayBtn(e[0],{slow:1})}</div><div style="flex:1"><span class="en">${e[0]}</span>${e[1]?`<small>${e[1]}</small>`:""}</div></div>`).join("")}</div></div>`}
+ <div class="gcard"><div class="row" style="justify-content:space-between"><h3 style="margin:0">🎧 جمل الدرس (${ss.length})</h3>${TTS?`<button class="ibtn" onclick="playSeq(L[${i}].v.map(w=>({t:w[2]})).concat(L[${i}].g[2].map(x=>({t:x[0]}))))">▶ استمع للكل</button>`:""}</div>
+ <div class="exs">${ss.map(e=>exRow(e[0],e[1])).join("")}</div></div></div>`}
 function setRate(r,b){S.rate=r;save();b.parentNode.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b))}
 function playDialogue(i){const btn=$("#pdlg");
  if(btn.dataset.on){stopSay();btn.dataset.on="";btn.textContent="▶ شغّل المحادثة";document.querySelectorAll(".line").forEach(l=>l.classList.remove("playing"));return}
@@ -1281,10 +1635,10 @@ function playDialogue(i){const btn=$("#pdlg");
 /* ---------- video of the day ---------- */
 let VP=null,VQ=null;
 function videoTab(i){const v=L[i].vid,s=S.L[i]||{},n=v[1].length;
- return `<div class="video" id="vid" style="--lv:${lvOf(i).col}"><div class="screen" id="scr"><div class="vt"><div class="scene" style="animation:none">${v[1][0][0]}</div><b>${esc(v[0])}</b><small>🎬 فيديو اليوم، ${n} مشاهد</small></div><button class="vbig" onclick="vPlay(${i})" aria-label="تشغيل الفيديو">▶</button></div>
+ return `<div class="split2 vsplit"><div><div class="video" id="vid" style="--lv:${lvOf(i).col}"><div class="screen" id="scr"><div class="vt"><div class="scene" style="animation:none">${v[1][0][0]}</div><b>${esc(v[0])}</b><small>🎬 فيديو اليوم، ${n} مشاهد</small></div><button class="vbig" onclick="vPlay(${i})" aria-label="تشغيل الفيديو">▶</button></div>
  <div class="vbar"><button id="vpp" onclick="vPlay(${i})" aria-label="تشغيل أو إيقاف">▶</button><button onclick="vRestart(${i})" aria-label="من البداية">⏮</button><div class="vprog"><i id="vpi"></i></div><span id="vcnt" class="en">0/${n}</span><button id="vcc" aria-pressed="true" onclick="vCC(this)" aria-label="إظهار النص">CC</button><button aria-pressed="${(S.rate||.9)<.8}" onclick="vSlow(this)" aria-label="سرعة بطيئة">🐢</button></div></div>
  <p class="hint" style="margin-top:10px">شاهد واستمع جيدًا ثم أجب عن الأسئلة. أخفِ النص (CC) إذا أردت أن تختبر أذنك فقط.</p>
- <div id="vqa" class="vq">${s.vw||s.vid||passed(i)?vQuestions(i):`<div class="info">🔒 الأسئلة تظهر بعد انتهاء الفيديو.</div>`}</div>`}
+ </div><div id="vqa" class="vq">${s.vw||s.vid||passed(i)?vQuestions(i):`<div class="info">🔒 الأسئلة تظهر بعد انتهاء الفيديو.</div>`}</div></div>`}
 function vCC(b){const on=b.getAttribute("aria-pressed")!=="true";b.setAttribute("aria-pressed",on);$("#vid").classList.toggle("nosub",!on)}
 function vSlow(b){const on=b.getAttribute("aria-pressed")!=="true";b.setAttribute("aria-pressed",on);S.rate=on?.65:.9;save()}
 function vRestart(i){stopSay();clearTimers();VP={i,k:0,playing:false};vPlay(i)}
@@ -1299,10 +1653,10 @@ function vScene(){if(!VP)return;const v=L[VP.i].vid,sc=v[1][VP.k],n=v[1].length,
  if(TTS){say(sc[1],{onend:()=>timers.push(setTimeout(go,800))});timers.push(setTimeout(()=>{if(!speechSynthesis.speaking)go()},Math.max(5000,wc(sc[1])*650)+3000))}
  else timers.push(setTimeout(go,Math.max(3500,wc(sc[1])*500)))}
 function vEnd(){const i=VP.i;VP.playing=false;VP.k=0;const s=st(i);s.vw=1;save();
- const scr=$("#scr");if(scr)scr.innerHTML=`<div class="vt"><div class="scene" style="animation:none">✅</div><b>انتهى الفيديو</b><small>أجب عن الأسئلة بالأسفل، أو شاهده مرة أخرى</small></div>`;
- const pp=$("#vpp");if(pp)pp.textContent="▶";const q=$("#vqa");if(q){q.innerHTML=vQuestions(i);q.scrollIntoView({behavior:"smooth",block:"start"})}}
+ const scr=$("#scr");if(scr)scr.innerHTML=`<div class="vt"><div class="scene" style="animation:none">✅</div><b>انتهى الفيديو</b><small>أجب عن أسئلة الفيديو، أو شاهده مرة أخرى</small></div>`;
+ const pp=$("#vpp");if(pp)pp.textContent="▶";const q=$("#vqa");if(q){q.innerHTML=vQuestions(i);if(innerWidth<1250)q.scrollIntoView({behavior:"smooth",block:"start"})}}
 function vQuestions(i){const qs=L[i].vid[2];VQ={i,qs:qs.map(q=>({q:q[0],ans:q[1],opts:shuffle([q[1],...q[2]])})),got:[],ok:0};
- return `<h3 class="sec">❓ ماذا حدث في الفيديو؟</h3>${VQ.qs.map((q,j)=>`<div class="qblock"><div class="qt ${isAr(q.q)?"":"en"}" ${isAr(q.q)?"":'style="text-align:left"'}>${j+1}. ${esc(q.q)}</div><div class="opts">${q.opts.map((o,k)=>`<button class="opt ${isAr(o)?"":"en-opt"}" data-q="${j}" onclick="vAns(${j},${k},this)">${esc(o)}</button>`).join("")}</div></div>`).join("")}<div id="vres"></div>`}
+ return `<h3 class="sec">❓ ماذا حدث في الفيديو؟</h3>${VQ.qs.map((q,j)=>`<div class="qblock"><div class="qt ${isAr(q.q)?"":"en"}" ${isAr(q.q)?"":'style="text-align:left"'}>${j+1}. ${esc(q.q)}</div><div class="opts">${q.opts.map((o,k)=>`<button class="opt ${isAr(o)?"":"en-opt"}" data-q="${j}" onclick="vAns(${j},${k},this)" ${isAr(o)?"data-keep":""}>${esc(o)}</button>`).join("")}</div></div>`).join("")}<div id="vres"></div>`}
 function vAns(j,k,b){if(VQ.got[j]!=null)return;const q=VQ.qs[j],ok=q.opts[k]===q.ans;VQ.got[j]=ok;if(ok)VQ.ok++;
  document.querySelectorAll(`.opt[data-q="${j}"]`).forEach((x,m)=>{x.disabled=true;if(q.opts[m]===q.ans)x.classList.add("right");else if(x===b)x.classList.add("wrong")});
  if(VQ.got.filter(x=>x!=null).length<VQ.qs.length)return;
@@ -1324,9 +1678,8 @@ function gameCards(i){const p=i==null?{}:P(i),a=i==null?"null":i;
  const g=(ic,t,d,done,fn)=>`<button class="act ${done?"done":""}" onclick="${fn}(${a})"><span class="ic">${ic}</span><b>${t}</b><small>${d}</small>${done?`<span class="st">${"★".repeat(done)}</span>`:""}</button>`;
  return g("🧩","توصيل الكلمات","صِل كل كلمة بمعناها بأسرع وقت",p.m,"gMatch")+g("🧱","رتّب الجملة","كوّن الجملة من كلماتها",p.b,"gBuild")+g("🔤","الحروف المبعثرة","رتّب الحروف لتكتب الكلمة",p.x,"gScr")+(TTS?g("⚡","سباق الأذن","اسمع واختر المعنى قبل انتهاء الوقت",p.r,"gRace"):"")}
 function examTab(i){
- if(passed(i))return `<div class="info"><b>اجتزت امتحان المراجعة ✓</b> بنتيجة ${S.L[i].es}٪.</div>`;
- return `<div class="info"><b>يوم المراجعة والامتحان (اليوم ${studyDay(i%LN)+1} من المستوى)</b><ul><li>إملاء كلمتين</li><li>استماع لكلمتين</li><li>4 أسئلة قواعد و3 عن الكلمات</li><li>سؤال من درس سابق</li></ul><p style="margin-top:8px">${!practiceDone(i)?"أكمل خطوة التدريب والألعاب أولًا.":waitOver(i)?"الامتحان متاح الآن. تحتاج ٧٠٪، والدرس التالي يُفتح غدًا بعد النجاح.":`يُفتح بعد ${untilMidnight()}.`}</p></div>`}
-
+ if(passed(i))return `<div class="info"><b>اجتزت امتحان الدرس ✓</b> بنتيجة ${S.L[i].es}٪.</div>`;
+ return `<div class="info"><b>امتحان الدرس (بعد ساعة من اختبار اليوم)</b><ul><li>إملاء كلمتين</li><li>استماع لكلمتين</li><li>4 أسئلة قواعد و3 عن الكلمات</li><li>سؤال من درس سابق</li></ul><p style="margin-top:8px">تحتاج ${examPassPct()}٪ على الأقل لتنتقل للدرس التالي فورًا. ${!practiceDone(i)?"أكمل خطوة التدريب والألعاب أولًا.":waitOver(i)?"الامتحان متاح الآن.":`يُفتح بعد ${fmtWait(waitMs(i))}.`}</p></div>`}
 /* ---------- activity frame ---------- */
 function frame(title,back,i,html){const col=i!=null?lvOf(i).col:LV[Math.min(cursor().r,NL-1)].col;
  return `<div class="wrap test" style="--lv:${col}"><div class="gtop"><button class="ibtn" onclick="${back}">→ رجوع</button><b>${title}</b><span style="width:60px"></span></div>${html}</div>`}
@@ -1410,7 +1763,7 @@ function gMatch(i){const ws=pick(gWords(i),6);GM={i,ws,sel:null,left:ws.length,m
  view(frame("توصيل الكلمات",backOf(i),i,`<p class="hint">اضغط كلمة إنجليزية ثم معناها بالعربي. الأسرع وبأقل أخطاء يأخذ 3 نجوم.</p>
  <div class="gtop"><span class="timer" id="tm">0s</span><span id="ms" style="font-weight:800">أخطاء: 0</span></div>
  <div class="mgrid"><div class="mcol">${shuffle(ws.map((_,k)=>k)).map(k=>`<button class="tile en" data-side="e" data-k="${k}" onclick="mTap(this)">${esc(ws[k][0])}</button>`).join("")}</div>
- <div class="mcol">${shuffle(ws.map((_,k)=>k)).map(k=>`<button class="tile" data-side="a" data-k="${k}" onclick="mTap(this)">${esc(ws[k][1])}</button>`).join("")}</div></div>`),"focus");
+ <div class="mcol">${shuffle(ws.map((_,k)=>k)).map(k=>`<button class="tile" data-keep data-side="a" data-k="${k}" onclick="mTap(this)">${esc(ws[k][1])}</button>`).join("")}</div></div>`),"focus");
  timers.push(setInterval(()=>{const e=$("#tm");if(e)e.textContent=Math.floor((Date.now()-GM.t0)/1000)+"s"},500))}
 function mTap(b){const s=GM.sel;if(b.dataset.side==="e")say(GM.ws[b.dataset.k][0]);
  if(!s||s.dataset.side===b.dataset.side){if(s)s.classList.remove("sel");GM.sel=b;b.classList.add("sel");return}
@@ -1423,7 +1776,7 @@ function gBuild(i){const pool=gSents(i).filter(s=>{const n=wc(s[0]);return n>=3&
 function bRound(){const s=GB.rs[GB.k];GB.words=s[0].split(/\s+/);let o,g=0;do{o=shuffle(GB.words.map((_,k)=>k))}while(++g<20&&GB.words.length>2&&o.every((v,k)=>GB.words[v]===GB.words[k]));
  GB.bank=o;GB.ans=[];GB.tries=0;GB.solved=false;
  view(frame("رتّب الجملة",backOf(GB.i),GB.i,`<div class="qcard"><span class="qtag">جملة ${GB.k+1} من ${GB.rs.length}</span>
- <p class="qtext">${esc(s[1])}</p><p class="muted">اضغط الكلمات بالترتيب الصحيح لتكوّن الجملة الإنجليزية</p>
+ <p class="qtext" data-keep>${esc(s[1])}</p><p class="muted">اضغط الكلمات بالترتيب الصحيح لتكوّن الجملة الإنجليزية</p>
  <div class="chipline" id="ansl"></div><div class="bank" id="bank"></div>
  <div class="row" style="margin-top:14px"><button class="btn" id="bc" onclick="bCheck()">تحقّق</button><button class="ibtn" data-say="${esc(s[0])}">🔊 تلميح صوتي</button></div><div id="fb"></div></div>`),"focus");bDraw()}
 function bDraw(){$("#ansl").innerHTML=GB.ans.map((k,j)=>`<button class="wchip" onclick="bMove(${j},0)">${esc(GB.words[k])}</button>`).join("");$("#bank").innerHTML=GB.bank.map((k,j)=>`<button class="wchip" onclick="bMove(${j},1)">${esc(GB.words[k])}</button>`).join("")}
@@ -1443,7 +1796,7 @@ function gScr(i){const ok=w=>/^[a-z]{3,11}$/i.test(w[0]);let ws=gWords(i).filter
 function sRound(){const w=GS.ws[GS.k][0];let o,g=0;do{o=shuffle([...w])}while(++g<20&&w.length>2&&o.join("")===w);
  GS.letters=o;GS.used=[];GS.tries=0;GS.solved=false;
  view(frame("الحروف المبعثرة",backOf(GS.i),GS.i,`<div class="qcard"><span class="qtag">كلمة ${GS.k+1} من ${GS.ws.length}</span>
- <p class="qtext">اكتب بالإنجليزية: «${esc(GS.ws[GS.k][1])}»</p><div class="slots" id="slots"></div><div class="letters" id="lets"></div>
+ <p class="qtext">Spell it in English: <b data-keep>«${esc(GS.ws[GS.k][1])}»</b></p><div class="slots" id="slots"></div><div class="letters" id="lets"></div>
  <div class="row" style="justify-content:center;margin-top:14px"><button class="ibtn" onclick="sBack()">⌫ امسح</button><button class="ibtn" data-say="${esc(w)}">🔊 تلميح صوتي</button></div><div id="fb"></div></div>`),"focus");sDraw()}
 function sDraw(){const w=GS.ws[GS.k][0];$("#slots").innerHTML=[...w].map((_,k)=>`<span class="slot">${GS.used[k]!=null?esc(GS.letters[GS.used[k]]):""}</span>`).join("");
  $("#lets").innerHTML=GS.letters.map((c,k)=>`<button class="letter" ${GS.used.includes(k)||GS.solved?"disabled":""} onclick="sTap(${k})">${esc(c)}</button>`).join("")}
@@ -1463,15 +1816,15 @@ function rRound(){const w=GR.ws[GR.k],opts=shuffle([w,...pick(GR.all.filter(x=>x
  view(frame("سباق الأذن",backOf(GR.i),GR.i,`<div class="qcard"><span class="qtag">${GR.k+1} من ${GR.ws.length}</span>
  <p class="qtext">اسمع الكلمة واختر معناها قبل انتهاء الوقت</p><div class="prog" style="margin-top:12px"><i id="rbar" style="width:100%"></i></div>
  <div class="bigsay"><button data-say="${esc(w[0])}" aria-label="أعد الصوت">🔊</button></div>
- <div class="opts">${opts.map(o=>`<button class="opt" data-ok="${o===w?1:0}" onclick="rPick(this)">${esc(o[1])}</button>`).join("")}</div><div id="fb"></div></div>`),"focus");
+ <div class="opts">${opts.map(o=>`<button class="opt" data-keep data-ok="${o===w?1:0}" onclick="rPick(this)">${esc(o[1])}</button>`).join("")}</div><div id="fb"></div></div>`),"focus");
  say(w[0]);const t0=Date.now();
  timers.push(setInterval(()=>{const p=1-(Date.now()-t0)/8000,b=$("#rbar");if(!b)return;b.style.width=Math.max(0,p*100)+"%";if(p<=0&&!GR.done)rPick(null)},100))}
 function rPick(b){if(GR.done)return;GR.done=true;clearTimers();const w=GR.ws[GR.k];
  document.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(x.dataset.ok==="1")x.classList.add("right");else if(x===b)x.classList.add("wrong")});
  const ok=b&&b.dataset.ok==="1";if(ok)GR.ok++;
- $("#fb").innerHTML=`<div class="fb ${ok?"good":"bad"}"><strong>${ok?pickPraise():b?"ليست هي":"انتهى الوقت"}</strong><span class="en">${esc(w[0])}</span> = ${esc(w[1])}</div>`;
+ $("#fb").innerHTML=`<div class="fb ${ok?"good":"bad"}"><strong>${ok?pickPraise():b?"ليست هي":"انتهى الوقت"}</strong><span class="en">${esc(w[0])}</span> = <span data-keep>${esc(w[1])}</span></div>`;
  timers.push(setTimeout(()=>{if(!$("#rbar"))return;if(GR.k<GR.ws.length-1){GR.k++;rRound()}else{const stars=GR.ok>=8?3:GR.ok>=5?2:1;S.xp+=GR.ok*4;markPractice(GR.i,"r",stars);endScreen("سباق الأذن",stars,`عرفت ${GR.ok} من ${GR.ws.length} كلمات بالسمع.`,`gRace(${GR.i})`,GR.i)}},1400))}
-function arcade(){view(page("صالة الألعاب","تلعب بالكلمات والجمل التي تعلمتها فقط، فلا تتقدّم لدروس جديدة ولا يتغير ترتيب الخطوات.",`<div class="acts">${gameCards(null)}</div><p class="muted">لعبت ${S.arc||0} جولة مراجعة حتى الآن.</p>`),"games")}
+function arcade(){RR=arcade;view(page("صالة الألعاب","تلعب بالكلمات والجمل التي تعلمتها فقط، فلا تتقدّم لدروس جديدة ولا يتغير ترتيب الخطوات.",`<div class="acts">${gameCards(null)}</div><p class="muted">لعبت ${S.arc||0} جولة مراجعة حتى الآن.</p>`),"games")}
 
 /* ---------- AI tutor (only inside Claude) ---------- */
 let AI=null;const chats={};
@@ -1483,7 +1836,7 @@ function openTutor(i){const les=L[i];const m=document.createElement("div");m.cla
  <div class="msgs" id="msgs" style="max-height:45vh;overflow:auto"></div>
  <form class="ask" onsubmit="event.preventDefault();const t=$('#tq');if(t.value.trim()){askTutor(${i},t.value.trim());t.value=''}"><textarea id="tq" rows="2" placeholder="اكتب سؤالك" aria-label="سؤالك"></textarea><button class="btn" type="submit">اسأل</button></form></div>`;
  m.addEventListener("click",e=>{if(e.target===m)m.remove()});document.body.appendChild(m);renderChat(i)}
-function renderChat(i){const box=$("#msgs");if(!box)return;box.innerHTML=(chats[i]||[]).map(m=>`<div class="msg ${m.r==="user"?"me":"ai"}">${esc(m.t)}</div>`).join("");box.scrollTop=box.scrollHeight}
+function renderChat(i){const box=$("#msgs");if(!box)return;box.innerHTML=(chats[i]||[]).map(m=>`<div class="msg ${m.r==="user"?"me":"ai"}" data-keep>${esc(m.t)}</div>`).join("");box.scrollTop=box.scrollHeight}
 let asking=false;
 async function askTutor(i,q){if(!AI||asking)return;asking=true;const h=chats[i]||(chats[i]=[]);h.push({r:"user",t:q});h.push({r:"ai",t:"يفكر المعلم..."});renderChat(i);
  const les=L[i],ctx=`أنت معلم لغة إنجليزية ودود وصبور لطالب عربي. الدرس: "${les.t}" (${les.a})، المستوى ${lvOf(i).c}. القاعدة: ${les.g[0]}. المفردات: ${les.v.map(w=>w[0]+" = "+w[1]).join("، ")}. أجب بالعربية ببساطة وتشجيع وباختصار (أقل من 140 كلمة)، وضع الأمثلة الإنجليزية في أسطر مستقلة، بدون تنسيق ماركداون.`;
@@ -1496,15 +1849,15 @@ async function askTutor(i,q){if(!AI||asking)return;asking=true;const h=chats[i]|
 /* ---------- lesson tests ---------- */
 function mcq(tag,prompt,correct,wrongs,why,extra){return Object.assign({t:"mcq",tag,prompt,opts:shuffle([correct,...wrongs]),ans:correct,why},extra||{})}
 const others=(l,w,k)=>{const seen=new Set([w[k]]);return l.v.filter(x=>x!==w&&!seen.has(x[k])&&seen.add(x[k])).map(x=>x[k])};
-const vMeaning=(w,l)=>mcq("معنى كلمة",`ما معنى <span class="en">«${w[0]}»</span>؟`,w[1],pick(others(l,w,1),3),`<span class="en">${w[0]}</span> تعني: ${w[1]}<br><span class="en">${w[2]}</span>`,{sayAfter:w[0]});
-const vReverse=(w,l)=>mcq("من العربية للإنجليزية",`كيف تقول «${w[1]}» بالإنجليزية؟`,w[0],pick(others(l,w,0),3),`«${w[1]}» = <span class="en">${w[0]}</span><br><span class="en">${w[2]}</span>`,{sayAfter:w[0]});
-const vListen=(w,l)=>TTS?mcq("استماع","استمع جيدًا واختر ما سمعته",w[0],pick(others(l,w,0),3),`سمعت: <span class="en">${w[0]}</span> (${w[1]})`,{listen:w[0]}):vMeaning(w,l);
-const vSpell=w=>({t:"spell",tag:"إملاء",prompt:`اكتب بالإنجليزية: «${w[1]}»`,ans:w[0],why:`الكتابة الصحيحة: <span class="en">${w[0]}</span><br><span class="en">${w[2]}</span>`,sayAfter:w[0]});
-const gq=(q,tag)=>mcq(tag||"قواعد",`<span class="qtext en">${esc(q[0]).replace(/___/g,'<span class="blank"></span>')}</span>`,q[1],q[2],q[3]);
+const vMeaning=(w,l)=>mcq("Meaning",`What does <span class="en">“${w[0]}”</span> mean?`,w[1],pick(others(l,w,1),3),`<span class="en">${w[0]}</span> تعني: ${w[1]}<br><span class="en">${w[2]}</span>`,{sayAfter:w[0]});
+const vReverse=(w,l)=>mcq("Arabic → English",`How do you say <b data-keep>«${w[1]}»</b> in English?`,w[0],pick(others(l,w,0),3),`«${w[1]}» = <span class="en">${w[0]}</span><br><span class="en">${w[2]}</span>`,{sayAfter:w[0]});
+const vListen=(w,l)=>TTS?mcq("Listening","Listen and choose the word you hear.",w[0],pick(others(l,w,0),3),`سمعت: <span class="en">${w[0]}</span> (${w[1]})`,{listen:w[0]}):vMeaning(w,l);
+const vSpell=w=>({t:"spell",tag:"Spelling",prompt:`Write it in English: <b data-keep>«${w[1]}»</b>`,ans:w[0],why:`الكتابة الصحيحة: <span class="en">${w[0]}</span><br><span class="en">${w[2]}</span>`,sayAfter:w[0]});
+const gq=(q,tag)=>mcq(tag||"Grammar",`<span class="qtext en">${esc(q[0]).replace(/___/g,'<span class="blank"></span>')}</span>`,q[1],q[2],q[3]);
 function buildQuiz(i){const l=L[i],v=shuffle(l.v);return [vMeaning(v[0],l),gq(l.q[0]),vListen(v[1],l),vMeaning(v[2],l),gq(l.q[1]),vReverse(v[3],l),gq(l.q[2]),vMeaning(v[4],l)]}
 function buildExam(i){const l=L[i],v=shuffle(l.v);
  const qs=[vReverse(v[0],l),gq(l.q[3]),vListen(v[1],l),vSpell(v[2]),gq(l.q[4]),vReverse(v[3],l),vListen(v[4],l),gq(l.q[5]),vSpell(v[5]),vMeaning(v[6],l),gq(l.q[Math.floor(Math.random()*3)])];
- if(i>0){const p=Math.floor(Math.random()*i),pl=L[p];const q=Math.random()<.5?gq(pl.q[Math.floor(Math.random()*6)]):vReverse(pick(pl.v,1)[0],pl);q.tag="مراجعة من درس سابق";qs.push(q)}
+ if(i>0){const p=Math.floor(Math.random()*i),pl=L[p];const q=Math.random()<.5?gq(pl.q[Math.floor(Math.random()*6)]):vReverse(pick(pl.v,1)[0],pl);q.tag="Review: earlier lesson";qs.push(q)}
  return qs}
 let T=null;
 function startTest(i,kind){if(kind==="exam"&&!passed(i)){if(S.L[i]&&S.L[i].review){toast("راجع الدرس من الخطوة الأولى قبل إعادة الامتحان");return lesson(i,0)}if(!canExam(i))return toast(!practiceDone(i)?"أكمل خطوة التدريب والألعاب أولًا":"امتحان المراجعة يُفتح غدًا")}
@@ -1512,13 +1865,13 @@ function startTest(i,kind){if(kind==="exam"&&!passed(i)){if(S.L[i]&&S.L[i].revie
 function renderQ(){const q=T.qs[T.k],lv=lvOf(T.i),n=T.qs.length;T.done=false;
  const kindName=T.kind==="exam"?"امتحان المراجعة":T.kind==="quiz"?"اختبار اليوم":"اختبار تدريبي";let body="";
  if(q.listen)body+=`<div class="bigsay"><button data-say="${esc(q.listen)}" aria-label="شغّل الصوت مرة أخرى">🔊</button></div>`;
- if(q.t==="mcq")body+=`<div class="opts">${q.opts.map((o,k)=>`<button class="opt ${isAr(o)?"":"en-opt"}" data-k="${k}" onclick="answer(${k})"><span class="k">${k+1}</span><span>${esc(o)}</span></button>`).join("")}</div>`;
+ if(q.t==="mcq")body+=`<div class="opts">${q.opts.map((o,k)=>`<button class="opt ${isAr(o)?"":"en-opt"}" data-k="${k}" onclick="answer(${k})"><span class="k">${k+1}</span><span ${isAr(o)?"data-keep":""}>${esc(o)}</span></button>`).join("")}</div>`;
  else body+=`<form class="spell" onsubmit="event.preventDefault();answerSpell()"><input id="sp" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="اكتب الكلمة بالإنجليزية"><button class="btn" type="submit">تحقّق</button></form>`;
  view(`<div class="wrap test" style="--lv:${lv.col}"><div class="tbar"><button class="ibtn" onclick="quitTest()" aria-label="إنهاء">✕</button><div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${T.k}"><i style="width:${T.k/n*100}%"></i></div><b class="en">${T.k+1}/${n}</b></div>
  <p class="tkind">${kindName}: <span class="en">${L[T.i].t}</span></p><div class="qcard"><span class="qtag">${q.tag}</span><div class="qtext">${q.prompt}</div>${body}<div id="fb"></div></div></div>`,"focus");
  if(q.listen)say(q.listen);if(q.t==="spell")setTimeout(()=>$("#sp")&&$("#sp").focus(),60)}
 function feedback(ok,q,note){T.done=true;if(ok)T.score++;else T.wrong.push(q);const last=T.k===T.qs.length-1;
- $("#fb").innerHTML=`<div class="fb ${ok?"good":"bad"}" role="status"><strong>${ok?pickPraise():"ليست الإجابة الصحيحة"}</strong>${ok?"":`الإجابة الصحيحة: <b class="${isAr(q.ans)?"":"en"}">${esc(q.ans)}</b><br>`}${note||""}${q.why}</div>
+ $("#fb").innerHTML=`<div class="fb ${ok?"good":"bad"}" role="status"><strong>${ok?pickPraise():"ليست الإجابة الصحيحة"}</strong>${ok?"":`الإجابة الصحيحة: <b data-keep class="${isAr(q.ans)?"":"en"}">${esc(q.ans)}</b><br>`}${note||""}<div data-arw class="whyw"><span class="arh" data-keep>${q.why}</span><button class="ibtn arbtn2" onclick="this.closest('[data-arw]').classList.toggle('show-ar')">ع الشرح بالعربي</button></div></div>
  <div class="next"><button class="btn" id="nx" onclick="nextQ()">${last?"اعرض النتيجة":"السؤال التالي"}</button></div>`;
  if(q.sayAfter&&TTS&&!q.listen)say(q.sayAfter);setTimeout(()=>$("#nx")&&$("#nx").focus(),30)}
 function answer(k){if(T.done)return;const q=T.qs[T.k],ok=q.opts[k]===q.ans;
@@ -1527,54 +1880,54 @@ function answerSpell(){if(T.done)return;const q=T.qs[T.k],inp=$("#sp"),v=norm(in
  let ok=v===a,note="";if(!ok&&a.length>=5&&lev(v,a)===1){ok=true;note=`انتبه للإملاء الدقيق: <span class="en">${esc(q.ans)}</span><br>`}
  inp.readOnly=true;inp.classList.add(ok?"right":"wrong");feedback(ok,q,note)}
 function nextQ(){if(T.k<T.qs.length-1){T.k++;renderQ()}else finish()}
-function quitTest(){if(confirm("هل تريد إنهاء الاختبار؟ لن تُحفظ هذه المحاولة.")){const i=T.i,k=T.kind==="quiz"?4:6;T=null;lesson(i,k)}}
+function quitTest(){if(cfm("هل تريد إنهاء الاختبار؟ لن تُحفظ هذه المحاولة.")){const i=T.i,k=T.kind==="quiz"?4:6;T=null;lesson(i,k)}}
 document.addEventListener("keydown",e=>{if(!T||!$(".qcard"))return;if(document.activeElement&&document.activeElement.id==="sp")return;if(!T.done&&/^[1-4]$/.test(e.key)){const b=document.querySelector(`.opt[data-k="${+e.key-1}"]`);if(b)b.click()}});
 function logMistakes(i,list){list.forEach(q=>S.mist.push({i,p:String(q.prompt).replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim(),a:q.ans,d:today()}));S.mist=S.mist.slice(-80)}
 function finish(){
- const i=T.i,s=st(i),n=T.qs.length,pct=Math.round(T.score/n*100),ok=T.score>=Math.ceil(n*PASS),lv=lvOf(i),k=i%LN;
+ const i=T.i,s=st(i),n=T.qs.length,pct=Math.round(T.score/n*100),need=T.kind==="exam"?examPassPct():70,ok=pct>=need,lv=lvOf(i),k=i%LN;
  logMistakes(i,T.wrong);let title,msg,btns,stampNow=false;
  if(T.kind==="quiz"){
-  if(ok){s.quiz=s.quiz||today();s.qs=pct;S.xp+=T.score*10;title="اجتزت اختبار اليوم";msg="الخطوة التالية: التدريب والألعاب لتثبيت الدرس. امتحان المراجعة غدًا.";btns=`<button class="btn sun" onclick="lesson(${i},5)">الخطوة 6: تدريب وألعاب</button>`}
-  else{title="قريب جدًا، حاول مرة أخرى";msg=`تحتاج ${Math.ceil(n*PASS)} إجابات صحيحة من ${n}. راجع ثم أعد؛ الأسئلة تتغير كل مرة.`;btns=`<button class="btn sun" onclick="lesson(${i},0)">راجع الدرس</button> <button class="btn ghost" onclick="startTest(${i},'quiz')">أعد الاختبار</button>`}}
+  if(ok){if(!s.quiz){s.quiz=today();s.qt=Date.now()}s.qs=pct;S.xp+=T.score*10;title="اجتزت اختبار اليوم";msg="الخطوة التالية: التدريب والألعاب لتثبيت الدرس. امتحان الدرس يُفتح بعد ساعة.";btns=`<button class="btn sun" onclick="lesson(${i},5)">الخطوة 6: تدريب وألعاب</button>`}
+  else{title="قريب جدًا، حاول مرة أخرى";msg=`تحتاج ${Math.ceil(n*.7)} إجابات صحيحة من ${n}. راجع ثم أعد؛ الأسئلة تتغير كل مرة.`;btns=`<button class="btn sun" onclick="lesson(${i},0)">راجع الدرس</button> <button class="btn ghost" onclick="startTest(${i},'quiz')">أعد الاختبار</button>`}}
  else if(T.kind==="exam"){
   if(ok&&!s.passed){s.passed=today();s.es=pct;s.review=false;S.xp+=50+T.score*10;stampNow=true;
    title="حصلت على الختم! وأضيفت 8 كلمات إلى «كلماتي»";
-   msg=k===2?"غدًا يوم راحة 🌴، وبعده يُفتح الدرس التالي.":k===5?"أنهيت دروس المستوى الستة! غدًا يوم راحة، وبعده امتحان المستوى الكبير.":"الدرس التالي يُفتح غدًا. استمتع ببقية يومك.";
-   btns=`<button class="btn sun" onclick="pgWords()">📚 كلماتي</button> <button class="btn ghost" onclick="home()">الرئيسية</button>`}
+   msg=k===5?"أنهيت دروس المستوى الستة! امتحان المستوى مفتوح الآن.":"الدرس التالي مفتوح الآن.";
+   btns=(k===5?`<button class="btn sun" onclick="lxIntro(${lvIdx(i)})">🏆 امتحان المستوى</button>`:`<button class="btn sun" onclick="lesson(${i+1},0)">ابدأ الدرس التالي</button>`)+` <button class="btn ghost" onclick="pgWords()">📚 كلماتي</button>`}
   else if(ok){title="نجحت مرة أخرى";msg="هذا الدرس مختوم بالفعل.";btns=`<button class="btn" onclick="home()">الرئيسية</button>`}
-  else{s.review=true;s.fails=(s.fails||0)+1;title="لم تجتز امتحان المراجعة هذه المرة";msg=`تحتاج ${Math.ceil(n*PASS)} من ${n}. راجع أخطاءك، ثم راجع الدرس من الخطوة الأولى، وبعدها أعد الامتحان.`;btns=`<button class="btn sun" onclick="lesson(${i},0)">راجع الدرس</button>`}}
+  else{s.review=true;s.fails=(s.fails||0)+1;title="لم تصل لنسبة النجاح هذه المرة";msg=`نتيجتك ${pct}٪ وتحتاج ${need}٪. لن ينفتح الدرس التالي حتى تنجح. راجع أخطاءك، ثم راجع الدرس من الخطوة الأولى، وبعدها أعد الامتحان.`;btns=`<button class="btn sun" onclick="lesson(${i},0)">راجع الدرس</button>`}}
  else{title=ok?"تدريب ممتاز":"التدريب يصنع الإتقان";msg="الاختبار التدريبي لا يغيّر تقدمك.";S.xp+=T.score*2;btns=`<button class="btn" onclick="startTest(${i},'practice')">تدريب آخر</button> <button class="btn ghost" onclick="lesson(${i},6)">رجوع</button>`}
  save();const C=2*Math.PI*80,col=ok?"var(--mint)":"var(--coral)",wrong=T.wrong,kind=T.kind;T=null;
  view(`<div class="wrap result" style="--lv:${lv.col}">
  ${stampNow?`<div class="bigstamp" aria-hidden="true"><span><b class="en" style="font-size:1.6rem">${lv.c}</b><small>الدرس ${k+1}</small><small>${shortDate(today())}</small></span></div>`:
  `<div class="score"><svg viewBox="0 0 190 190"><circle cx="95" cy="95" r="80" fill="none" stroke="var(--line)" stroke-width="16"/><circle cx="95" cy="95" r="80" fill="none" stroke="${col}" stroke-width="16" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct/100)}"/></svg><b class="en">${pct}%</b></div>`}
  <h2>${title}</h2><p>${stampNow?`نتيجتك <b class="en">${pct}%</b>. `:""}${msg}</p><div class="row" style="justify-content:center">${btns}</div>
- ${wrong.length?`<div class="wrongs"><h3>راجع هذه الأسئلة</h3>${wrong.map(q=>`<div class="wi"><div>${q.prompt}</div><div>الصحيح: <span class="ans ${isAr(q.ans)?"":"en"}">${esc(q.ans)}</span> ${isAr(q.ans)?"":sayBtn(q.ans)}</div><small class="muted">${q.why}</small></div>`).join("")}</div>`:""}</div>`,"focus");
+ ${wrong.length?`<div class="wrongs"><h3>راجع هذه الأسئلة</h3>${wrong.map(q=>`<div class="wi"><div>${q.prompt}</div><div>الصحيح: <span data-keep class="ans ${isAr(q.ans)?"":"en"}">${esc(q.ans)}</span> ${isAr(q.ans)?"":sayBtn(q.ans)}</div><small class="muted arh" data-keep>${q.why}</small></div>`).join("")}</div>`:""}</div>`,"focus");
  if(ok&&kind!=="practice")confetti(stampNow?160:70)}
 
 /* ---------- LEVEL EXAM (day 15) ---------- */
 const XSEC=["القراءة","الاستماع","القواعد والمفردات","الإملاء","الكتابة"],XMAX=[20,20,30,10,20];
 let XS=null;
-function lxIntro(r){const lv=LV[r],x=S.X[r]||{},d=lxOpenDate(r),ok=dateOk(d),ts=todayState();
+function lxIntro(r){RR=()=>lxIntro(r);const lv=LV[r],x=S.X[r]||{},ok=lxOpen(r);
  let act;
  if(x.passed)act=`<p><b>اجتزت هذا الامتحان ✓</b> بنتيجة ${x.score}٪ بتاريخ ${shortDate(x.passed)}.</p><div class="row" style="margin-top:12px"><button class="btn sun" onclick="cert(${r})">🎓 الشهادة</button></div>`;
- else if(ok)act=`<p>${x.failed?"هذه محاولة جديدة. راجعت؟ ابدأ عندما تكون جاهزًا.":"خصص 30 إلى 45 دقيقة بدون مقاطعة. لا يمكن الرجوع لقسم بعد تسليمه."}</p><div class="row" style="margin-top:12px"><button class="btn sun" onclick="lxStart(${r})">ابدأ امتحان المستوى</button><button class="btn ghost" onclick="wordFilter.lv='${r}';pgWords()">📚 راجع كلمات المستوى</button></div>`;
- else act=`<p>${d?(ts.t==="rest"?"اليوم يوم راحة. الامتحان يُفتح غدًا.":`يُفتح بعد ${untilMidnight()}.`):"يُفتح بعد إنهاء الدروس الستة ويومي الراحة."}</p>`;
- view(page(`امتحان المستوى ${r+1}: ${lv.n}`,`اليوم 15 من المستوى <span class="en">${lv.c}</span>. تحتاج ٧٠ من ١٠٠ للانتقال للمستوى التالي.`,`<div class="card">
+ else if(ok)act=`<p>${x.failed?"هذه محاولة جديدة. ابدأ عندما تكون جاهزًا.":"خصص 30 إلى 45 دقيقة بدون مقاطعة. لا يمكن الرجوع لقسم بعد تسليمه."}</p><div class="row" style="margin-top:12px"><button class="btn sun" onclick="lxStart(${r})">ابدأ امتحان المستوى</button><button class="btn ghost" onclick="wordFilter.lv='${r}';pgWords()">📚 راجع كلمات المستوى</button></div>`;
+ else act=`<p>${passed(r*LN+LN-1)?`إعادة المحاولة بعد <b class="cd" data-lx="${r}">${fmtWait(lxWait(r))}</b>.`:"يُفتح بعد النجاح في امتحانات الدروس الستة."}</p>`;
+ view(page(`امتحان المستوى ${r+1}: ${lv.n}`,`تحتاج ٧٠ من ١٠٠ للانتقال للمستوى التالي.`,`<div class="card">
  <div class="breakdown" style="margin-top:0">${XSEC.map((t,k)=>`<div><span>${["📖","🎧","📐","✍️","📝"][k]} ${t}</span><span class="en">${XMAX[k]}</span></div>`).join("")}<div style="border-color:var(--lv)"><span>المجموع</span><span class="en">100</span></div></div>${act}</div>`,lv.col),"today")}
 function lxStart(r){const e=LX[r],ws=levelWords(r),pool={v:ws};
  const G=[];for(let k=0;k<LN;k++)G.push(gq(pick(L[r*LN+k].q,1)[0]));shuffle(ws).slice(0,4).forEach((w,j)=>G.push(j%2?vReverse(w,pool):vMeaning(w,pool)));
  const mq=q=>({prompt:esc(q[0]),opts:shuffle([q[1],...q[2]]),ans:q[1],why:""});
  XS={r,sec:0,pts:[0,0,0,0,0],ans:{},plays:0,R:e.R[1].map(mq),H:e.H[1].map(mq),G:shuffle(G),SP:pick(ws.filter(w=>/^[a-z]{3,12}$/i.test(w[0])),2),wrong:[],W:null};touch();xRender()}
 function xHead(){const lv=LV[XS.r];return `<div class="tbar"><b>امتحان المستوى <span class="en">${lv.c}</span></b></div><div class="xsec">${XSEC.map((t,k)=>`<span class="${k<XS.sec?"done":k===XS.sec?"on":""}">${k<XS.sec?"✓ ":""}${t}</span>`).join("")}</div>`}
-function qList(key){return XS[key].map((q,j)=>`<div class="qblock"><div class="qt ${isAr(q.prompt)?"":"en"}" style="${isAr(q.prompt)?"":"text-align:left"}">${j+1}. ${q.prompt}</div><div class="opts">${q.opts.map((o,k)=>`<button class="opt ${isAr(o)?"":"en-opt"} ${XS.ans[key+j]===k?"sel":""}" data-g="${key}${j}" onclick="xSel('${key}',${j},${k},this)">${esc(o)}</button>`).join("")}</div></div>`).join("")}
+function qList(key){return XS[key].map((q,j)=>`<div class="qblock"><div class="qt ${isAr(q.prompt)?"":"en"}" style="${isAr(q.prompt)?"":"text-align:left"}">${j+1}. ${q.prompt}</div><div class="opts">${q.opts.map((o,k)=>`<button class="opt ${isAr(o)?"":"en-opt"} ${XS.ans[key+j]===k?"sel":""}" data-g="${key}${j}" onclick="xSel('${key}',${j},${k},this)" ${isAr(o)?"data-keep":""}>${esc(o)}</button>`).join("")}</div></div>`).join("")}
 function xSel(key,j,k,b){XS.ans[key+j]=k;document.querySelectorAll(`[data-g="${key}${j}"]`).forEach(x=>x.classList.toggle("sel",x===b))}
 function xRender(){const e=LX[XS.r],lv=LV[XS.r];let body="";
  if(XS.sec===0)body=`<p class="hint">اقرأ النص بعناية ثم أجب. (٥ درجات لكل سؤال)</p><div class="passage">${esc(e.R[0])}</div><h3 class="sec" style="margin-top:16px">الأسئلة</h3>${qList("R")}`;
  if(XS.sec===1)body=`<p class="hint">ستسمع نصًا بدون كتابة. يمكنك التشغيل 3 مرات فقط. (٥ درجات لكل سؤال)</p><div class="bigsay"><button id="hplay" onclick="xPlay()" aria-label="تشغيل">🔊</button></div><p style="text-align:center;font-weight:800" id="hleft">مرات التشغيل المتبقية: ${3-XS.plays}</p><h3 class="sec">الأسئلة</h3>${qList("H")}`;
- if(XS.sec===2)body=`<p class="hint">أسئلة من الدروس الستة. (٣ درجات لكل سؤال)</p>${XS.G.map((q,j)=>`<div class="qblock"><div class="qt">${j+1}. ${q.prompt}</div><div class="opts">${q.opts.map((o,k)=>`<button class="opt ${isAr(o)?"":"en-opt"} ${XS.ans["G"+j]===k?"sel":""}" data-g="G${j}" onclick="xSel('G',${j},${k},this)">${esc(o)}</button>`).join("")}</div></div>`).join("")}`;
+ if(XS.sec===2)body=`<p class="hint">أسئلة من الدروس الستة. (٣ درجات لكل سؤال)</p>${XS.G.map((q,j)=>`<div class="qblock"><div class="qt">${j+1}. ${q.prompt}</div><div class="opts">${q.opts.map((o,k)=>`<button class="opt ${isAr(o)?"":"en-opt"} ${XS.ans["G"+j]===k?"sel":""}" data-g="G${j}" onclick="xSel('G',${j},${k},this)" ${isAr(o)?"data-keep":""}>${esc(o)}</button>`).join("")}</div></div>`).join("")}`;
  if(XS.sec===3)body=`<p class="hint">استمع لكل كلمة واكتبها بالإنجليزية. (٥ درجات لكل كلمة)</p>${XS.SP.map((w,j)=>`<div class="qblock"><div class="row"><button class="ibtn" data-say="${esc(w[0])}">🔊 الكلمة ${j+1}</button><button class="ibtn" data-say="${esc(w[0])}" data-slow="1">🐢</button></div><div class="spell"><input id="xs${j}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="الكلمة ${j+1}"></div></div>`).join("")}`;
- if(XS.sec===4)body=`<div class="info"><b>${esc(e.W[0])}</b><p class="en" style="text-align:left;margin-top:6px">${esc(e.W[1])} (at least ${e.W[2]} words)</p><p style="margin-top:8px">استخدم هذه الكلمات أو التراكيب:</p><div class="kw" id="kw">${e.W[3].map(k=>`<span>${esc(k)}</span>`).join("")}</div></div>
+ if(XS.sec===4)body=`<div class="info" data-arw><p class="en" style="text-align:left;font-weight:800;font-size:1.1rem">${esc(e.W[1])} (at least ${e.W[2]} words)</p><p class="arh" data-keep style="margin-top:6px">${esc(e.W[0])}</p><button class="ibtn arbtn2" style="margin-top:6px" onclick="this.closest('[data-arw]').classList.toggle('show-ar')">ع التعليمات بالعربي</button><p style="margin-top:8px">استخدم هذه الكلمات أو التراكيب:</p><div class="kw" id="kw">${e.W[3].map(k=>`<span>${esc(k)}</span>`).join("")}</div></div>
  <textarea class="essay" id="essay" oninput="xCount()" aria-label="اكتب هنا" placeholder="Write here..."></textarea><p id="wcount" style="font-weight:800;margin-top:6px">0 / ${e.W[2]} كلمة</p>`;
  view(`<div class="wrap test" style="--lv:${lv.col}">${xHead()}<h2 style="margin:6px 0 10px">${["📖","🎧","📐","✍️","📝"][XS.sec]} ${XSEC[XS.sec]}</h2>${body}<div class="row" style="margin-top:16px;justify-content:flex-end"><button class="btn sun" onclick="xSubmit()">${XS.sec<4?"سلّم القسم وانتقل للتالي":"سلّم الامتحان"}</button></div></div>`,"focus")}
 function xPlay(){if(XS.plays>=3)return toast("انتهت مرات التشغيل");XS.plays++;$("#hleft").textContent="مرات التشغيل المتبقية: "+(3-XS.plays);say(LX[XS.r].H[0],{rate:(S.rate||.9)<.8?.7:.88})}
@@ -1586,24 +1939,24 @@ function xSubmit(){const sec=XS.sec,key=["R","H","G"][sec];
  if(sec===0)XS.pts[0]=xGrade("R",5);
  if(sec===1){if(!XS.plays)return toast("استمع للنص أولًا");XS.pts[1]=xGrade("H",5)}
  if(sec===2)XS.pts[2]=xGrade("G",3);
- if(sec===3){let p=0;XS.SP.forEach((w,j)=>{const v=norm($("#xs"+j).value),a=norm(w[0]);if(v===a)p+=5;else if(a.length>=5&&lev(v,a)===1)p+=3;if(v!==a)XS.wrong.push({prompt:`إملاء: ${w[1]}`,ans:w[0]})});XS.pts[3]=p}
+ if(sec===3){let p=0;XS.SP.forEach((w,j)=>{const v=norm($("#xs"+j).value),a=norm(w[0]);if(v===a)p+=5;else if(a.length>=5&&lev(v,a)===1)p+=3;if(v!==a)XS.wrong.push({prompt:`Spelling: <b data-keep>«${esc(w[1])}»</b>`,ans:w[0]})});XS.pts[3]=p}
  if(sec===4){const e=LX[XS.r],t=$("#essay").value,n=wc(t);if(n<5)return toast("اكتب نصك أولًا");
-  if(n<e.W[2]&&!confirm(`كتبت ${n} كلمة من ${e.W[2]} المطلوبة. هل تريد التسليم؟`))return;
+  if(n<e.W[2]&&!cfm(`كتبت ${n} كلمة من ${e.W[2]} المطلوبة. هل تريد التسليم؟`))return;
   const low=" "+norm(t)+" ",hits=e.W[3].filter(k=>low.includes(" "+norm(k)+" "));const len=n>=e.W[2]?10:n>=e.W[2]*.6?6:2;
   XS.pts[4]=Math.round(len+hits.length*2.5);XS.W={text:t,n,hits,len};return xFinish()}
  XS.sec++;xRender()}
 function xFinish(){const r=XS.r,lv=LV[r],x=S.X[r]||(S.X[r]={}),total=XS.pts.reduce((a,b)=>a+b,0),ok=total>=70;
  x.tries=(x.tries||[]).concat([{d:today(),s:total}]);logMistakes(r*LN,XS.wrong);
- if(ok){x.passed=today();x.score=total;S.xp+=200}else x.failed=today();save();
+ if(ok){x.passed=today();x.score=total;S.xp+=200}else{x.failed=today();x.failT=Date.now()}save();
  const e=LX[r],W=XS.W;
  view(`<div class="wrap result" style="--lv:${lv.col}">
  ${ok?`<div class="bigstamp" aria-hidden="true"><span><b class="en" style="font-size:1.6rem">${lv.c}</b><small>امتحان المستوى</small><small>${total}٪</small></span></div>`:`<div class="score"><svg viewBox="0 0 190 190"><circle cx="95" cy="95" r="80" fill="none" stroke="var(--line)" stroke-width="16"/><circle cx="95" cy="95" r="80" fill="none" stroke="var(--coral)" stroke-width="16" stroke-linecap="round" stroke-dasharray="${2*Math.PI*80}" stroke-dashoffset="${2*Math.PI*80*(1-total/100)}"/></svg><b class="en">${total}</b></div>`}
  <h2>${ok?`نجحت في امتحان المستوى ${lv.c}!`:"لم تصل لدرجة النجاح هذه المرة"}</h2>
- <p>${ok?(r<NL-1?`المستوى ${r+2} (${LV[r+1].n}) يُفتح غدًا.`:"أتممت الرحلة كاملة!"):"تحتاج 70 من 100. راجع كلمات المستوى وأخطاءك، ويمكنك إعادة الامتحان غدًا."}</p>
+ <p>${ok?(r<NL-1?`المستوى ${r+2} (${LV[r+1].n}) مفتوح الآن.`:"أتممت الرحلة كاملة!"):"تحتاج 70 من 100. راجع كلمات المستوى وأخطاءك، ويمكنك إعادة الامتحان بعد ساعة."}</p>
  <div class="breakdown">${XSEC.map((t,k)=>`<div><span>${t}</span><span class="en">${XS.pts[k]} / ${XMAX[k]}</span></div>`).join("")}<div style="border-color:var(--lv)"><span>المجموع</span><span class="en">${total} / 100</span></div></div>
  <div class="info" style="text-align:start"><b>تقييم الكتابة</b><p>عدد الكلمات: ${W.n} من ${e.W[2]} (${W.len} من 10). الكلمات المطلوبة المستخدمة: ${W.hits.length} من ${e.W[3].length}${W.hits.length?`: <span class="en">${W.hits.map(esc).join(", ")}</span>`:""}.</p>${AI?`<button class="btn ghost" style="margin-top:10px" id="aiw" onclick="aiWriting()">💬 ملاحظات المعلم الذكي على كتابتي</button><div id="aiwo" class="msg ai" style="margin-top:10px;display:none"></div>`:""}</div>
  <div class="row" style="justify-content:center;margin-top:16px">${ok?`<button class="btn sun" onclick="cert(${r})">🎓 استلم الشهادة</button>`:`<button class="btn sun" onclick="wordFilter.lv='${r}';pgWords()">📚 راجع كلمات المستوى</button>`}<button class="btn ghost" onclick="home()">الرئيسية</button></div>
- ${XS.wrong.length?`<div class="wrongs"><h3>أخطاؤك في الامتحان</h3>${XS.wrong.map(q=>`<div class="wi"><div>${q.prompt}</div><div>الصحيح: <span class="ans ${isAr(q.ans)?"":"en"}">${esc(q.ans)}</span></div></div>`).join("")}</div>`:""}</div>`,"focus");
+ ${XS.wrong.length?`<div class="wrongs"><h3>أخطاؤك في الامتحان</h3>${XS.wrong.map(q=>`<div class="wi"><div>${q.prompt}</div><div>الصحيح: <span data-keep class="ans ${isAr(q.ans)?"":"en"}">${esc(q.ans)}</span></div></div>`).join("")}</div>`:""}</div>`,"focus");
  if(ok)confetti(180)}
 async function aiWriting(){if(!AI||!XS||!XS.W)return;const o=$("#aiwo"),b=$("#aiw");o.style.display="block";o.textContent="يقرأ المعلم كتابتك...";b.disabled=true;const e=LX[XS.r];
  try{const r=await AI(`أنت معلم إنجليزي لطالب عربي في المستوى ${LV[XS.r].c}. المهمة: ${e.W[0]}\nنص الطالب:\n${XS.W.text}\n\nأعطه ملاحظات بالعربية باختصار (أقل من 150 كلمة): نقطتان قويتان، وأهم 3 أخطاء مع تصحيحها بالإنجليزية، ونصيحة واحدة. بدون ماركداون.`,{onText:({text})=>{o.textContent=text},cache:false});o.textContent=r.text}
@@ -1623,9 +1976,9 @@ function cert(r){const lv=LV[r],x=S.X[r]||{};if(!x.passed)return toast("الشه
  m.addEventListener("click",e=>{if(e.target===m)m.remove()});document.body.appendChild(m)}
 
 /* ---------- mistakes ---------- */
-function showMistakes(){const list=S.mist.slice().reverse();
- view(page("دفتر أخطائي","كل خطأ هنا فرصة. راجعها قبل امتحان المراجعة وامتحان المستوى.",list.length?`<div class="wrongs" style="margin-top:0">${list.map(m=>`<div class="wi"><small class="muted">المستوى ${lvOf(m.i).c}، الدرس ${m.i%LN+1}، ${shortDate(m.d)}</small><div>${esc(m.p)}</div><div>الصحيح: <span class="ans ${isAr(m.a)?"":"en"}">${esc(m.a)}</span> ${isAr(m.a)?"":sayBtn(m.a)}</div></div>`).join("")}</div>
- <button class="btn ghost" onclick="if(confirm('مسح كل الأخطاء من الدفتر؟')){S.mist=[];save();showMistakes()}">امسح الدفتر</button>`:`<div class="empty card">الدفتر فارغ. الأخطاء التي تقع فيها في الاختبارات ستظهر هنا.</div>`),"mist")}
+function showMistakes(){RR=showMistakes;const list=S.mist.slice().reverse();
+ view(page("دفتر أخطائي","كل خطأ هنا فرصة. راجعها قبل امتحان المراجعة وامتحان المستوى.",list.length?`<div class="wrongs" style="margin-top:0">${list.map(m=>`<div class="wi"><small class="muted">المستوى ${lvOf(m.i).c}، الدرس ${m.i%LN+1}، ${shortDate(m.d)}</small><div data-keep>${esc(m.p)}</div><div>الصحيح: <span data-keep class="ans ${isAr(m.a)?"":"en"}">${esc(m.a)}</span> ${isAr(m.a)?"":sayBtn(m.a)}</div></div>`).join("")}</div>
+ <button class="btn ghost" onclick="if(cfm('مسح كل الأخطاء من الدفتر؟')){S.mist=[];save();showMistakes()}">امسح الدفتر</button>`:`<div class="empty card">الدفتر فارغ. الأخطاء التي تقع فيها في الاختبارات ستظهر هنا.</div>`),"mist")}
 
 /* ---------- settings ---------- */
 function settings(){const m=document.createElement("div");m.className="modal";
@@ -1635,19 +1988,177 @@ function settings(){const m=document.createElement("div");m.className="modal";
  <div class="field"><b>المظهر</b><div class="seg">${[["auto","تلقائي"],["light","فاتح"],["dark","داكن"]].map(([k,t])=>`<button aria-pressed="${S.theme===k}" data-th="${k}">${t}</button>`).join("")}</div></div>
  <div class="field"><b>اختبار الصوت</b><div class="row"><button class="ibtn" data-say="Hello! Your sound is working.">🔊 جرّب الصوت</button><small class="muted">لو لم تسمع شيئًا: ارفع الصوت، ألغِ الوضع الصامت، أو افتح الصفحة في Chrome أو Safari.</small></div></div>
  <hr><h3 style="font-size:1.1rem">وضع ولي الأمر</h3>
- <label class="check"><input type="checkbox" id="sk" ${S.skip?"checked":""}><span>تجاوز انتظار الأيام (أيام الراحة وانتظار اليوم التالي). ترتيب الخطوات يبقى كما هو.</span></label>
+ <div class="field"><b>نسبة النجاح في امتحان الدرس</b><div class="seg">${[[96,"أخطاء أقل من 5٪"],[90,"90٪"],[80,"80٪"],[70,"70٪"]].map(([v,t])=>`<button aria-pressed="${examPassPct()===v}" data-ep="${v}">${t}</button>`).join("")}</div></div>
+ <label class="check"><input type="checkbox" id="sk" ${S.skip?"checked":""}><span>تجاوز انتظار الساعة قبل الامتحان (للتجربة). ترتيب الخطوات يبقى كما هو.</span></label>
+ ${CLOUD_SET&&UID?`<hr><h3 style="font-size:1.1rem">الحساب</h3><p class="muted" style="font-size:.92rem">تقدّمك محفوظ في حسابك تلقائيًا. سجّل الدخول بنفس الحساب من أي جهاز لتكمل من نفس المكان.</p><p data-keep dir="ltr" style="font-weight:800;margin:6px 0">${esc((fbAuth&&fbAuth.currentUser&&fbAuth.currentUser.email)||"")}</p><button class="btn ghost" onclick="this.closest('.modal').remove();logout()">تسجيل الخروج</button>`:""}
  <hr><h3 style="font-size:1.1rem">نقل التقدّم لجهاز آخر</h3><p class="muted" style="font-size:.92rem">التقدم محفوظ في هذا المتصفح. انسخ الرمز والصقه في الجهاز الآخر.</p>
  <div class="field"><textarea id="pc" rows="3" dir="ltr" aria-label="رمز التقدم"></textarea></div>
  <div class="row"><button class="btn ghost" id="cp">انسخ رمز تقدّمي</button><button class="btn ghost" id="im">استورد الرمز</button></div>
  <hr><div class="row" style="justify-content:space-between"><button class="btn ghost" id="rs" style="color:var(--bad)">ابدأ الرحلة من جديد</button><button class="btn" id="sv">حفظ</button></div></div>`;
  document.body.appendChild(m);m.addEventListener("click",e=>{if(e.target===m)m.remove()});
  m.querySelectorAll("[data-th]").forEach(b=>b.onclick=()=>{S.theme=b.dataset.th;applyTheme();save();m.querySelectorAll("[data-th]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
+ m.querySelectorAll("[data-ep]").forEach(b=>b.onclick=()=>{S.examPass=+b.dataset.ep;save();m.querySelectorAll("[data-ep]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
  m.querySelector("#cp").onclick=async()=>{const c=code();m.querySelector("#pc").value=c;try{await navigator.clipboard.writeText(c);toast("نُسخ الرمز")}catch(e){m.querySelector("#pc").select();toast("الرمز جاهز في المربع، انسخه يدويًا")}};
  m.querySelector("#im").onclick=()=>{try{const o=JSON.parse(decodeURIComponent(escape(atob(m.querySelector("#pc").value.trim()))));if(!o||typeof o!=="object"||!o.L)throw 0;S=Object.assign(def(),o);save();applyTheme();m.remove();toast("تم استيراد التقدّم");home()}catch(e){toast("الرمز غير صالح. تأكد من نسخه كاملًا")}};
- m.querySelector("#rs").onclick=()=>{if(confirm("سيُحذف كل التقدم والأختام. متأكد؟")){S=def();save();applyTheme();m.remove();welcome()}};
- m.querySelector("#sv").onclick=()=>{const n=m.querySelector("#sn").value.trim();if(n)S.name=n;S.skip=m.querySelector("#sk").checked;save();m.remove();toast("تم الحفظ");if(route!=="focus")home()}}
+ m.querySelector("#rs").onclick=()=>{if(cfm("سيُحذف كل التقدم والأختام. متأكد؟")){S=def();save();applyTheme();m.remove();welcome()}};
+ m.querySelector("#sv").onclick=()=>{const n=m.querySelector("#sn").value.trim();if(n)S.name=n;S.skip=m.querySelector("#sk").checked;save();m.remove();toast("تم الحفظ");if(route!=="focus")RR()}}
 
-home();
+
+/* ---------- language: Arabic interface ⇄ English interface ---------- */
+const nkey=s=>s.replace(/[0-9]+/g,"#").replace(/\s+/g," ").trim();
+const I18N_N=new Map();
+Object.entries(I18N).forEach(([k,v])=>{I18N_N.set(nkey(k),v);const kk=k.trim();if(/[:：]$/.test(kk)){const k2=nkey(kk.slice(0,-1));if(!I18N_N.has(k2))I18N_N.set(k2,v.replace(/:\s*$/,""))}});
+L.forEach(l=>{if(!I18N_N.has(nkey(l.a)))I18N_N.set(nkey(l.a),l.t)});
+LV.forEach((l,r)=>{I18N_N.set(nkey(l.n),LVEN[r][0]);I18N_N.set(nkey(l.d),LVEN[r][1])});
+STEPS.forEach((s,k)=>I18N_N.set(nkey(s.n),STEPEN[k]));
+const missingTr=new Set();
+const fixPunct=s=>s.replace(/،/g,",").replace(/؟/g,"?").replace(/؛/g,";").replace(/٪/g,"%");
+const isArL=s=>/[\u0621-\u064A]/.test(s);
+function trFull(s){const k=nkey(s);if(!k)return s;if(!isArL(k))return fixPunct(s);const v=I18N_N.get(k);if(v==null)return null;const nums=s.match(/[0-9]+/g)||[];let j=0;return v.replace(/#/g,()=>nums[j]!=null?nums[j++]:"#")}
+function trSmart(s,depth){depth=depth||0;const t=s.trim();if(!t)return s;
+ if(!isArL(t))return s.replace(t,fixPunct(t));
+ let r=trFull(t);if(r!=null)return s.replace(t,r);
+ const lead=t.match(/^[^\u0621-\u064A]*/)[0],trail=t.match(/[^\u0621-\u064A]*$/)[0];
+ if(lead||trail){const mid=t.slice(lead.length,t.length-trail.length);const x=trFull(mid);if(x!=null)return s.replace(t,fixPunct(lead)+x+fixPunct(trail))}
+ if(depth>4)return null;
+ const ci=t.indexOf(": ");if(ci>0){const lt=t.slice(0,ci),rt=t.slice(ci+2),lx=trFull(lt)||trSmart(lt,depth+1),rx=trFull(rt)||(isArL(rt)?trSmart(rt,depth+1):rt);if(lx!=null&&rx!=null)return s.replace(t,lx+": "+rx)}
+ const parts=t.split(/(\s*[:،,؛;]\s*|\s+[-–]\s+|[()«»“”"]|[.!؟?]+\s+|\s*[.!؟?]+\s*$|\s*٪\s*)/);
+ if(parts.length>1){let ok=true;const out=parts.map(p=>{if(!p)return p;if(!isArL(p))return fixPunct(p);const x=trSmart(p,depth+1);if(x==null){ok=false;return p}return x});if(ok)return s.replace(t,out.join(""))}
+ return null}
+function trNode(n){const raw=n.nodeValue;if(!raw||!isAr(raw))return;const p=n.parentElement;if(!p||p.closest("[data-keep],script,style,textarea,input"))return;
+ const r=trSmart(raw);if(r==null){missingTr.add(raw.trim());return}if(r===raw)return;
+ if(!p.hasAttribute("data-ar"))p.setAttribute("data-ar",raw.trim());n.nodeValue=r}
+function trAttrs(el){["placeholder","aria-label","title"].forEach(a=>{const v=el.getAttribute&&el.getAttribute(a);if(v&&isAr(v)){const r=trSmart(v);if(r!=null&&r!==v)el.setAttribute(a,r)}})}
+function trWalk(root){if(S.lang!=="en"||!root)return;if(root.nodeType===3){trNode(root);return}if(root.nodeType!==1)return;if(root.closest&&root.closest("[data-keep]"))return;
+ trAttrs(root);const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT|NodeFilter.SHOW_ELEMENT,{acceptNode:n=>n.nodeType===1&&(n.hasAttribute("data-keep")||/^(SCRIPT|STYLE|TEXTAREA)$/.test(n.tagName))?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+ const texts=[];let n;while((n=w.nextNode())){if(n.nodeType===3)texts.push(n);else trAttrs(n)}texts.forEach(trNode)}
+const trObs=new MutationObserver(ms=>{if(S.lang!=="en")return;ms.forEach(m=>{if(m.type==="characterData")trNode(m.target);else m.addedNodes.forEach(trWalk)})});
+function applyLang(){const en=S.lang==="en",h=document.documentElement;h.lang=en?"en":"ar";h.dir=en?"ltr":"rtl";document.title=en?"English Journey: 10 levels":"رحلة الإنجليزية: 10 مستويات";
+ const lb=$("#lens");if(lb)lb.setAttribute("aria-label",en?"Tap a word to see its meaning":"اضغط ثم اختر كلمة لتعرف معناها")}
+function setLang(l){S.lang=l;save();applyLang();try{RR()}catch(e){home()}}
+const cfm=m=>confirm(S.lang==="en"?(trSmart(m)||m):m);
+
+/* ---------- lens: tap any English word to see its Arabic meaning ---------- */
+const DICT=new Map(GLOSS);
+L.forEach(l=>l.v.forEach(w=>DICT.set(w[0].toLowerCase(),w[1])));
+let lensOn=false;
+function lensInit(){const b=document.createElement("button");b.id="lens";b.type="button";b.innerHTML='🔎 <span data-keep>ع</span>';b.onclick=e=>{e.stopPropagation();toggleLens()};document.body.appendChild(b);applyLang()}
+function toggleLens(on){lensOn=on==null?!lensOn:on;document.body.classList.toggle("lens-on",lensOn);$("#lens").setAttribute("aria-pressed",lensOn);closePop();
+ if(lensOn)toast(S.lang==="en"?"Tap any English word to see its meaning":"اضغط على أي كلمة إنجليزية لترى معناها")}
+function lemmas(w){const c=[w];const add=x=>{if(x&&x.length>1&&!c.includes(x))c.push(x)};
+ if(w.endsWith("'s"))add(w.slice(0,-2));if(w.endsWith("ies"))add(w.slice(0,-3)+"y");if(w.endsWith("es"))add(w.slice(0,-2));if(w.endsWith("s"))add(w.slice(0,-1));
+ if(w.endsWith("ied"))add(w.slice(0,-3)+"y");if(w.endsWith("ed")){add(w.slice(0,-2));add(w.slice(0,-1));if(/(.)\1ed$/.test(w))add(w.slice(0,-3))}
+ if(w.endsWith("ing")){add(w.slice(0,-3));add(w.slice(0,-3)+"e");if(/(.)\1ing$/.test(w))add(w.slice(0,-4))}
+ if(w.endsWith("ly")){add(w.slice(0,-2));if(w.endsWith("ily"))add(w.slice(0,-3)+"y")}
+ if(w.endsWith("ier"))add(w.slice(0,-3)+"y");if(w.endsWith("er")){add(w.slice(0,-2));add(w.slice(0,-1))}
+ if(w.endsWith("iest"))add(w.slice(0,-4)+"y");if(w.endsWith("est")){add(w.slice(0,-3));add(w.slice(0,-2))}return c}
+function lookupWord(w){w=w.toLowerCase().replace(/[’‘]/g,"'");for(const c of lemmas(w))if(DICT.has(c))return{w:c,ar:DICT.get(c)};return null}
+function lookupPhrase(text,a,b){const words=[];const re=/[A-Za-z][A-Za-z'’-]*/g;let m,idx=-1;while((m=re.exec(text))){words.push(m[0].toLowerCase().replace(/’/g,"'"));if(m.index<=a&&re.lastIndex>=b)idx=words.length-1}
+ if(idx<0)return null;for(let n=4;n>=2;n--)for(let s=Math.max(0,idx-n+1);s<=idx&&s+n<=words.length;s++){const k=words.slice(s,s+n).join(" ");if(DICT.has(k))return{w:k,ar:DICT.get(k)}}return null}
+function wordAt(x,y){let node=null,off=0;if(document.caretRangeFromPoint){const r=document.caretRangeFromPoint(x,y);if(r){node=r.startContainer;off=r.startOffset}}else if(document.caretPositionFromPoint){const p=document.caretPositionFromPoint(x,y);if(p){node=p.offsetNode;off=p.offset}}
+ if(!node||node.nodeType!==3)return null;const t=node.nodeValue;let a=off,b=off;const ok=ch=>/[A-Za-z'’-]/.test(ch||"");
+ if(!ok(t[a])&&ok(t[a-1]))a--,b--;while(a>0&&ok(t[a-1]))a--;while(b<t.length&&ok(t[b]))b++;
+ const w=t.slice(a,b).replace(/^['’-]+|['’-]+$/g,"");return w&&/[A-Za-z]/.test(w)?{w,node,a,b,text:t}:null}
+let popEl=null;const lensCache={};try{Object.assign(lensCache,JSON.parse(localStorage.getItem("eng-lens-cache")||"{}"))}catch(e){}
+function closePop(){if(popEl){popEl.remove();popEl=null}}
+function showPop(x,y,html){closePop();popEl=document.createElement("div");popEl.className="lpop";popEl.setAttribute("role","dialog");popEl.setAttribute("data-keep","");popEl.innerHTML=html+'<button class="lx" onclick="closePop()" aria-label="close">✕</button>';document.body.appendChild(popEl);
+ const w=popEl.offsetWidth,h=popEl.offsetHeight;popEl.style.left=Math.max(8,Math.min(innerWidth-w-8,x-w/2))+"px";popEl.style.top=(y+h+24>innerHeight?Math.max(8,y-h-14):y+16)+"px"}
+async function onlineTr(q){if(lensCache[q])return lensCache[q];let out=null;
+ try{const r=await fetch("https://api.mymemory.translated.net/get?q="+encodeURIComponent(q)+"&langpair=en|ar");const j=await r.json();const t=j&&j.responseData&&j.responseData.translatedText;if(t&&!/MYMEMORY|INVALID/i.test(t))out=t}catch(e){}
+ if(!out&&AI){try{const r=await AI(`Translate into simple Arabic. Reply with the Arabic only:\n${q}`,{cache:true});out=(r.text||"").trim()}catch(e){}}
+ if(out){lensCache[q]=out;try{localStorage.setItem("eng-lens-cache",JSON.stringify(lensCache))}catch(e){}}return out}
+async function lensTranslate(btn){const q=btn.dataset.q,box=btn.parentElement.querySelector(".lres");btn.disabled=true;box.textContent="...";const t=await onlineTr(q);box.textContent=t||"تعذّرت الترجمة الآن (تحتاج اتصالًا بالإنترنت).";btn.remove()}
+function sentenceOf(el){const s=el.closest("[data-ar]");if(s)return{ar:s.getAttribute("data-ar")};const blk=el.closest(".vsub,.passage,.qtext,.face,.bub,.ex,p,li,h1,h2,h3,.qt,.opt,button,small,b,span");return blk?{en:blk.textContent.replace(/\s+/g," ").trim().slice(0,300)}:null}
+document.addEventListener("click",e=>{
+ if(!lensOn)return;if(e.target.closest("#lens,.lpop"))return;if(e.target.closest("[data-say]"))return;
+ e.preventDefault();e.stopPropagation();
+ const hit=wordAt(e.clientX,e.clientY);
+ if(!hit){const s=sentenceOf(e.target);if(s&&s.ar&&S.lang==="en")showPop(e.clientX,e.clientY,`<div class="lar">${esc(s.ar)}</div>`);else closePop();return}
+ const ph=lookupPhrase(hit.text,hit.a,hit.b),wd=lookupWord(hit.w),res=ph||wd,sent=sentenceOf(hit.node.parentElement);
+ const q=res?null:hit.w;
+ showPop(e.clientX,e.clientY,`<div class="lw"><b>${esc(res?res.w:hit.w)}</b>${TTS?`<button class="say" data-say="${esc(res?res.w:hit.w)}" aria-label="listen">🔊</button>`:""}</div>
+ <div class="lar">${res?esc(res.ar):`<span class="lres"></span>`}</div>
+ ${q?`<button class="ibtn" data-q="${esc(q)}" onclick="lensTranslate(this)">🌐 ترجم الكلمة</button>`:""}
+ ${sent&&sent.ar?`<div class="lsent"><small>الجملة كاملة:</small><div>${esc(sent.ar)}</div></div>`:sent&&sent.en&&sent.en.split(" ").length>2?`<div class="lsent"><button class="ibtn" data-q="${esc(sent.en)}" onclick="lensTranslate(this)">🌐 ترجم الجملة كاملة</button><div class="lres"></div></div>`:""}`)},true);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closePop();if(lensOn)toggleLens(false)}});
+addEventListener("scroll",closePop,{passive:true});
+
+/* ---------- start ---------- */
+trObs.observe(document.body,{childList:true,subtree:true,characterData:true});
+lensInit();
+
+/* ---------- accounts & cloud sync (Firebase) ---------- */
+const CFG=window.FIREBASE_CONFIG||{};
+const CLOUD_SET=!!(CFG.apiKey&&!/PASTE/i.test(CFG.apiKey)&&CFG.projectId&&!/PASTE/i.test(CFG.projectId));
+let fbAuth=null,fbDb=null,cloudTimer=null,syncState="",pendingName="",authTab="in",authBusy=false;
+function rawLoad(k){try{const r=localStorage.getItem(k);return r?JSON.parse(r):null}catch(e){return null}}
+function setSync(st){syncState=st;const e=$("#sync");if(e)e.textContent=syncLabel()}
+function syncLabel(){return syncState==="saving"?"☁ جارٍ الحفظ...":syncState==="err"?"☁ لم يُحفظ أونلاين (سيُعاد المحاولة)":syncState==="offline"?"☁ بدون إنترنت: محفوظ على الجهاز":"☁ محفوظ في حسابك"}
+function acctHTML(){if(!UID)return "";const u=fbAuth&&fbAuth.currentUser;return `<span class="sync" id="sync">${syncLabel()}</span>${u&&u.email?`<span class="acct" data-keep dir="ltr">${esc(u.email)}</span>`:""}<button class="linkbtn" onclick="logout()">تسجيل الخروج</button>`}
+function cloudSave(now){if(!UID||!fbDb)return;clearTimeout(cloudTimer);const go=()=>{setSync("saving");const u=fbAuth.currentUser;
+ return fbDb.collection("users").doc(UID).set({state:JSON.stringify(S),name:S.name||"",email:(u&&u.email)||"",ts:S.ts||Date.now(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true}).then(()=>setSync("ok")).catch(()=>{setSync(navigator.onLine?"err":"offline");cloudTimer=setTimeout(()=>cloudSave(),15000)})};
+ if(now)return go();cloudTimer=setTimeout(go,1500)}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden"&&UID&&cloudTimer)cloudSave(true)});
+addEventListener("online",()=>{if(UID)cloudSave()});
+
+async function pullCloud(u){
+ let cloud=null;
+ try{const d=await fbDb.collection("users").doc(u.uid).get();if(d.exists&&d.data().state)cloud=JSON.parse(d.data().state);setSync("ok")}catch(e){setSync("offline")}
+ const local=rawLoad(KEY+":"+u.uid);
+ let pick=null;
+ if(cloud&&local)pick=(cloud.ts||0)>=(local.ts||0)?cloud:local;else pick=cloud||local;
+ if(!pick){const legacy=rawLoad(KEY);if(legacy&&legacy.L&&Object.keys(legacy.L).length&&!localStorage.getItem(KEY+":migrated")){pick=legacy;try{localStorage.setItem(KEY+":migrated",u.uid)}catch(e){}}}
+ const lang=S.lang,theme=S.theme;
+ S=Object.assign(def(),pick||{});if(!pick){S.lang=lang;S.theme=theme}
+ if(pendingName){S.name=pendingName;pendingName=""}
+ if(!S.name)S.name=u.displayName||((u.email||"").split("@")[0])||"";
+ applyTheme();applyLang();save();if(pick!==cloud)cloudSave(true)}
+
+function boot(){
+ if(!CLOUD_SET){home();return}
+ if(!window.firebase||!firebase.initializeApp){const last=localStorage.getItem("eng-last-uid");if(last){UID=last;S=load();applyTheme();applyLang();setSync("offline");home()}else loginScreen("لا يوجد اتصال بالإنترنت. اتصل بالإنترنت لتسجيل الدخول أول مرة.");return}
+ try{firebase.initializeApp(CFG);fbAuth=firebase.auth();fbDb=firebase.firestore()}catch(e){console.error(e);home();return}
+ view(`<div class="wrap welcome"><p class="lead" style="margin-top:20vh;text-align:center">⏳ جارٍ التحميل...</p></div>`,"focus");
+ fbAuth.getRedirectResult().catch(e=>loginScreen(authMsg(e)));
+ fbAuth.onAuthStateChanged(async u=>{
+  if(!u){UID=null;S=Object.assign(def(),{lang:S.lang,theme:S.theme});loginScreen();return}
+  UID=u.uid;try{localStorage.setItem("eng-last-uid",u.uid)}catch(e){}
+  await pullCloud(u);home()})}
+
+function loginScreen(msg){RR=()=>loginScreen();const up=authTab==="up";
+ view(`<div class="wrap welcome"><div class="row" style="justify-content:flex-end;margin-top:14px"><button class="ibtn" onclick="setLang(S.lang==='en'?'ar':'en')">🌐 <span data-keep>${S.lang==="en"?"عربي":"English"}</span></button></div>
+ <h1>رحلة الإنجليزية</h1><p class="lead">سجّل دخولك ليُحفظ تقدّمك في حسابك، وتكمل من أي جهاز من نفس المكان.</p>
+ <div class="card authcard">
+ <div class="seg" style="margin-bottom:16px"><button aria-pressed="${!up}" onclick="authTab='in';loginScreen()">تسجيل الدخول</button><button aria-pressed="${up}" onclick="authTab='up';loginScreen()">حساب جديد</button></div>
+ <form onsubmit="event.preventDefault();doAuth()">
+ ${up?`<div class="field"><label for="an"><b>اسم الطالب</b></label><input id="an" autocomplete="name" required maxlength="30"></div>`:""}
+ <div class="field"><label for="ae"><b>البريد الإلكتروني</b></label><input id="ae" type="email" dir="ltr" autocomplete="email" required></div>
+ <div class="field"><label for="ap"><b>كلمة المرور</b></label><input id="ap" type="password" dir="ltr" autocomplete="${up?"new-password":"current-password"}" minlength="6" required>${up?`<small class="muted">6 حروف أو أرقام على الأقل</small>`:""}</div>
+ <div id="aerr" role="alert" class="aerr">${msg?esc(msg):""}</div>
+ <button class="btn sun" type="submit" id="abtn" style="width:100%">${up?"إنشاء الحساب":"دخول"}</button></form>
+ ${!up?`<button class="linkbtn" style="margin-top:10px" onclick="resetPw()">نسيت كلمة المرور؟</button>`:""}
+ <div class="orline"><span>أو</span></div>
+ <button class="btn ghost gbtn" onclick="googleIn()"><b class="g" aria-hidden="true">G</b> الدخول بحساب جوجل</button>
+ </div><p class="muted" style="margin-top:14px;font-size:.92rem">كل طالب له حساب خاص، ولا يستطيع أحد رؤية بيانات غيره.</p></div>`,"focus")}
+function authMsg(e){const c=(e&&e.code)||"";const m={
+ "auth/invalid-email":"البريد الإلكتروني غير صحيح.","auth/user-not-found":"البريد أو كلمة المرور غير صحيحة.","auth/wrong-password":"البريد أو كلمة المرور غير صحيحة.","auth/invalid-credential":"البريد أو كلمة المرور غير صحيحة.","auth/invalid-login-credentials":"البريد أو كلمة المرور غير صحيحة.",
+ "auth/email-already-in-use":"هذا البريد مسجّل بالفعل. سجّل دخولك بدلًا من إنشاء حساب.","auth/weak-password":"كلمة المرور لازم تكون 6 حروف على الأقل.","auth/network-request-failed":"لا يوجد اتصال بالإنترنت.","auth/too-many-requests":"محاولات كثيرة. انتظر قليلًا ثم حاول مرة أخرى.",
+ "auth/unauthorized-domain":"هذا الموقع غير مضاف في Firebase. أضف عنوان الموقع في Authorized domains.","auth/operation-not-allowed":"طريقة الدخول هذه غير مفعّلة في Firebase.","auth/popup-closed-by-user":"تم إغلاق نافذة جوجل قبل إكمال الدخول.","auth/cancelled-popup-request":"تم إغلاق نافذة جوجل قبل إكمال الدخول.","auth/missing-password":"اكتب كلمة المرور."};
+ if(/api-key/.test(c))return "مفتاح apiKey في إعدادات Firebase غير صحيح. راجع قيمة apiKey في أول ملف index.html.";
+ return m[c]||("حدث خطأ: "+((e&&e.message)||c))}
+function aErr(m,ok){const e=$("#aerr");if(e){e.textContent=m;e.classList.toggle("ok",!!ok)}}
+function busy(b){authBusy=b;const x=$("#abtn");if(x)x.disabled=b}
+async function doAuth(){if(authBusy||!fbAuth)return;const em=$("#ae").value.trim(),pw=$("#ap").value;busy(true);aErr("");
+ try{if(authTab==="up"){pendingName=($("#an").value||"").trim();const r=await fbAuth.createUserWithEmailAndPassword(em,pw);if(pendingName)try{await r.user.updateProfile({displayName:pendingName})}catch(e){}}
+  else await fbAuth.signInWithEmailAndPassword(em,pw)}
+ catch(e){pendingName="";aErr(authMsg(e));busy(false)}}
+async function googleIn(){if(!fbAuth)return;const p=new firebase.auth.GoogleAuthProvider();p.setCustomParameters({prompt:"select_account"});
+ try{await fbAuth.signInWithPopup(p)}catch(e){if(/popup-blocked|operation-not-supported/.test(e.code||""))fbAuth.signInWithRedirect(p);else aErr(authMsg(e))}}
+async function resetPw(){const em=($("#ae")&&$("#ae").value.trim())||"";if(!em)return aErr("اكتب بريدك الإلكتروني أولًا ثم اضغط «نسيت كلمة المرور».");
+ try{await fbAuth.sendPasswordResetEmail(em);aErr("أرسلنا رابط تغيير كلمة المرور إلى بريدك.",true)}catch(e){aErr(authMsg(e))}}
+async function logout(){if(!cfm("هل تريد تسجيل الخروج؟ تقدّمك محفوظ في حسابك."))return;try{await cloudSave(true)}catch(e){}try{localStorage.removeItem("eng-last-uid")}catch(e){}if(fbAuth)fbAuth.signOut()}
+
+boot();
 
 </script>
 </body>
