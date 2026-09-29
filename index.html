@@ -607,6 +607,50 @@ body.focus .main{margin-right:0}body.focus .actionbar{right:0}
 .wrow.core{border-color:color-mix(in srgb,var(--sun) 70%,var(--line))}
 .coretag{margin-inline-start:6px;font-size:.85rem}
 .wrow .w small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+
+/* ---- my grammar ---- */
+.gdet{background:var(--paper);border:2px solid var(--line);border-inline-start:6px solid var(--lv);border-radius:18px;margin-bottom:10px;overflow:hidden}
+.gdet summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:12px 16px}
+.gdet summary::-webkit-details-marker{display:none}
+.gdet summary::after{content:"▾";margin-inline-start:auto;color:var(--muted);font-size:1.2rem;transition:transform .2s}
+.gdet[open] summary::after{transform:rotate(180deg)}
+.gnum{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--lv);color:#fff;font-family:var(--disp);font-weight:800}
+.gt{display:grid}.gt b{font-size:1.12rem;color:var(--ink);text-align:start}.gt small{color:var(--muted);font-weight:700}
+.gbody{padding:0 14px 16px}.gbody .gcard{border:0;padding:6px 4px}
+.lockrule{display:flex;gap:12px;align-items:center;margin-bottom:12px;border-style:dashed}.lockrule>span{font-size:1.6rem}
+/* ---- question words ---- */
+.qh{margin:26px 0 12px;font-size:1.3rem}
+.golden{border-color:var(--sun);background:color-mix(in srgb,var(--sun) 10%,var(--paper))}
+.formula{display:flex;flex-wrap:wrap;align-items:center;gap:6px;direction:ltr;justify-content:flex-start;margin-top:8px}
+.formula span{font-family:var(--disp);font-weight:800;padding:6px 12px;border-radius:12px;color:#fff;font-size:1rem}
+.formula.sm span{font-size:.85rem;padding:3px 9px;border-radius:9px}
+.formula .arr{color:var(--muted)}
+.formula.ex span{font-size:1.25rem}
+.fc0{background:#E4574B}.fc1{background:#7A5AE0}.fc2{background:#2E8FD0}.fc3{background:#1FA88A}.fc4{background:#CF7D00}
+.qwgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.qwc{background:var(--paper);border:2px solid var(--line);border-radius:18px;padding:12px 14px;display:grid;gap:3px}
+.qwc .qw{font-size:1.45rem;color:var(--ink)}.qwc .say{margin:0}
+.qwc .qm{font-weight:800}
+.qwc small{color:var(--muted);font-weight:600}
+.qwc .qex{margin-top:6px;font-weight:700;text-align:left}
+.qcgrid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(420px,1fr))}
+@media (max-width:560px){.qcgrid{grid-template-columns:1fr}}
+.qcase h3{font-size:1.1rem;display:flex;gap:8px;align-items:center}
+.qn{flex:none;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-family:var(--disp);font-size:.9rem}
+.qcase p{margin-top:8px;line-height:1.8}
+.mist{display:grid;gap:4px;margin-top:10px;direction:ltr;text-align:left;font-weight:800}
+.mist .bad{color:var(--bad);text-decoration:line-through;text-decoration-thickness:2px}
+.mist .good{color:var(--ok)}
+.qpgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.qpgrid .qblock{margin:0}
+.side{width:clamp(236px,15.5vw,290px)}
+.main{margin-right:clamp(236px,15.5vw,290px)}
+.actionbar{right:clamp(236px,15.5vw,290px)}
+:root[dir="ltr"] .main{margin-right:0;margin-left:clamp(236px,15.5vw,290px)}
+:root[dir="ltr"] .actionbar{right:0;left:clamp(236px,15.5vw,290px)}
+.nav button{font-size:.95rem;padding:9px 10px}
+@media (max-width:760px){.side{width:72px}.main{margin-right:72px}.actionbar{right:72px}:root[dir="ltr"] .main{margin-left:72px;margin-right:0}:root[dir="ltr"] .actionbar{left:72px;right:0}.nav button{font-size:.6rem;padding:8px 2px}}
+body.focus .main{margin-right:0}body.focus .actionbar{right:0}:root[dir="ltr"] body.focus .main{margin-left:0}:root[dir="ltr"] body.focus .actionbar{left:0}
 </style>
 </head>
 <body>
@@ -1231,6 +1275,14 @@ const NAMES=new Set("maryam nora abha adam adel ahmed ali alula amal arabia asia
 const LVEN=[["Starter","First words: greetings, numbers, colours and family"],["Beginner","Your day, home, food and abilities"],["High beginner","The past, shopping and directions"],["Elementary","Comparing, the future and describing events"],["High elementary","Experiences, feelings and old habits"],["Intermediate","Predictions, conditionals and the passive"],["High intermediate","Reporting speech and telling stories"],["Upper intermediate","Future perfect and news style"],["Advanced","Formal style and powerful writing"],["Mastery","The precision and feel of native speakers"]];
 const STEPEN=["Words","Grammar","Listening","Video of the day","Today's quiz","Practice & games","Lesson exam"];
 const I18N={
+"قواعدي":"My grammar","أدوات السؤال":"Question words",
+"القواعد ستظهر هنا بعد أن تنجح في امتحان أول درس. كل درس تنجح فيه تُضاف قاعدته تلقائيًا.":"Grammar rules appear here after you pass your first lesson exam. Each lesson you pass adds its rule automatically.",
+"📝 اختبر نفسك في الدرس":"📝 Test yourself on this lesson","افتح الدرس":"Open the lesson","القاعدة التالية:":"Next rule:","القاعدة التالية":"Next rule","تُضاف هنا عندما تنجح في امتحان":"It will be added here when you pass the exam of",
+"# من # قاعدة. كل قاعدة تُضاف هنا تلقائيًا عندما تنجح في امتحان درسها.":"# of # rules. Each rule is added here automatically when you pass its lesson exam.","ابحث في القواعد":"Search the rules","افتح الكل":"Open all","أغلق الكل":"Close all",
+"أدوات السؤال وأين تأتي":"Question words and where they go","كل كلمات السؤال في الإنجليزية، ومكان كلمة السؤال في كل زمن وحالة، مع أمثلة مسموعة وتدريب.":"All the English question words, and where the question word goes in every tense and case, with audio examples and practice.",
+"⭐ القاعدة الذهبية":"⭐ The golden rule","كلمة السؤال أولًا، ثم الفعل المساعد، ثم الفاعل، ثم الفعل الأساسي. الاستثناء الوحيد: عندما تكون كلمة السؤال هي الفاعل (Who called?).":"Question word first, then the auxiliary, then the subject, then the main verb. The only exception: when the question word is the subject (Who called?).",
+"1. كلمات السؤال":"1. Question words","2. أين تأتي كلمة السؤال في كل حالة؟":"2. Where does the question word go in each case?","3. درّب نفسك":"3. Practise",
+"ممتاز! أنت تعرف مكان كلمة السؤال.":"Excellent! You know where the question word goes.","راجع الحالات بالأعلى ثم جرّب مرة أخرى.":"Review the cases above, then try again.","جرّب مرة أخرى":"Try again",
 "📖 كل كلمات الدرس (#)":"📖 All the words in this lesson (#)","كل الكلمات التي ستقابلها في الأمثلة والمحادثة والفيديو. تُضاف كلها إلى «كلماتي» عندما تنجح في امتحان الدرس، وتأتي منها أسئلة في الامتحان.":"Every word you'll meet in the examples, the conversation and the video. They are all added to My words when you pass the lesson exam, and the exam asks about them.",
 "⭐ الكلمات الأساسية فقط":"⭐ Core words only","كلماتك ستظهر هنا بعد أن تجتاز امتحان أول درس. كل درس تجتازه يضيف كل الكلمات التي ظهرت فيه.":"Your words will appear here after you pass your first lesson exam. Each lesson you pass adds every word that appeared in it.",
 "10 أسئلة وتحتاج 7.":"10 questions; you need 7.","10 أسئلة، تحتاج 7 إجابات صحيحة":"10 questions; you need 7 correct","5 أسئلة عن الكلمات الأساسية وكلمات الدرس":"5 questions on core words and lesson words","سؤال استماع وسؤال من العربية للإنجليزية":"1 listening and 1 Arabic-to-English question","تحتاج 7 من 10. لو لم تنجح راجع وأعد؛ الأسئلة تتغير كل مرة.":"You need 7 of 10. If you don't pass, review and try again; the questions change every time.",
@@ -1474,7 +1526,7 @@ function learnedWords(){const out=[],seen=new Set();for(let i=0;i<L.length;i++)i
 function sidebar(r){const nw=learnedWords().length;
  const it=(key,ic,t,fn,badge)=>`<button onclick="${fn}" ${r===key?'aria-current="page"':""}><span class="ic" aria-hidden="true">${ic}</span><span class="nl">${t}</span>${badge?`<span class="badge">${badge}</span>`:""}</button>`;
  return `<aside class="side"><div class="brand"><i aria-hidden="true">✈</i><span>رحلة الإنجليزية</span></div><button class="langbtn" onclick="setLang(S.lang==='en'?'ar':'en')" aria-label="Language / اللغة">🌐 <span data-keep>${S.lang==="en"?"عربي":"English"}</span></button>
- <nav class="nav" aria-label="القائمة الرئيسية">${it("home","🏠","الرئيسية","home()")}${it("today","📖","درس اليوم","goToday()")}${it("video","🎬","فيديو اليوم","pgVideo()")}${it("sched","🗓️","خطة المستوى","pgSchedule()")}${it("words","📚","كلماتي","pgWords()",nw)}${it("games","🎮","الألعاب","arcade()")}${it("mist","📒","أخطائي","showMistakes()")}${it("set","⚙","الإعدادات","settings()")}</nav>
+ <nav class="nav" aria-label="القائمة الرئيسية">${it("home","🏠","الرئيسية","home()")}${it("today","📖","درس اليوم","goToday()")}${it("video","🎬","فيديو اليوم","pgVideo()")}${it("sched","🗓️","خطة المستوى","pgSchedule()")}${it("words","📚","كلماتي","pgWords()",nw)}${it("gram","📘","قواعدي","pgGrammar()",L.filter((_,i)=>passed(i)).length)}${it("qw","❓","أدوات السؤال","pgQuestions()")}${it("games","🎮","الألعاب","arcade()")}${it("mist","📒","أخطائي","showMistakes()")}${it("set","⚙","الإعدادات","settings()")}</nav>
  <div class="me"><b data-keep>${esc(S.name)}</b><span>🔥 ${streakNow()} أيام متتالية</span><span>⭐ ${S.xp} نقطة</span><span>🛂 ${stampCount()} ختم من 60</span>${typeof acctHTML==="function"?acctHTML():""}</div></aside>`}
 function view(html,r){stopSay();cleanupMedia();clearTimers();VP=null;curL=null;route=r||"home";
  const focus=r==="focus";document.body.classList.toggle("focus",focus);
@@ -2189,6 +2241,83 @@ async function resetPw(){const em=($("#ae")&&$("#ae").value.trim())||"";if(!em)r
  try{await fbAuth.sendPasswordResetEmail(em);aErr("أرسلنا رابط تغيير كلمة المرور إلى بريدك.",true)}catch(e){aErr(authMsg(e))}}
 async function logout(){if(!cfm("هل تريد تسجيل الخروج؟ تقدّمك محفوظ في حسابك."))return;try{await cloudSave(true)}catch(e){}try{localStorage.removeItem("eng-last-uid")}catch(e){}if(fbAuth)fbAuth.signOut()}
 
+
+/* ---------- 📘 My grammar: rules of passed lessons ---------- */
+function pgGrammar(){RR=pgGrammar;const done=L.map((_,i)=>i).filter(passed),next=L.findIndex((_,i)=>!passed(i));
+ let html="";
+ if(!done.length)html=`<div class="card empty">القواعد ستظهر هنا بعد أن تنجح في امتحان أول درس. كل درس تنجح فيه تُضاف قاعدته تلقائيًا.</div>`;
+ else{let lastR=-1;done.slice().reverse().forEach((i,j)=>{const r=lvIdx(i);if(r!==lastR){lastR=r;html+=`<div class="wgroup" style="--lv:${LV[r].col};margin-top:22px"><i>${LV[r].c}</i> المستوى ${r+1}: ${LV[r].n}</div>`}
+  html+=`<details class="gdet" style="--lv:${lvOf(i).col}" ${j===0?"open":""} data-s="${esc((L[i].g[0]+" "+L[i].a+" "+L[i].t).toLowerCase())}"><summary><span class="gnum">${i%LN+1}</span><span class="gt"><b class="en">${L[i].g[0]}</b><small>الدرس ${i%LN+1}: ${L[i].a}</small></span></summary>
+  <div class="gbody">${gramTab(i)}<div class="row" style="margin-top:12px"><button class="btn" onclick="startTest(${i},'practice')">📝 اختبر نفسك في الدرس</button><button class="btn ghost" onclick="lesson(${i},1)">افتح الدرس</button></div></div></details>`})}
+ const nxt=next>=0&&!passed(next)?`<div class="card lockrule"><span>🔒</span><div><b>القاعدة التالية:</b> <span class="en">${L[next].g[0]}</span><br><small class="muted">تُضاف هنا عندما تنجح في امتحان «${L[next].a}».</small></div></div>`:"";
+ view(page("قواعدي",`${done.length} من 60 قاعدة. كل قاعدة تُضاف هنا تلقائيًا عندما تنجح في امتحان درسها.`,`${done.length?`<div class="wtools"><input placeholder="ابحث في القواعد" aria-label="ابحث في القواعد" oninput="filterG(this.value)"><button class="ibtn" onclick="document.querySelectorAll('.gdet').forEach(d=>d.open=true)">افتح الكل</button><button class="ibtn" onclick="document.querySelectorAll('.gdet').forEach(d=>d.open=false)">أغلق الكل</button></div>`:""}${nxt}${html}`),"gram")}
+function filterG(q){q=q.trim().toLowerCase();document.querySelectorAll(".gdet").forEach(d=>{d.hidden=!!q&&!d.dataset.s.includes(q)&&!d.textContent.toLowerCase().includes(q)})}
+
+/* ---------- ❓ Question words and where they go ---------- */
+const QW=[
+["What","ماذا / ما","عن الأشياء والأفعال","things and actions","What is your name?","ما اسمك؟"],
+["Who","مَن","عن الأشخاص","people","Who is your teacher?","من معلّمك؟"],
+["Whose","لِمَن","عن الملكية","possession","Whose bag is this?","لمن هذه الحقيبة؟"],
+["Which","أيّ","اختيار من بين أشياء محددة","a choice between things","Which colour do you like?","أي لون تحب؟"],
+["Where","أين","عن المكان","place","Where do you live?","أين تسكن؟"],
+["When","متى","عن الوقت","time","When is your birthday?","متى عيد ميلادك؟"],
+["What time","في أي ساعة","عن الساعة","clock time","What time does school start?","متى تبدأ المدرسة؟"],
+["Why","لماذا","عن السبب، ونجيب بـ Because","the reason (answer with because)","Why are you sad?","لماذا أنت حزين؟"],
+["How","كيف","عن الطريقة أو الحال","the way or how someone is","How do you go to school?","كيف تذهب إلى المدرسة؟"],
+["How many","كم (للمعدود)","عن العدد","number (countable)","How many brothers do you have?","كم أخًا لديك؟"],
+["How much","كم (لغير المعدود والسعر)","عن الكمية والسعر","amount and price","How much is this shirt?","بكم هذا القميص؟"],
+["How old","كم عمر","عن العمر","age","How old are you?","كم عمرك؟"],
+["How long","منذ متى / ما طول","عن المدة أو الطول","duration or length","How long have you lived here?","منذ متى تسكن هنا؟"],
+["How often","كم مرة","عن عدد المرات","how frequently","How often do you play football?","كم مرة تلعب كرة القدم؟"],
+["How far","كم تبعد","عن المسافة","distance","How far is the school?","كم تبعد المدرسة؟"],
+["What kind of","أيّ نوع من","عن النوع","type","What kind of music do you like?","أي نوع من الموسيقى تحب؟"]];
+const QC=[
+["مع فعل to be","With be (am / is / are / was / were)",["Wh-","am / is / are / was / were","subject","...?"],"إذا كانت الجملة فيها am / is / are / was / were نضع كلمة السؤال ثم فعل be ثم الفاعل، ولا نستخدم do معها.","If the sentence uses be, put the question word, then be, then the subject. Never add do.",[["Where is your brother?","أين أخوك؟"],["Why were you late?","لماذا تأخرت؟"]],["Where does your brother is?","Where is your brother?"]],
+["المضارع البسيط","Present simple",["Wh-","do / does","subject","base verb","...?"],"نضيف do (مع I / you / we / they) أو does (مع he / she / it) بعد كلمة السؤال، والفعل يرجع مجردًا بلا s.","Add do or does after the question word. The main verb goes back to its base form, with no -s.",[["Where do you live?","أين تسكن؟"],["What does she like?","ماذا تحب؟"]],["What she likes?","What does she like?"]],
+["الماضي البسيط","Past simple",["Wh-","did","subject","base verb","...?"],"نضيف did مع كل الضمائر، والفعل يرجع مجردًا، بدون ed وبدون التصريف الثاني.","Add did for every subject. The verb goes back to its base form.",[["What did you eat?","ماذا أكلت؟"],["Where did they go?","أين ذهبوا؟"]],["Where did they went?","Where did they go?"]],
+["المضارع المستمر","Present continuous",["Wh-","am / is / are","subject","verb-ing","...?"],"كلمة السؤال ثم am / is / are ثم الفاعل ثم الفعل بـ ing.","Question word, then am / is / are, then the subject and the -ing verb.",[["What are you doing?","ماذا تفعل الآن؟"],["Why is she crying?","لماذا تبكي؟"]],["What you are doing?","What are you doing?"]],
+["الماضي المستمر","Past continuous",["Wh-","was / were","subject","verb-ing","...?"],"كلمة السؤال ثم was / were ثم الفاعل ثم الفعل بـ ing.","Question word, then was / were, then the subject and the -ing verb.",[["What were you doing at eight?","ماذا كنت تفعل في الثامنة؟"],["Where was he going?","إلى أين كان ذاهبًا؟"]],null],
+["المضارع التام","Present perfect",["Wh-","have / has","subject","past participle","...?"],"كلمة السؤال ثم have / has ثم الفاعل ثم التصريف الثالث.","Question word, then have / has, the subject and the past participle.",[["Where have you been?","أين كنت؟"],["How long has she lived here?","منذ متى تسكن هنا؟"]],["Where you have been?","Where have you been?"]],
+["المستقبل بـ will","Future with will",["Wh-","will","subject","base verb","...?"],"كلمة السؤال ثم will ثم الفاعل ثم الفعل المجرد.","Question word, then will, the subject and the base verb.",[["When will you come?","متى ستأتي؟"],["What will she say?","ماذا ستقول؟"]],null],
+["المستقبل بـ going to","Future with going to",["Wh-","am / is / are","subject","going to","verb","...?"],"فعل be يأتي قبل الفاعل، ثم going to والفعل.","Put be before the subject, then going to and the verb.",[["What are you going to do?","ماذا ستفعل؟"],["Where is he going to stay?","أين سيقيم؟"]],null],
+["مع الأفعال الناقصة","With modals (can, should, must...)",["Wh-","can / should / must","subject","base verb","...?"],"الفعل الناقص يأتي بعد كلمة السؤال مباشرة ثم الفاعل ثم الفعل المجرد، ولا نضيف do.","The modal comes right after the question word, then the subject and the base verb. No do.",[["How can I help you?","كيف أستطيع مساعدتك؟"],["What should we do?","ماذا ينبغي أن نفعل؟"]],["How do I can help you?","How can I help you?"]],
+["المبني للمجهول","Passive",["Wh-","be","subject","past participle","...?"],"كلمة السؤال ثم فعل be ثم الشيء ثم التصريف الثالث.","Question word, then be, the subject and the past participle.",[["When was the bridge built?","متى بُني الجسر؟"],["Where are these phones made?","أين تُصنع هذه الهواتف؟"]],["When did the bridge built?","When was the bridge built?"]],
+["إذا كانت كلمة السؤال هي الفاعل","When the question word is the subject",["Who / What","verb","...?"],"عندما نسأل عن الفاعل نفسه (من فعل؟ ماذا حدث؟) لا نستخدم do / does / did، والفعل يبقى كما في الجملة العادية.","When you ask about the subject itself, don't use do / does / did. The verb stays as in a normal sentence.",[["Who broke the window?","من كسر النافذة؟"],["What happened?","ماذا حدث؟"]],["Who did break the window?","Who broke the window?"]],
+["حرف الجر في آخر السؤال","Prepositions at the end",["Wh-","...","preposition?"],"في الإنجليزية اليومية يأتي حرف الجر غالبًا في آخر السؤال.","In everyday English the preposition usually goes at the end of the question.",[["Where are you from?","من أين أنت؟"],["Who are you talking to?","مع من تتكلم؟"]],null],
+["أسئلة نعم / لا","Yes / No questions",["do / is / can / have / will","subject","verb","...?"],"بدون كلمة سؤال: نبدأ مباشرة بالفعل المساعد ثم الفاعل. الإجابة القصيرة: Yes, I do. / No, she isn't.","No question word: start with the auxiliary, then the subject. Short answers: Yes, I do. / No, she isn't.",[["Do you like pizza?","هل تحب البيتزا؟"],["Can she swim?","هل تستطيع السباحة؟"],["Have you finished?","هل انتهيت؟"]],["You like pizza?","Do you like pizza?"]],
+["السؤال المهذّب (غير المباشر)","Indirect (polite) questions",["Can you tell me / Do you know","Wh-","subject","verb","...?"],"بعد Can you tell me أو Do you know يرجع ترتيب الجملة عاديًا: الفاعل قبل الفعل، ولا نستخدم do / did.","After Can you tell me or Do you know, use normal word order: subject before verb, and no do / did.",[["Can you tell me where the bank is?","هل يمكنك أن تخبرني أين البنك؟"],["Do you know what time it starts?","هل تعرف متى يبدأ؟"]],["Can you tell me where is the bank?","Can you tell me where the bank is?"]],
+["How مع صفة أو ظرف","How + adjective / adverb",["How","old / tall / far / fast / often","...?"],"نضع صفة أو ظرفًا بعد How لنسأل عن الدرجة: العمر، الطول، المسافة، السرعة، التكرار.","Put an adjective or adverb after How to ask about degree: age, height, distance, speed, frequency.",[["How tall is your father?","ما طول أبيك؟"],["How fast can you run?","ما سرعة ركضك؟"]],null],
+["أسئلة الذيل","Question tags",["sentence,","auxiliary","pronoun?"],"في آخر الجملة: الجملة المثبتة تأخذ ذيلًا منفيًا والعكس، بنفس الفعل المساعد.","At the end of a sentence: a positive sentence takes a negative tag and the other way round, with the same auxiliary.",[["It's hot, isn't it?","الجو حار، أليس كذلك؟"],["You didn't call, did you?","لم تتصل، أليس كذلك؟"]],null]];
+const QPRAC=[
+["___ do you live? In Dammam.","Where",["When","Who","Why"],"السؤال عن المكان: Where."],
+["___ is your birthday? In May.","When",["Where","How","Which"],"السؤال عن الوقت: When."],
+["___ brothers do you have?","How many",["How much","How old","How long"],"brothers معدود: How many."],
+["___ bag is this? It's Ali's.","Whose",["Who","Which","What"],"الملكية: Whose."],
+["What ___ she like?","does",["do","is","are"],"مضارع بسيط مع she: does."],
+["Where ___ you go yesterday?","did",["do","were","have"],"الماضي: did + فعل مجرد."],
+["What ___ you doing now?","are",["do","did","is"],"المضارع المستمر: are + ing."],
+["Who ___ the window?","broke",["did break","does break","broken"],"Who هنا فاعل فلا نستخدم did."],
+["Can you tell me where the bank ___?","is",["does","do","was being"],"السؤال المهذب: ترتيب عادي (the bank is)."],
+["Choose the correct question:","When was the bridge built?",["When did the bridge built?","When the bridge was built?","When was built the bridge?"],"المبني للمجهول: was + الشيء + التصريف الثالث."],
+["How ___ do you play football? Twice a week.","often",["many","long","much"],"عدد المرات: How often."],
+["Where are you ___? From Egypt.","from",["in","at","to"],"حرف الجر في آخر السؤال: Where are you from?"]];
+QC.forEach(c=>{if(typeof I18N_N!=="undefined"&&!I18N_N.has(nkey(c[0])))I18N_N.set(nkey(c[0]),c[1])});
+let QP=null;
+function pgQuestions(){RR=pgQuestions;
+ const golden=`<div class="card golden"><h2 class="sec" style="margin-top:0">⭐ القاعدة الذهبية</h2><div class="formula">${["Question word","Auxiliary","Subject","Main verb","...?"].map((t,k)=>`<span class="fc${k}">${t}</span>`).join('<b class="arr">→</b>')}</div>
+ <div class="formula ex">${["Where","do","you","live","?"].map((t,k)=>`<span class="fc${k}">${t}</span>`).join('<b class="arr">→</b>')}</div>
+ <p style="margin-top:10px">كلمة السؤال أولًا، ثم الفعل المساعد، ثم الفاعل، ثم الفعل الأساسي. الاستثناء الوحيد: عندما تكون كلمة السؤال هي الفاعل (Who called?).</p></div>`;
+ const words=`<h2 class="sec qh">1. كلمات السؤال</h2><div class="qwgrid">${QW.map(w=>`<div class="qwc" data-arw data-ar="${esc(w[5])}"><div class="row" style="justify-content:space-between"><b class="en qw">${w[0]}</b>${sayBtn(w[4])}</div><div class="qm" data-keep>${w[1]}</div><small class="arh" data-keep>${w[2]}</small><small class="enx" data-keep>${w[3]}</small><div class="en qex">${w[4]}</div><small class="arh" data-keep>${w[5]}</small></div>`).join("")}</div>`;
+ const cases=`<h2 class="sec qh">2. أين تأتي كلمة السؤال في كل حالة؟</h2><div class="qcgrid">${QC.map((c,k)=>`<div class="card qcase" data-arw><h3><span class="qn">${k+1}</span> ${c[0]}</h3><div class="formula sm">${c[2].map((t,j)=>`<span class="fc${j%5}">${t}</span>`).join("")}</div>
+ <p class="enx" data-keep>${c[4]}</p><p class="arh" data-keep>${c[3]}</p><div class="row" style="margin:6px 0"><button class="ibtn enbtn" onclick="this.closest('[data-arw]').classList.toggle('show-en')">EN <span data-keep>English</span></button><button class="ibtn arbtn2" onclick="this.closest('[data-arw]').classList.toggle('show-ar')">ع الشرح بالعربي</button></div>
+ <div class="exs">${c[5].map(e=>exRow(e[0],e[1])).join("")}</div>${c[6]?`<div class="mist"><span class="bad en">✗ ${c[6][0]}</span><span class="good en">✓ ${c[6][1]}</span></div>`:""}</div>`).join("")}</div>`;
+ QP={qs:QPRAC.map(q=>({q:q[0],ans:q[1],why:q[3],opts:shuffle([q[1],...q[2]])})),got:[],ok:0};
+ const prac=`<h2 class="sec qh">3. درّب نفسك</h2><div class="card"><div class="qpgrid">${QP.qs.map((q,j)=>`<div class="qblock"><div class="qt en" dir="ltr">${j+1}. ${esc(q.q).replace("___",'<span class="blank"></span>')}</div><div class="opts">${q.opts.map((o,k)=>`<button class="opt en-opt" data-pq="${j}" onclick="qpAns(${j},${k},this)">${esc(o)}</button>`).join("")}</div><div class="qpw" id="qpw${j}"></div></div>`).join("")}</div><div id="qpres"></div></div>`;
+ view(page("أدوات السؤال وأين تأتي","كل كلمات السؤال في الإنجليزية، ومكان كلمة السؤال في كل زمن وحالة، مع أمثلة مسموعة وتدريب.",golden+words+cases+prac),"qw")}
+function qpAns(j,k,b){if(QP.got[j]!=null)return;const q=QP.qs[j],ok=q.opts[k]===q.ans;QP.got[j]=ok;if(ok)QP.ok++;
+ document.querySelectorAll(`[data-pq="${j}"]`).forEach((x,m)=>{x.disabled=true;if(q.opts[m]===q.ans)x.classList.add("right");else if(x===b)x.classList.add("wrong")});
+ $("#qpw"+j).innerHTML=`<small data-keep class="arh" style="display:block">${esc(q.why)}</small>`;if(ok)say(q.q.replace("___",q.ans).replace(/\s+[A-Z][a-z].*$/,m=>m));
+ const n=QP.got.filter(x=>x!=null).length;if(n===QP.qs.length){const r=$("#qpres");S.xp+=QP.ok*3;save();r.innerHTML=`<div class="fb ${QP.ok>=10?"good":"bad"}" style="margin-top:14px"><strong>${QP.ok} / ${QP.qs.length}</strong>${QP.ok>=10?"ممتاز! أنت تعرف مكان كلمة السؤال.":"راجع الحالات بالأعلى ثم جرّب مرة أخرى."}</div><button class="btn" style="margin-top:10px" onclick="pgQuestions()">جرّب مرة أخرى</button>`}}
 
 /* ---------- every word used in a lesson ---------- */
 const STOPW=new Set(["a","an","the","s","t","and","or","of","to","d","ll","m","re","ve"]);
