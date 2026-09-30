@@ -651,6 +651,29 @@ body.focus .main{margin-right:0}body.focus .actionbar{right:0}
 .nav button{font-size:.95rem;padding:9px 10px}
 @media (max-width:760px){.side{width:72px}.main{margin-right:72px}.actionbar{right:72px}:root[dir="ltr"] .main{margin-left:72px;margin-right:0}:root[dir="ltr"] .actionbar{left:72px;right:0}.nav button{font-size:.6rem;padding:8px 2px}}
 body.focus .main{margin-right:0}body.focus .actionbar{right:0}:root[dir="ltr"] body.focus .main{margin-left:0}:root[dir="ltr"] body.focus .actionbar{left:0}
+
+/* ---- Test for me ---- */
+.tfmwrap{grid-column:1/-1;margin-top:18px}
+.tfm{border:2px dashed var(--sun);background:color-mix(in srgb,var(--sun) 8%,var(--paper));border-radius:20px;padding:16px;display:grid;gap:12px}
+.tfmh{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+.tfmh b{font-family:var(--disp);font-size:1.25rem;color:var(--ink);direction:ltr}
+.tfmh small{color:var(--muted);font-weight:700}
+.tfmt{background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:12px 14px;display:grid;gap:8px}
+.tfmt.done{border-color:var(--ok)}
+.tins{display:flex;gap:8px;align-items:center;font-weight:800}
+.tgiven{font-family:var(--disp);font-size:1.15rem;font-weight:700;background:var(--paper2);border-radius:10px;padding:8px 12px}
+.tgiven.en{text-align:left}
+.tfin{width:100%;border:2px solid var(--line);background:var(--paper2);border-radius:12px;padding:10px 12px;font-family:var(--disp);font-size:1.12rem;text-align:left;resize:vertical}
+.tfin:focus{border-color:var(--ink);outline:none}
+.tfin.right{border-color:var(--ok);background:var(--okbg)}
+.tfin.wrong{border-color:var(--bad);animation:shake .35s}
+.tfb .fb{margin-top:0}
+.tfcmp{margin-top:6px}.tfcmp small,.tfans small{color:var(--muted);font-weight:700;display:block}
+.tfwhy{margin-top:8px;font-weight:600}
+.tfans{margin-top:8px;background:var(--paper);border-radius:10px;padding:8px 10px}
+.tfans .say{margin:0 6px;vertical-align:middle}
+.tfmall{text-align:center}
+.qcase .tfm{margin-top:12px}
 </style>
 </head>
 <body>
@@ -1275,6 +1298,20 @@ const NAMES=new Set("bader maryam nora abha adam adel ahmed ali alula amal arabi
 const LVEN=[["Starter","First words: greetings, numbers, colours and family"],["Beginner","Your day, home, food and abilities"],["High beginner","The past, shopping and directions"],["Elementary","Comparing, the future and describing events"],["High elementary","Experiences, feelings and old habits"],["Intermediate","Predictions, conditionals and the passive"],["High intermediate","Reporting speech and telling stories"],["Upper intermediate","Future perfect and news style"],["Advanced","Formal style and powerful writing"],["Mastery","The precision and feel of native speakers"]];
 const STEPEN=["Words","Grammar","Listening","Video of the day","Today's quiz","Practice & games","Lesson exam"];
 const I18N={
+"الإملاء والإملاء السمعي":"Spelling & dictation","كتابة الجمل":"Sentence writing","الكتابة الحرة":"Free writing",
+"امتحان قوي من 6 أقسام، ويتغيّر في كل محاولة. تحتاج # من # للانتقال للمستوى التالي.":"A strong exam in 6 sections that changes every attempt. You need # out of # to reach the next level.",
+"امتحان قوي من 6 أقسام ويتغيّر في كل محاولة. تحتاج #٪ للانتقال للمستوى التالي.":"A strong exam in 6 sections that changes every attempt. You need #% to reach the next level.",
+"خصص من 45 دقيقة لساعة بدون مقاطعة. لا يمكن الرجوع لقسم بعد تسليمه.":"Set aside 45 minutes to an hour without interruptions. You can't go back to a section after submitting it.",
+"اقرأ النصين بعناية ثم أجب. (٢٫٥ درجة لكل سؤال)":"Read both texts carefully, then answer. (2.5 points per question)","النص الأول":"Text 1","النص الثاني":"Text 2",
+"ستسمع بدون كتابة. كل جزء يُشغَّل 3 مرات فقط. (٢٫٥ درجة لكل سؤال)":"You'll listen without subtitles. Each part can be played 3 times only. (2.5 points per question)","الجزء الأول: حديث":"Part 1: a talk","الجزء الثاني: محادثة بين شخصين":"Part 2: a conversation","تشغيل المحادثة":"Play the conversation",
+"15 سؤالًا من الدروس الستة ومن المستويات السابقة: قواعد، اكتشاف الأخطاء، ترجمة، ومعاني كلمات في سياقها. (٢ درجة لكل سؤال)":"15 questions from the six lessons and earlier levels: grammar, finding mistakes, translation and word meanings in context. (2 points per question)",
+"15 سؤالًا من الدروس الستة: قواعد، اكتشاف الأخطاء، ترجمة، ومعاني كلمات في سياقها. (٢ درجة لكل سؤال)":"15 questions from the six lessons: grammar, finding mistakes, translation and word meanings in context. (2 points per question)",
+"اكتب كل كلمة تسمعها (٢ درجة لكل كلمة)، ثم اكتب الجملة كاملة (٤ درجات).":"Type each word you hear (2 points each), then type the whole sentence (4 points).","🔊 الجملة":"🔊 Sentence",
+"اكتب كل جملة كاملة وصحيحة. (٥ درجات لكل جملة)":"Write each sentence completely and correctly. (5 points per sentence)","استمع للجزأين أولًا":"Listen to both parts first",
+"تحتاج # من #. راجع كلمات المستوى وقواعده وأخطاءك، ويمكنك إعادة الامتحان بعد ساعة، وستكون الأسئلة مختلفة.":"You need # out of #. Review the level's words, grammar and your mistakes. You can retake the exam in one hour, and the questions will be different.",
+"20 سؤالًا تتغيّر في كل محاولة":"20 questions that change every attempt","كلمات: إملاء، أكمل الجملة، ومعاني في سياقها":"Words: spelling, fill the gap and meanings in context","قواعد: اكتب الكلمة الناقصة، اكتشف الخطأ، واختر الترجمة الصحيحة":"Grammar: type the missing word, find the mistake, choose the right translation","استماع: إملاء جملة، رد مناسب في محادثة، وأسئلة عن الفيديو":"Listening: sentence dictation, the right reply in a conversation, and video questions","أسئلة مراجعة من دروس سابقة":"Review questions from earlier lessons",
+"من 7). الكلمات المطلوبة المستخدمة:":"of 7). Required words used:",
+"اكتب الجملتين صح عشان تتأكد إنك فهمت، ده إجباري قبل ما تكمل":"Write both sentences correctly to check you understood. This is required before you continue.","اكتب الجملتين عشان تتأكد إنك فهمت":"Write both sentences to check you understood","صحّح جملتي":"Check my sentence","🔄 جملتين جداد":"🔄 Two new sentences","اكتب جملة كاملة أولًا.":"Write a complete sentence first.","اكتب جملتك":"Write your sentence","اكتب جملتي Test for me صح عشان تكمل":"Write both Test for me sentences correctly to continue",
 "قواعدي":"My grammar","أدوات السؤال":"Question words",
 "القواعد ستظهر هنا بعد أن تنجح في امتحان أول درس. كل درس تنجح فيه تُضاف قاعدته تلقائيًا.":"Grammar rules appear here after you pass your first lesson exam. Each lesson you pass adds its rule automatically.",
 "📝 اختبر نفسك في الدرس":"📝 Test yourself on this lesson","افتح الدرس":"Open the lesson","القاعدة التالية:":"Next rule:","القاعدة التالية":"Next rule","تُضاف هنا عندما تنجح في امتحان":"It will be added here when you pass the exam of",
@@ -1562,7 +1599,7 @@ function missionHTML(){
  const r=ts.r,lv=LV[r];
  if(ts.t==="lx"||ts.t==="lxwait"){const x=S.X[r]||{},head=`<p style="font-weight:800;color:var(--muted)">المستوى <span class="en">${lv.c}</span></p>`;
   if(ts.t==="lxwait")return `<div class="mission" style="--lv:${lv.col}"><div class="mbadge">⏳</div><div>${head}<h2>إعادة امتحان المستوى بعد قليل</h2><p class="sub">تُفتح المحاولة الجديدة بعد <b class="cd" data-lx="${r}">${fmtWait(lxWait(r))}</b>. راجع كلماتك وأخطاءك الآن.</p><div class="row"><button class="btn sun" onclick="wordFilter.lv='${r}';pgWords()">📚 راجع كلمات المستوى</button><button class="btn ghost" onclick="showMistakes()">📒 أخطائي</button></div></div></div>`;
-  return `<div class="mission" style="--lv:${lv.col}"><div class="mbadge">🏆</div><div>${head}<h2>امتحان المستوى</h2><p class="sub">${x.failed?"المحاولة السابقة لم تنجح. راجعت؟ جرّب مرة أخرى.":"قراءة، استماع، قواعد ومفردات، إملاء، وكتابة. تحتاج ٧٠٪ للانتقال للمستوى التالي."}</p><div class="row"><button class="btn sun" onclick="lxIntro(${r})">اذهب للامتحان</button><button class="btn ghost" onclick="wordFilter.lv='${r}';pgWords()">📚 راجع كلماتي</button></div></div></div>`}
+  return `<div class="mission" style="--lv:${lv.col}"><div class="mbadge">🏆</div><div>${head}<h2>امتحان المستوى</h2><p class="sub">${x.failed?"المحاولة السابقة لم تنجح. راجعت؟ جرّب مرة أخرى.":`امتحان قوي من 6 أقسام ويتغيّر في كل محاولة. تحتاج ${LXPASS}٪ للانتقال للمستوى التالي.`}</p><div class="row"><button class="btn sun" onclick="lxIntro(${r})">اذهب للامتحان</button><button class="btn ghost" onclick="wordFilter.lv='${r}';pgWords()">📚 راجع كلماتي</button></div></div></div>`}
  const i=ts.i,s=S.L[i]||{},les=L[i],k=nowStep(i);
  const head=`<p style="font-weight:800;color:var(--muted)">المستوى <span class="en">${lv.c}</span>، الدرس ${i%LN+1} من 6</p>`;
  let h,sub,btn;
@@ -1674,7 +1711,7 @@ function markStep(i,key,next){const s=st(i);if(!s[key]){s[key]=1;S.xp+=5}save();
 function abar(i,k){
  const s=S.L[i]||{},done=stepDone(i,k);
  if(k===0)return done?`<p>راجعت الكلمات</p><button class="btn" onclick="lesson(${i},1)">التالي: القاعدة</button>`:`<p id="fcount">اقلب كل البطاقات: ${flipped.size}/8</p><button class="btn sun" id="nextBtn" ${flipped.size<8?"disabled":""} onclick="markStep(${i},'v',1)">حفظت الكلمات، التالي</button>`;
- if(k===1)return `<p>اقرأ الشرح واستمع لكل مثال</p><button class="btn ${done?"":"sun"}" onclick="markStep(${i},'g',2)">${done?"التالي: الاستماع":"فهمت القاعدة، التالي"}</button>`;
+ if(k===1){const t=done||s.tfm;return `<p>${t?"اقرأ الشرح واستمع لكل مثال":"اكتب جملتي Test for me صح عشان تكمل"}</p><button class="btn ${done?"":"sun"}" ${t?"":"disabled"} onclick="markStep(${i},'g',2)">${done?"التالي: الاستماع":"فهمت القاعدة، التالي"}</button>`}
  if(k===2){const ok=done||dlgHeard||!TTS;return `<p id="lhint">${ok?"أحسنت، يمكنك المتابعة":"شغّل المحادثة كاملة مرة واحدة على الأقل"}</p><button class="btn sun" id="nextBtn" ${ok?"":"disabled"} onclick="markStep(${i},'l',3)">${done?"التالي: فيديو اليوم":"أنهيت الاستماع، التالي"}</button>`}
  if(k===3)return done?`<p>شاهدت الفيديو وأجبت ✓</p><button class="btn" onclick="lesson(${i},4)">التالي: اختبار اليوم</button>`:`<p>شاهد الفيديو ثم أجب عن سؤالين من 3 على الأقل</p>`;
  if(k===4)return s.quiz?`<p>اجتزت اختبار اليوم بنتيجة ${s.qs||""}٪</p><button class="btn" onclick="lesson(${i},5)">التالي: تدريب وألعاب</button>`:`<p>10 أسئلة، تحتاج 7 إجابات صحيحة</p><button class="btn sun" onclick="startTest(${i},'quiz')">ابدأ اختبار اليوم</button>`;
@@ -1691,10 +1728,11 @@ function vocabTab(i){const v=L[i].v;
 function flipCard(el,k){el.classList.toggle("flip");flipped.add(k);const c=$("#fcount"),b=$("#nextBtn");if(c)c.textContent=`اقلب كل البطاقات: ${flipped.size}/8`;if(b&&flipped.size>=8)b.disabled=false}
 const arBtn=()=>`<button class="say arbtn" data-keep onclick="event.stopPropagation();this.closest('[data-arw]').classList.toggle('show-ar')" aria-label="المعنى بالعربي">ع</button>`;
 const exRow=(en,ar)=>`<div class="ex" data-arw${ar?` data-ar="${esc(ar)}"`:""}><div class="sb">${sayBtn(en)}${sayBtn(en,{slow:1})}${ar?arBtn():""}</div><div style="flex:1"><span class="en">${en}</span>${ar?`<small class="arh" data-keep>${ar}</small>`:""}</div></div>`;
-function gramTab(i){const g=L[i].g,en=L[i].gen;
+function gramTab(i,ctx){const g=L[i].g,en=L[i].gen,inLesson=ctx!=="page";
  return `<div class="gcard gsplit" data-arw><div><h3>${g[0]}</h3>${en?`<div class="exp enx" data-keep>${en}</div>`:""}<div class="exp arh" data-keep>${g[1]}</div>
  <div class="row" style="margin-top:10px">${en?`<button class="ibtn enbtn" onclick="this.closest('[data-arw]').classList.toggle('show-en')">EN <span data-keep>English explanation</span></button>`:""}<button class="ibtn arbtn2" onclick="this.closest('[data-arw]').classList.toggle('show-ar')">ع الشرح بالعربي</button></div></div>
- <div class="exs">${g[2].map(e=>exRow(e[0],e[1])).join("")}</div></div>`}
+ <div class="exs">${g[2].map(e=>exRow(e[0],e[1])).join("")}</div>
+ <div class="tfmwrap">${tfmBox((inLesson?"L":"g")+i,lessonTasks(i),inLesson?{must:!stepDone(i,1),onDone:()=>{const s=st(i);s.tfm=1;save();const ab=$("#abar");if(ab&&curL===i&&curStep===1)ab.innerHTML=abar(i,1)}}:{})}</div></div>`}
 function listenTab(i){const d=L[i].d,ss=L[i].v.map(w=>[w[2],""]).concat(L[i].g[2]);
  return `<div class="split2"><div class="gcard"><div class="row" style="justify-content:space-between"><h3 style="margin:0">🗣 محادثة الدرس</h3><button class="btn sun" id="pdlg" onclick="playDialogue(${i})">▶ شغّل المحادثة</button></div>
  <div class="row" style="margin-top:12px;justify-content:space-between"><div class="seg" style="min-width:210px">${[[.65,"🐢 بطيء"],[.9,"عادي"]].map(([r,t])=>`<button aria-pressed="${(S.rate||.9)===r}" onclick="setRate(${r},this)">${t}</button>`).join("")}</div>
@@ -1757,7 +1795,7 @@ function gameCards(i){const p=i==null?{}:P(i),a=i==null?"null":i;
  return g("🧩","توصيل الكلمات","صِل كل كلمة بمعناها بأسرع وقت",p.m,"gMatch")+g("🧱","رتّب الجملة","كوّن الجملة من كلماتها",p.b,"gBuild")+g("🔤","الحروف المبعثرة","رتّب الحروف لتكتب الكلمة",p.x,"gScr")+(TTS?g("⚡","سباق الأذن","اسمع واختر المعنى قبل انتهاء الوقت",p.r,"gRace"):"")}
 function examTab(i){
  if(passed(i))return `<div class="info"><b>اجتزت امتحان الدرس ✓</b> بنتيجة ${S.L[i].es}٪.</div>`;
- return `<div class="info"><b>امتحان الدرس (بعد ساعة من اختبار اليوم)</b><ul><li>20 سؤالًا، أغلبها كتابة وليس اختيارًا</li><li>إملاء كلمات، وإملاء جمل كاملة بالسمع</li><li>أكمل الجملة، وترتيب الكلمات، واستماع لجمل</li><li>4 أسئلة قواعد و3 من كل كلمات الدرس</li><li>سؤال من درس سابق</li></ul><p style="margin-top:8px">تحتاج ${examPassPct()}٪ على الأقل لتنتقل للدرس التالي فورًا. ${!practiceDone(i)?"أكمل خطوة التدريب والألعاب أولًا.":waitOver(i)?"الامتحان متاح الآن.":`يُفتح بعد ${fmtWait(waitMs(i))}.`}</p></div>`}
+ return `<div class="info"><b>امتحان الدرس (بعد ساعة من اختبار اليوم)</b><ul><li>20 سؤالًا تتغيّر في كل محاولة</li><li>كلمات: إملاء، أكمل الجملة، ومعاني في سياقها</li><li>قواعد: اكتب الكلمة الناقصة، اكتشف الخطأ، واختر الترجمة الصحيحة</li><li>استماع: إملاء جملة، رد مناسب في محادثة، وأسئلة عن الفيديو</li><li>أسئلة مراجعة من دروس سابقة</li></ul><p style="margin-top:8px">تحتاج ${examPassPct()}٪ على الأقل لتنتقل للدرس التالي فورًا. ${!practiceDone(i)?"أكمل خطوة التدريب والألعاب أولًا.":waitOver(i)?"الامتحان متاح الآن.":`يُفتح بعد ${fmtWait(waitMs(i))}.`}</p></div>`}
 /* ---------- activity frame ---------- */
 function frame(title,back,i,html){const col=i!=null?lvOf(i).col:LV[Math.min(cursor().r,NL-1)].col;
  return `<div class="wrap test" style="--lv:${col}"><div class="gtop"><button class="ibtn" onclick="${back}">→ رجوع</button><b>${title}</b><span style="width:60px"></span></div>${html}</div>`}
@@ -1934,12 +1972,7 @@ const vSpell=w=>({t:"spell",tag:"Spelling",prompt:`Write it in English: <b data-
 const gq=(q,tag)=>mcq(tag||"Grammar",`<span class="qtext en">${esc(q[0]).replace(/___/g,'<span class="blank"></span>')}</span>`,q[1],q[2],q[3]);
 function buildQuiz(i){const l=L[i],v=shuffle(l.v),lw=shuffle(lessonWords(i)),x=j=>lw[j]?vMeaningX(lw[j],i):vMeaning(v[5+j],l);
  return [vMeaning(v[0],l),gq(l.q[0]),vListen(v[1],l),x(0),vMeaning(v[2],l),gq(l.q[1]),vReverse(v[3],l),x(1),gq(l.q[2]),vMeaning(v[4],l)]}
-function buildExam(i){const l=L[i],v=shuffle(l.v),lw=shuffle(lessonWords(i)),ss=shuffle(shortSents(i,3,9)),ls=shuffle(shortSents(i,4,9)),all=[...new Set(lessonSentAll(i))];
- const x=j=>lw[j]?vMeaningX(lw[j],i):vReverse(v[(j+6)%8],l);
- const qs=[vSpell(v[0]),gapQ(v[1]),vListen(v[2],l),gq(l.q[3]),x(0),ss[0]?dictQ(ss[0]):vSpell(v[3]),vReverse(v[3],l),ls[0]?orderQ(ls[0]):gq(l.q[0]),gq(l.q[4]),x(1),
-  gapQ(v[4]),all.length>=4?hearQ(ss[1]||all[0],all):vListen(v[5],l),vSpell(v[5]),gq(l.q[5]),x(2),ss[2]?dictQ(ss[2]):vSpell(v[6]),vListen(v[6],l),ls[1]?orderQ(ls[1]):gq(l.q[1]),gq(l.q[Math.floor(Math.random()*3)])];
- if(i>0){const p=Math.floor(Math.random()*i),pl=L[p];const q=Math.random()<.5?gq(pl.q[Math.floor(Math.random()*6)]):vReverse(pick(pl.v,1)[0],pl);q.tag="Review: earlier lesson";qs.push(q)}else qs.push(vMeaning(v[7],l));
- return qs}
+/* buildExam lives in p9.js */
 let T=null;
 function startTest(i,kind){if(kind==="exam"&&!passed(i)){if(S.L[i]&&S.L[i].review){toast("راجع الدرس من الخطوة الأولى قبل إعادة الامتحان");return lesson(i,0)}if(!canExam(i))return toast(!practiceDone(i)?"أكمل خطوة التدريب والألعاب أولًا":"امتحان المراجعة يُفتح غدًا")}
  touch();T={i,kind,qs:kind==="exam"?buildExam(i):buildQuiz(i),k:0,score:0,wrong:[],done:false};renderQ()}
@@ -1959,7 +1992,7 @@ function feedback(ok,q,note){T.done=true;if(ok)T.score++;else T.wrong.push(q);co
 function answer(k){if(T.done)return;const q=T.qs[T.k],ok=q.opts[k]===q.ans;
  document.querySelectorAll(".opt").forEach((b,j)=>{b.disabled=true;if(q.opts[j]===q.ans)b.classList.add("right");else if(j===k)b.classList.add("wrong")});feedback(ok,q)}
 function answerSpell(){if(T.done)return;const q=T.qs[T.k],inp=$("#sp"),v=norm(inp.value),a=norm(q.ans);if(!v)return;
- let ok=v===a,note="";if(!ok&&a.length>=5&&lev(v,a)===1){ok=true;note=`انتبه للإملاء الدقيق: <span class="en">${esc(q.ans)}</span><br>`}
+ let ok=v===a||tnorm(inp.value)===tnorm(q.ans),note="";if(!ok&&a.length>=5&&lev(v,a)===1){ok=true;note=`انتبه للإملاء الدقيق: <span class="en">${esc(q.ans)}</span><br>`}
  inp.readOnly=true;inp.classList.add(ok?"right":"wrong");feedback(ok,q,note)}
 function nextQ(){if(T.k<T.qs.length-1){T.k++;renderQ()}else finish()}
 function quitTest(){if(cfm("هل تريد إنهاء الاختبار؟ لن تُحفظ هذه المحاولة.")){const i=T.i,k=T.kind==="quiz"?4:6;T=null;lesson(i,k)}}
@@ -1988,55 +2021,73 @@ function finish(){
  if(ok&&kind!=="practice")confetti(stampNow?160:70)}
 
 /* ---------- LEVEL EXAM (day 15) ---------- */
-const XSEC=["القراءة","الاستماع","القواعد والمفردات","الإملاء","الكتابة"],XMAX=[20,20,30,10,20];
+const XSEC=["القراءة","الاستماع","القواعد والمفردات","الإملاء والإملاء السمعي","كتابة الجمل","الكتابة الحرة"],XMAX=[15,15,30,10,15,15],XICON=["📖","🎧","📐","✍️","🧩","📝"],LXPASS=75;
 let XS=null;
 function lxIntro(r){RR=()=>lxIntro(r);const lv=LV[r],x=S.X[r]||{},ok=lxOpen(r);
  let act;
  if(x.passed)act=`<p><b>اجتزت هذا الامتحان ✓</b> بنتيجة ${x.score}٪ بتاريخ ${shortDate(x.passed)}.</p><div class="row" style="margin-top:12px"><button class="btn sun" onclick="cert(${r})">🎓 الشهادة</button></div>`;
- else if(ok)act=`<p>${x.failed?"هذه محاولة جديدة. ابدأ عندما تكون جاهزًا.":"خصص 30 إلى 45 دقيقة بدون مقاطعة. لا يمكن الرجوع لقسم بعد تسليمه."}</p><div class="row" style="margin-top:12px"><button class="btn sun" onclick="lxStart(${r})">ابدأ امتحان المستوى</button><button class="btn ghost" onclick="wordFilter.lv='${r}';pgWords()">📚 راجع كلمات المستوى</button></div>`;
+ else if(ok)act=`<p>${x.failed?"هذه محاولة جديدة. ابدأ عندما تكون جاهزًا.":"خصص من 45 دقيقة لساعة بدون مقاطعة. لا يمكن الرجوع لقسم بعد تسليمه."}</p><div class="row" style="margin-top:12px"><button class="btn sun" onclick="lxStart(${r})">ابدأ امتحان المستوى</button><button class="btn ghost" onclick="wordFilter.lv='${r}';pgWords()">📚 راجع كلمات المستوى</button></div>`;
  else act=`<p>${passed(r*LN+LN-1)?`إعادة المحاولة بعد <b class="cd" data-lx="${r}">${fmtWait(lxWait(r))}</b>.`:"يُفتح بعد النجاح في امتحانات الدروس الستة."}</p>`;
- view(page(`امتحان المستوى ${r+1}: ${lv.n}`,`تحتاج ٧٠ من ١٠٠ للانتقال للمستوى التالي.`,`<div class="card">
- <div class="breakdown" style="margin-top:0">${XSEC.map((t,k)=>`<div><span>${["📖","🎧","📐","✍️","📝"][k]} ${t}</span><span class="en">${XMAX[k]}</span></div>`).join("")}<div style="border-color:var(--lv)"><span>المجموع</span><span class="en">100</span></div></div>${act}</div>`,lv.col),"today")}
-function lxStart(r){const e=LX[r],ws=levelWords(r),pool={v:ws};
- const G=[];for(let k=0;k<LN;k++)G.push(gq(pick(L[r*LN+k].q,1)[0]));shuffle(ws).slice(0,4).forEach((w,j)=>G.push(j%2?vReverse(w,pool):vMeaning(w,pool)));
+ view(page(`امتحان المستوى ${r+1}: ${lv.n}`,`امتحان قوي من 6 أقسام، ويتغيّر في كل محاولة. تحتاج ${LXPASS} من 100 للانتقال للمستوى التالي.`,`<div class="card">
+ <div class="breakdown" style="margin-top:0">${XSEC.map((t,k)=>`<div><span>${XICON[k]} ${t}</span><span class="en">${XMAX[k]}</span></div>`).join("")}<div style="border-color:var(--lv)"><span>المجموع</span><span class="en">100</span></div></div>${act}</div>`,lv.col),"today")}
+function lxStart(r){const e=LX[r],idx=[...Array(LN)].map((_,k)=>r*LN+k),ws=levelWords(r),pool={v:ws};
  const mq=q=>({prompt:esc(q[0]),opts:shuffle([q[1],...q[2]]),ans:q[1],why:""});
- XS={r,sec:0,pts:[0,0,0,0,0],ans:{},plays:0,R:e.R[1].map(mq),H:e.H[1].map(mq),G:shuffle(G),SP:pick(ws.filter(w=>/^[a-z]{3,12}$/i.test(w[0])),2),wrong:[],W:null};touch();xRender()}
+ const toX=q=>q&&q.t==="mcq"?{prompt:q.prompt,opts:q.opts,ans:q.ans,why:q.why||""}:null;
+ const rv=pick(idx,1)[0],story=L[rv].vid,sq=pick(story[2],2).map(mq);
+ const dl=pick(idx,1)[0],dlg=L[dl].d,a=Math.random()<.5?0:2,others=levelDialogLines(dl,dl);
+ const H2=[{prompt:"Which sentence was in the conversation?",opts:shuffle([pick(dlg,1)[0][0],...pick(others,3)]),why:""},{prompt:`Choose the best reply to: <span class="en">“${esc(dlg[a][0])}”</span>`,opts:null,ans:dlg[a+1][0],why:""}];
+ H2[0].ans=H2[0].opts.find(o=>dlg.some(x=>x[0]===o));H2[1].opts=shuffle([dlg[a+1][0],...pick(others.filter(o=>o!==dlg[a+1][0]),3)]);
+ const G=[];idx.forEach(k=>{const l=L[k],gs=shuffle(l.q.filter(gapSent));G.push(toX(gq(pick(l.q,1)[0])));
+  const extra=shuffle([gs[0]&&errorQ(gs[0]),translateQ(pick(l.g[2],1)[0],k),lessonWords(k).length&&vMeaningX(pick(lessonWords(k),1)[0],k)].filter(Boolean));if(extra[0])G.push(toX(extra[0]))});
+ if(r>0){for(let n=0;n<3;n++){const p=Math.floor(Math.random()*r*LN);const q=toX(reviewQ(p));if(q){q.prompt=`<small class="muted">Review (${lvOf(p).c})</small> `+q.prompt;G.push(q)}}}
+ while(G.length<15){const w=pick(ws,1)[0];G.push(toX(Math.random()<.5?vReverse(w,pool):vMeaning(w,pool)))}
+ const tasks=pick(idx.flatMap(k=>lessonTasks(k).map(t=>Object.assign({},t,{k}))),3);
+ const dict=pick(idx.flatMap(k=>shortSents(k,5,10)),1)[0];
+ XS={r,sec:0,pts:[0,0,0,0,0,0],ans:{},plays:0,dplays:0,R:e.R[1].map(mq),R2:sq,story,H:e.H[1].map(mq),H2,dlg,G:shuffle(G).slice(0,15),SP:pick(ws.filter(w=>/^[a-z]{3,12}$/i.test(w[0])),3),dict,tasks,wrong:[],W:null,t0:Date.now()};
+ touch();xRender()}
 function xHead(){const lv=LV[XS.r];return `<div class="tbar"><b>امتحان المستوى <span class="en">${lv.c}</span></b></div><div class="xsec">${XSEC.map((t,k)=>`<span class="${k<XS.sec?"done":k===XS.sec?"on":""}">${k<XS.sec?"✓ ":""}${t}</span>`).join("")}</div>`}
-function qList(key){return XS[key].map((q,j)=>`<div class="qblock"><div class="qt" dir="auto">${j+1}. ${q.prompt}</div><div class="opts">${q.opts.map((o,k)=>`<button class="opt ${isAr(o)?"":"en-opt"} ${XS.ans[key+j]===k?"sel":""}" data-g="${key}${j}" onclick="xSel('${key}',${j},${k},this)" ${isAr(o)?"data-keep":""}>${esc(o)}</button>`).join("")}</div></div>`).join("")}
+function qList(key,start){start=start||0;return XS[key].map((q,j)=>`<div class="qblock"><div class="qt" dir="auto">${j+1+start}. ${q.prompt}</div><div class="opts">${q.opts.map((o,k)=>`<button class="opt ${isAr(o)?"":"en-opt"} ${XS.ans[key+j]===k?"sel":""}" data-g="${key}${j}" onclick="xSel('${key}',${j},${k},this)" ${isAr(o)?"data-keep":""}>${esc(o)}</button>`).join("")}</div></div>`).join("")}
 function xSel(key,j,k,b){XS.ans[key+j]=k;document.querySelectorAll(`[data-g="${key}${j}"]`).forEach(x=>x.classList.toggle("sel",x===b))}
 function xRender(){const e=LX[XS.r],lv=LV[XS.r];let body="";
- if(XS.sec===0)body=`<p class="hint">اقرأ النص بعناية ثم أجب. (٥ درجات لكل سؤال)</p><div class="passage">${esc(e.R[0])}</div><h3 class="sec" style="margin-top:16px">الأسئلة</h3>${qList("R")}`;
- if(XS.sec===1)body=`<p class="hint">ستسمع نصًا بدون كتابة. يمكنك التشغيل 3 مرات فقط. (٥ درجات لكل سؤال)</p><div class="bigsay"><button id="hplay" onclick="xPlay()" aria-label="تشغيل">🔊</button></div><p style="text-align:center;font-weight:800" id="hleft">مرات التشغيل المتبقية: ${3-XS.plays}</p><h3 class="sec">الأسئلة</h3>${qList("H")}`;
- if(XS.sec===2)body=`<p class="hint">أسئلة من الدروس الستة. (٣ درجات لكل سؤال)</p>${XS.G.map((q,j)=>`<div class="qblock"><div class="qt">${j+1}. ${q.prompt}</div><div class="opts">${q.opts.map((o,k)=>`<button class="opt ${isAr(o)?"":"en-opt"} ${XS.ans["G"+j]===k?"sel":""}" data-g="G${j}" onclick="xSel('G',${j},${k},this)" ${isAr(o)?"data-keep":""}>${esc(o)}</button>`).join("")}</div></div>`).join("")}`;
- if(XS.sec===3)body=`<p class="hint">استمع لكل كلمة واكتبها بالإنجليزية. (٥ درجات لكل كلمة)</p>${XS.SP.map((w,j)=>`<div class="qblock"><div class="row"><button class="ibtn" data-say="${esc(w[0])}">🔊 الكلمة ${j+1}</button><button class="ibtn" data-say="${esc(w[0])}" data-slow="1">🐢</button></div><div class="spell"><input id="xs${j}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="الكلمة ${j+1}"></div></div>`).join("")}`;
- if(XS.sec===4)body=`<div class="info" data-arw><p class="en" style="text-align:left;font-weight:800;font-size:1.1rem">${esc(e.W[1])} (at least ${e.W[2]} words)</p><p class="arh" data-keep style="margin-top:6px">${esc(e.W[0])}</p><button class="ibtn arbtn2" style="margin-top:6px" onclick="this.closest('[data-arw]').classList.toggle('show-ar')">ع التعليمات بالعربي</button><p style="margin-top:8px">استخدم هذه الكلمات أو التراكيب:</p><div class="kw" id="kw">${e.W[3].map(k=>`<span>${esc(k)}</span>`).join("")}</div></div>
+ if(XS.sec===0)body=`<p class="hint">اقرأ النصين بعناية ثم أجب. (٢٫٥ درجة لكل سؤال)</p><h3 class="sec">النص الأول</h3><div class="passage">${esc(e.R[0])}</div>${qList("R")}
+ <h3 class="sec" style="margin-top:18px">النص الثاني: <span class="en">${esc(XS.story[0])}</span></h3><div class="passage">${XS.story[1].map(s=>esc(s[1])).join(" ")}</div>${qList("R2",4)}`;
+ if(XS.sec===1)body=`<p class="hint">ستسمع بدون كتابة. كل جزء يُشغَّل 3 مرات فقط. (٢٫٥ درجة لكل سؤال)</p><h3 class="sec">الجزء الأول: حديث</h3><div class="bigsay"><button id="hplay" onclick="xPlay()" aria-label="تشغيل">🔊</button></div><p style="text-align:center;font-weight:800" id="hleft">مرات التشغيل المتبقية: ${3-XS.plays}</p>${qList("H")}
+ <h3 class="sec" style="margin-top:18px">الجزء الثاني: محادثة بين شخصين</h3><div class="bigsay"><button onclick="xPlayD()" aria-label="تشغيل المحادثة">🗣</button></div><p style="text-align:center;font-weight:800" id="dleft">مرات التشغيل المتبقية: ${3-XS.dplays}</p>${qList("H2",4)}`;
+ if(XS.sec===2)body=`<p class="hint">15 سؤالًا من الدروس الستة${XS.r>0?" ومن المستويات السابقة":""}: قواعد، اكتشاف الأخطاء، ترجمة، ومعاني كلمات في سياقها. (٢ درجة لكل سؤال)</p>${qList("G")}`;
+ if(XS.sec===3)body=`<p class="hint">اكتب كل كلمة تسمعها (٢ درجة لكل كلمة)، ثم اكتب الجملة كاملة (٤ درجات).</p>${XS.SP.map((w,j)=>`<div class="qblock"><div class="row"><button class="ibtn" data-say="${esc(w[0])}">🔊 الكلمة ${j+1}</button><button class="ibtn" data-say="${esc(w[0])}" data-slow="1">🐢</button></div><div class="spell"><input id="xs${j}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="الكلمة ${j+1}"></div></div>`).join("")}
+ <div class="qblock"><div class="row"><button class="ibtn" data-say="${esc(XS.dict)}">🔊 الجملة</button><button class="ibtn" data-say="${esc(XS.dict)}" data-slow="1">🐢</button></div><textarea class="dict" id="xdict" autocomplete="off" spellcheck="false" aria-label="اكتب الجملة" placeholder="Type the sentence..."></textarea></div>`;
+ if(XS.sec===4)body=`<p class="hint">اكتب كل جملة كاملة وصحيحة. (٥ درجات لكل جملة)</p>${XS.tasks.map((t,k)=>`<div class="tfmt"><div class="tins"><span class="qn">${k+1}</span><span class="arh" data-keep>${t.ins}</span><span class="enx" data-keep>${t.insEn}</span></div><div class="tgiven ${t.givenAr?"":"en"}" ${t.givenAr?'data-keep dir="rtl"':'dir="ltr"'}>${esc(t.given).replace(/___/g,'<span class="blank"></span>')}</div><textarea class="tfin" id="xt${k}" rows="2" dir="ltr" spellcheck="false" aria-label="اكتب جملتك"></textarea></div>`).join("")}`;
+ if(XS.sec===5)body=`<div class="info" data-arw><p class="en" style="text-align:left;font-weight:800;font-size:1.1rem">${esc(e.W[1])} (at least ${e.W[2]} words)</p><p class="arh" data-keep style="margin-top:6px">${esc(e.W[0])}</p><button class="ibtn arbtn2" style="margin-top:6px" onclick="this.closest('[data-arw]').classList.toggle('show-ar')">ع التعليمات بالعربي</button><p style="margin-top:8px">استخدم هذه الكلمات أو التراكيب:</p><div class="kw" id="kw">${e.W[3].map(k=>`<span>${esc(k)}</span>`).join("")}</div></div>
  <textarea class="essay" id="essay" oninput="xCount()" aria-label="اكتب هنا" placeholder="Write here..."></textarea><p id="wcount" style="font-weight:800;margin-top:6px">0 / ${e.W[2]} كلمة</p>`;
- view(`<div class="wrap test" style="--lv:${lv.col}">${xHead()}<h2 style="margin:6px 0 10px">${["📖","🎧","📐","✍️","📝"][XS.sec]} ${XSEC[XS.sec]}</h2>${body}<div class="row" style="margin-top:16px;justify-content:flex-end"><button class="btn sun" onclick="xSubmit()">${XS.sec<4?"سلّم القسم وانتقل للتالي":"سلّم الامتحان"}</button></div></div>`,"focus")}
+ view(`<div class="wrap test" style="--lv:${lv.col}">${xHead()}<h2 style="margin:6px 0 10px">${XICON[XS.sec]} ${XSEC[XS.sec]} <small class="muted">(${XMAX[XS.sec]})</small></h2>${body}<div class="row" style="margin-top:16px;justify-content:flex-end"><button class="btn sun" onclick="xSubmit()">${XS.sec<5?"سلّم القسم وانتقل للتالي":"سلّم الامتحان"}</button></div></div>`,"focus")}
+function xPlayD(){if(XS.dplays>=3)return toast("انتهت مرات التشغيل");XS.dplays++;$("#dleft").textContent="مرات التشغيل المتبقية: "+(3-XS.dplays);playSeq(XS.dlg.map((x,j)=>({t:x[0],b:j%2===1})))}
 function xPlay(){if(XS.plays>=3)return toast("انتهت مرات التشغيل");XS.plays++;$("#hleft").textContent="مرات التشغيل المتبقية: "+(3-XS.plays);say(LX[XS.r].H[0],{rate:(S.rate||.9)<.8?.7:.88})}
 function xCount(){const e=LX[XS.r],t=$("#essay").value,n=wc(t),low=" "+norm(t)+" ";$("#wcount").textContent=`${n} / ${e.W[2]} كلمة`;
  document.querySelectorAll("#kw span").forEach((s,j)=>s.classList.toggle("hit",low.includes(" "+norm(e.W[3][j])+" ")))}
-function xGrade(key,w){let p=0;XS[key].forEach((q,j)=>{const k=XS.ans[key+j];if(q.opts[k]===q.ans)p+=w;else XS.wrong.push(q)});return p}
-function xSubmit(){const sec=XS.sec,key=["R","H","G"][sec];
- if(key&&XS[key].some((_,j)=>XS.ans[key+j]==null))return toast("أجب عن كل الأسئلة أولًا");
- if(sec===0)XS.pts[0]=xGrade("R",5);
- if(sec===1){if(!XS.plays)return toast("استمع للنص أولًا");XS.pts[1]=xGrade("H",5)}
- if(sec===2)XS.pts[2]=xGrade("G",3);
- if(sec===3){let p=0;XS.SP.forEach((w,j)=>{const v=norm($("#xs"+j).value),a=norm(w[0]);if(v===a)p+=5;else if(a.length>=5&&lev(v,a)===1)p+=3;if(v!==a)XS.wrong.push({prompt:`Spelling: <b data-keep>«${esc(w[1])}»</b>`,ans:w[0]})});XS.pts[3]=p}
- if(sec===4){const e=LX[XS.r],t=$("#essay").value,n=wc(t);if(n<5)return toast("اكتب نصك أولًا");
+function xGrade(key,w){let p=0;XS[key].forEach((q,j)=>{const k=XS.ans[key+j];if(q.opts[k]===q.ans)p+=w;else XS.wrong.push({prompt:q.prompt,ans:q.ans})});return p}
+function xSubmit(){const sec=XS.sec,keys=[["R","R2"],["H","H2"],["G"]][sec];
+ if(keys&&keys.some(key=>XS[key].some((_,j)=>XS.ans[key+j]==null)))return toast("أجب عن كل الأسئلة أولًا");
+ if(sec===0)XS.pts[0]=xGrade("R",2.5)+xGrade("R2",2.5);
+ if(sec===1){if(!XS.plays||!XS.dplays)return toast("استمع للجزأين أولًا");XS.pts[1]=xGrade("H",2.5)+xGrade("H2",2.5)}
+ if(sec===2)XS.pts[2]=xGrade("G",2);
+ if(sec===3){let p=0;XS.SP.forEach((w,j)=>{const v=norm($("#xs"+j).value),a=norm(w[0]);if(v===a)p+=2;else if(a.length>=5&&lev(v,a)===1)p+=1;if(v!==a)XS.wrong.push({prompt:`Spelling: <b data-keep>«${esc(w[1])}»</b>`,ans:w[0]})});
+  const d=diffWords(XS.dict,$("#xdict").value||"");p+=d.pct>=90?4:d.pct>=70?2:0;if(d.pct<90)XS.wrong.push({prompt:"Dictation",ans:XS.dict});XS.pts[3]=p}
+ if(sec===4){let p=0;XS.tasks.forEach((t,k)=>{const v=$("#xt"+k).value;if(t.ans.some(a=>tnorm(a)===tnorm(v)))p+=5;else XS.wrong.push({prompt:esc(t.given),ans:t.ans[0]})});XS.pts[4]=p}
+ if(sec===5){const e=LX[XS.r],t=$("#essay").value,n=wc(t);if(n<5)return toast("اكتب نصك أولًا");
   if(n<e.W[2]&&!cfm(`كتبت ${n} كلمة من ${e.W[2]} المطلوبة. هل تريد التسليم؟`))return;
-  const low=" "+norm(t)+" ",hits=e.W[3].filter(k=>low.includes(" "+norm(k)+" "));const len=n>=e.W[2]?10:n>=e.W[2]*.6?6:2;
-  XS.pts[4]=Math.round(len+hits.length*2.5);XS.W={text:t,n,hits,len};return xFinish()}
+  const low=" "+norm(t)+" ",hits=e.W[3].filter(k=>low.includes(" "+norm(k)+" "));const len=n>=e.W[2]?7:n>=e.W[2]*.6?4:1;
+  XS.pts[5]=len+hits.length*2;XS.W={text:t,n,hits,len};return xFinish()}
  XS.sec++;xRender()}
-function xFinish(){const r=XS.r,lv=LV[r],x=S.X[r]||(S.X[r]={}),total=XS.pts.reduce((a,b)=>a+b,0),ok=total>=70;
+function xFinish(){const r=XS.r,lv=LV[r],x=S.X[r]||(S.X[r]={}),total=Math.round(XS.pts.reduce((a,b)=>a+b,0)),ok=total>=LXPASS;
  x.tries=(x.tries||[]).concat([{d:today(),s:total}]);logMistakes(r*LN,XS.wrong);
  if(ok){x.passed=today();x.score=total;S.xp+=200}else{x.failed=today();x.failT=Date.now()}save();
  const e=LX[r],W=XS.W;
  view(`<div class="wrap result" style="--lv:${lv.col}">
  ${ok?`<div class="bigstamp" aria-hidden="true"><span><b class="en" style="font-size:1.6rem">${lv.c}</b><small>امتحان المستوى</small><small>${total}٪</small></span></div>`:`<div class="score"><svg viewBox="0 0 190 190"><circle cx="95" cy="95" r="80" fill="none" stroke="var(--line)" stroke-width="16"/><circle cx="95" cy="95" r="80" fill="none" stroke="var(--coral)" stroke-width="16" stroke-linecap="round" stroke-dasharray="${2*Math.PI*80}" stroke-dashoffset="${2*Math.PI*80*(1-total/100)}"/></svg><b class="en">${total}</b></div>`}
  <h2>${ok?`نجحت في امتحان المستوى ${lv.c}!`:"لم تصل لدرجة النجاح هذه المرة"}</h2>
- <p>${ok?(r<NL-1?`المستوى ${r+2} (${LV[r+1].n}) مفتوح الآن.`:"أتممت الرحلة كاملة!"):"تحتاج 70 من 100. راجع كلمات المستوى وأخطاءك، ويمكنك إعادة الامتحان بعد ساعة."}</p>
- <div class="breakdown">${XSEC.map((t,k)=>`<div><span>${t}</span><span class="en">${XS.pts[k]} / ${XMAX[k]}</span></div>`).join("")}<div style="border-color:var(--lv)"><span>المجموع</span><span class="en">${total} / 100</span></div></div>
- <div class="info" style="text-align:start"><b>تقييم الكتابة</b><p>عدد الكلمات: ${W.n} من ${e.W[2]} (${W.len} من 10). الكلمات المطلوبة المستخدمة: ${W.hits.length} من ${e.W[3].length}${W.hits.length?`: <span class="en">${W.hits.map(esc).join(", ")}</span>`:""}.</p>${AI?`<button class="btn ghost" style="margin-top:10px" id="aiw" onclick="aiWriting()">💬 ملاحظات المعلم الذكي على كتابتي</button><div id="aiwo" class="msg ai" style="margin-top:10px;display:none"></div>`:""}</div>
+ <p>${ok?(r<NL-1?`المستوى ${r+2} (${LV[r+1].n}) مفتوح الآن.`:"أتممت الرحلة كاملة!"):`تحتاج ${LXPASS} من 100. راجع كلمات المستوى وقواعده وأخطاءك، ويمكنك إعادة الامتحان بعد ساعة، وستكون الأسئلة مختلفة.`}</p>
+ <div class="breakdown">${XSEC.map((t,k)=>`<div><span>${XICON[k]} ${t}</span><span class="en">${Math.round(XS.pts[k]*10)/10} / ${XMAX[k]}</span></div>`).join("")}<div style="border-color:var(--lv)"><span>المجموع</span><span class="en">${total} / 100</span></div></div>
+ <div class="info" style="text-align:start"><b>تقييم الكتابة</b><p>عدد الكلمات: ${W.n} من ${e.W[2]} (${W.len} من 7). الكلمات المطلوبة المستخدمة: ${W.hits.length} من ${e.W[3].length}${W.hits.length?`: <span class="en">${W.hits.map(esc).join(", ")}</span>`:""}.</p>${AI?`<button class="btn ghost" style="margin-top:10px" id="aiw" onclick="aiWriting()">💬 ملاحظات المعلم الذكي على كتابتي</button><div id="aiwo" class="msg ai" style="margin-top:10px;display:none"></div>`:""}</div>
  <div class="row" style="justify-content:center;margin-top:16px">${ok?`<button class="btn sun" onclick="cert(${r})">🎓 استلم الشهادة</button>`:`<button class="btn sun" onclick="wordFilter.lv='${r}';pgWords()">📚 راجع كلمات المستوى</button>`}<button class="btn ghost" onclick="home()">الرئيسية</button></div>
  ${XS.wrong.length?`<div class="wrongs"><h3>أخطاؤك في الامتحان</h3>${XS.wrong.map(q=>`<div class="wi"><div>${q.prompt}</div><div>الصحيح: <span data-keep class="ans ${isAr(q.ans)?"":"en"}">${esc(q.ans)}</span></div></div>`).join("")}</div>`:""}</div>`,"focus");
  if(ok)confetti(180)}
@@ -2287,7 +2338,7 @@ function pgGrammar(){RR=pgGrammar;const done=L.map((_,i)=>i).filter(passed),next
  if(!done.length)html=`<div class="card empty">القواعد ستظهر هنا بعد أن تنجح في امتحان أول درس. كل درس تنجح فيه تُضاف قاعدته تلقائيًا.</div>`;
  else{let lastR=-1;done.slice().reverse().forEach((i,j)=>{const r=lvIdx(i);if(r!==lastR){lastR=r;html+=`<div class="wgroup" style="--lv:${LV[r].col};margin-top:22px"><i>${LV[r].c}</i> المستوى ${r+1}: ${LV[r].n}</div>`}
   html+=`<details class="gdet" style="--lv:${lvOf(i).col}" ${j===0?"open":""} data-s="${esc((L[i].g[0]+" "+L[i].a+" "+L[i].t).toLowerCase())}"><summary><span class="gnum">${i%LN+1}</span><span class="gt"><b class="en">${L[i].g[0]}</b><small>الدرس ${i%LN+1}: ${L[i].a}</small></span></summary>
-  <div class="gbody">${gramTab(i)}<div class="row" style="margin-top:12px"><button class="btn" onclick="startTest(${i},'practice')">📝 اختبر نفسك في الدرس</button><button class="btn ghost" onclick="lesson(${i},1)">افتح الدرس</button></div></div></details>`})}
+  <div class="gbody">${gramTab(i,"page")}<div class="row" style="margin-top:12px"><button class="btn" onclick="startTest(${i},'practice')">📝 اختبر نفسك في الدرس</button><button class="btn ghost" onclick="lesson(${i},1)">افتح الدرس</button></div></div></details>`})}
  const nxt=next>=0&&!passed(next)?`<div class="card lockrule"><span>🔒</span><div><b>القاعدة التالية:</b> <span class="en">${L[next].g[0]}</span><br><small class="muted">تُضاف هنا عندما تنجح في امتحان «${L[next].a}».</small></div></div>`:"";
  view(page("قواعدي",`${done.length} من 60 قاعدة. كل قاعدة تُضاف هنا تلقائيًا عندما تنجح في امتحان درسها.`,`${done.length?`<div class="wtools"><input placeholder="ابحث في القواعد" aria-label="ابحث في القواعد" oninput="filterG(this.value)"><button class="ibtn" onclick="document.querySelectorAll('.gdet').forEach(d=>d.open=true)">افتح الكل</button><button class="ibtn" onclick="document.querySelectorAll('.gdet').forEach(d=>d.open=false)">أغلق الكل</button></div>`:""}${nxt}${html}`),"gram")}
 function filterG(q){q=q.trim().toLowerCase();document.querySelectorAll(".gdet").forEach(d=>{d.hidden=!!q&&!d.dataset.s.includes(q)&&!d.textContent.toLowerCase().includes(q)})}
@@ -2349,7 +2400,7 @@ function pgQuestions(){RR=pgQuestions;
  const words=`<h2 class="sec qh">1. كلمات السؤال</h2><div class="qwgrid">${QW.map(w=>`<div class="qwc" data-arw data-ar="${esc(w[5])}"><div class="row" style="justify-content:space-between"><b class="en qw">${w[0]}</b>${sayBtn(w[4])}</div><div class="qm" data-keep>${w[1]}</div><small class="arh" data-keep>${w[2]}</small><small class="enx" data-keep>${w[3]}</small><div class="en qex">${w[4]}</div><small class="arh" data-keep>${w[5]}</small></div>`).join("")}</div>`;
  const cases=`<h2 class="sec qh">2. أين تأتي كلمة السؤال في كل حالة؟</h2><div class="qcgrid">${QC.map((c,k)=>`<div class="card qcase" data-arw><h3><span class="qn">${k+1}</span> ${c[0]}</h3><div class="formula sm">${c[2].map((t,j)=>`<span class="fc${j%5}">${t}</span>`).join("")}</div>
  <p class="enx" data-keep>${c[4]}</p><p class="arh" data-keep>${c[3]}</p><div class="row" style="margin:6px 0"><button class="ibtn enbtn" onclick="this.closest('[data-arw]').classList.toggle('show-en')">EN <span data-keep>English</span></button><button class="ibtn arbtn2" onclick="this.closest('[data-arw]').classList.toggle('show-ar')">ع الشرح بالعربي</button></div>
- <div class="exs">${c[5].map(e=>exRow(e[0],e[1])).join("")}</div>${c[6]?`<div class="mist"><span class="bad en">✗ ${c[6][0]}</span><span class="good en">✓ ${c[6][1]}</span></div>`:""}</div>`).join("")}</div>`;
+ <div class="exs">${c[5].map(e=>exRow(e[0],e[1])).join("")}</div>${c[6]?`<div class="mist"><span class="bad en">✗ ${c[6][0]}</span><span class="good en">✓ ${c[6][1]}</span></div>`:""}${tfmBox("q"+k,QT[k].map(t=>({ins:t[0],insEn:t[1],given:t[2],ans:t[3],why:""})))}</div>`).join("")}</div>`;
  QP={qs:QPRAC.map(q=>({q:q[0],ans:q[1],why:q[3],opts:shuffle([q[1],...q[2]])})),got:[],ok:0};
  const prac=`<h2 class="sec qh">3. درّب نفسك</h2><div class="card"><div class="qpgrid">${QP.qs.map((q,j)=>`<div class="qblock"><div class="qt en" dir="ltr">${j+1}. ${esc(q.q).replace("___",'<span class="blank"></span>')}</div><div class="opts">${q.opts.map((o,k)=>`<button class="opt en-opt" data-pq="${j}" onclick="qpAns(${j},${k},this)">${esc(o)}</button>`).join("")}</div><div class="qpw" id="qpw${j}"></div></div>`).join("")}</div><div id="qpres"></div></div>`;
  view(page("أدوات السؤال وأين تأتي","كل كلمات السؤال في الإنجليزية، ومكان كلمة السؤال في كل زمن وحالة، مع أمثلة مسموعة وتدريب.",golden+words+cases+prac),"qw")}
@@ -2357,6 +2408,95 @@ function qpAns(j,k,b){if(QP.got[j]!=null)return;const q=QP.qs[j],ok=q.opts[k]===
  document.querySelectorAll(`[data-pq="${j}"]`).forEach((x,m)=>{x.disabled=true;if(q.opts[m]===q.ans)x.classList.add("right");else if(x===b)x.classList.add("wrong")});
  $("#qpw"+j).innerHTML=`<small data-keep class="arh" style="display:block">${esc(q.why)}</small>`;if(ok)say(q.q.replace("___",q.ans).replace(/\s+[A-Z][a-z].*$/,m=>m));
  const n=QP.got.filter(x=>x!=null).length;if(n===QP.qs.length){const r=$("#qpres");S.xp+=QP.ok*3;save();r.innerHTML=`<div class="fb ${QP.ok>=10?"good":"bad"}" style="margin-top:14px"><strong>${QP.ok} / ${QP.qs.length}</strong>${QP.ok>=10?"ممتاز! أنت تعرف مكان كلمة السؤال.":"راجع الحالات بالأعلى ثم جرّب مرة أخرى."}</div><button class="btn" style="margin-top:10px" onclick="pgQuestions()">جرّب مرة أخرى</button>`}}
+
+/* ---------- ✍️ Test for me: write sentences next to every explanation ---------- */
+const CONTR=[["i'm","i am"],["you're","you are"],["we're","we are"],["they're","they are"],["he's","he is"],["she's","she is"],["it's","it is"],["that's","that is"],["there's","there is"],["what's","what is"],["where's","where is"],["who's","who is"],["i've","i have"],["you've","you have"],["we've","we have"],["they've","they have"],["i'll","i will"],["you'll","you will"],["he'll","he will"],["she'll","she will"],["we'll","we will"],["they'll","they will"],["it'll","it will"],["i'd","i would"],["don't","do not"],["doesn't","does not"],["didn't","did not"],["isn't","is not"],["aren't","are not"],["wasn't","was not"],["weren't","were not"],["haven't","have not"],["hasn't","has not"],["hadn't","had not"],["won't","will not"],["wouldn't","would not"],["can't","cannot"],["couldn't","could not"],["shouldn't","should not"],["mustn't","must not"],["let's","let us"]];
+function tnorm(s){let t=" "+norm(String(s))+" ";CONTR.forEach(([a,b])=>{t=t.split(" "+a+" ").join(" "+b+" ")});return t.replace(/\bcan not\b/g,"cannot").replace(/\s+/g," ").trim()}
+const cleanHint=s=>s.replace(/\s*\([^)]*[\u0600-\u06FF][^)]*\)/g,"").replace(/\s*\((now|a regret)\)/gi,"").trim();
+function lessonTasks(i){const l=L[i],out=[];
+ l.q.forEach(q=>{const p=q[0];
+  if(p.includes("___")&&!/[\u0600-\u06FF]/.test(q[1])){const full=cleanHint(p).replace(/___/g,q[1]).replace(/\s+/g," ");const ans=[full];const qi=full.lastIndexOf("”");if(qi>0&&qi<full.length-3)ans.push(full.slice(qi+1).trim());
+   out.push({ins:"اكتب الجملة كاملة بعد إكمال الفراغ:",insEn:"Write the whole sentence with the gap filled:",given:p,ans,why:q[3]})}
+  else if(/choose the correct|which is correct|which sentence/i.test(p)&&/\s/.test(q[1])&&!/[\u0600-\u06FF]/.test(q[1])){const wrong=q[2].find(w=>/\s/.test(w)&&wc(w)>=2);
+   if(wrong)out.push({ins:"في الجملة دي غلطة. صحّحها واكتبها صحيحة:",insEn:"This sentence has a mistake. Write it correctly:",given:wrong,ans:[q[1]],why:q[3]})}});
+ l.g[2].forEach(e=>out.push({ins:"اكتب بالإنجليزية مستخدمًا القاعدة:",insEn:"Write it in English using the rule:",given:e[1],givenAr:1,ans:[e[0]],why:""}));
+ return out}
+const QT=[
+[["اسأل عن المكان:","Ask about the place:","Your brother is at school.",["Where is your brother?"]],["اسأل عن السبب:","Ask why:","You were late.",["Why were you late?"]]],
+[["اسأل عن المكان:","Ask where:","They live in Dammam.",["Where do they live?"]],["اسأل ماذا:","Ask what:","She likes pizza.",["What does she like?"]]],
+[["اسأل ماذا:","Ask what:","He ate rice.",["What did he eat?"]],["اسأل متى:","Ask when:","They arrived yesterday.",["When did they arrive?"]]],
+[["اسأل ماذا:","Ask what:","She is reading a book.",["What is she reading?","What is she doing?"]],["اسأل أين:","Ask where:","They are going to the park.",["Where are they going?"]]],
+[["اسأل ماذا:","Ask what:","He was watching TV.",["What was he watching?","What was he doing?"]],["اسأل أين:","Ask where:","They were playing in the garden.",["Where were they playing?"]]],
+[["اسأل أين:","Ask where:","She has been to London.",["Where has she been?"]],["اسأل منذ متى:","Ask how long:","He has lived here for five years.",["How long has he lived here?"]]],
+[["اسأل متى:","Ask when:","She will come tomorrow.",["When will she come?"]],["اسأل ماذا:","Ask what:","They will buy a car.",["What will they buy?"]]],
+[["اسأل متى:","Ask when:","He is going to travel next week.",["When is he going to travel?"]],["اسأل ماذا:","Ask what:","They are going to buy a new car.",["What are they going to buy?"]]],
+[["اسأل كيف:","Ask how:","She can fix it.",["How can she fix it?"]],["اسأل ماذا:","Ask what:","We should do our homework.",["What should we do?"]]],
+[["اسأل متى:","Ask when:","The school was built in 1990.",["When was the school built?"]],["اسأل أين:","Ask where:","Dates are grown in Saudi Arabia.",["Where are dates grown?"]]],
+[["اسأل من فعلها:","Ask who did it:","Ali broke the window.",["Who broke the window?"]],["اسأل ماذا حدث:","Ask what happened:","Something happened yesterday.",["What happened yesterday?","What happened?"]]],
+[["اسأل من أين:","Ask where ... from:","He is from Egypt.",["Where is he from?"]],["اسأل مع من تتكلم:","Ask who she is talking to:","She is talking to her teacher.",["Who is she talking to?"]]],
+[["حوّله لسؤال نعم / لا:","Make a yes / no question:","You like football.",["Do you like football?"]],["حوّله لسؤال نعم / لا:","Make a yes / no question:","She can swim.",["Can she swim?"]]],
+[["اسأل بأدب وابدأ بـ Can you tell me:","Ask politely, starting with Can you tell me:","Where is the station?",["Can you tell me where the station is?"]],["اسأل بأدب وابدأ بـ Do you know:","Ask politely, starting with Do you know:","What time does the film start?",["Do you know what time the film starts?"]]],
+[["اسأل عن الطول:","Ask about height:","Your father is 180 cm tall.",["How tall is your father?"]],["اسأل كم مرة:","Ask how often:","She swims twice a week.",["How often does she swim?"]]],
+[["أكمل بسؤال الذيل واكتب الجملة كاملة:","Add the question tag and write the whole sentence:","It's cold, ___?",["It's cold, isn't it?"]],["أكمل بسؤال الذيل واكتب الجملة كاملة:","Add the question tag and write the whole sentence:","He can drive, ___?",["He can drive, can't he?"]]]];
+const TFM={};
+const PRAISE=[["🌟 ممتاز! جملتك صحيحة 100٪","🌟 Excellent! Your sentence is 100% correct"],["👏 أحسنت! واضح إنك فهمت القاعدة","👏 Well done! You clearly understand the rule"],["🚀 رائع! كمّل كده","🚀 Great! Keep going"],["💪 بطل! كتابتك صحيحة","💪 Champion! Your writing is correct"],["🎯 إصابة مباشرة!","🎯 Spot on!"]];
+const praiseTxt=()=>{const p=PRAISE[Math.floor(Math.random()*PRAISE.length)];return `<span class="arh" data-keep>${p[0]}</span><span class="enx" data-keep>${p[1]}</span>`};
+function tfmBox(id,pool,opts){opts=opts||{};const tasks=pick(pool,2);TFM[id]={pool,tasks,ok:tasks.map(()=>false),tries:tasks.map(()=>0),opts};
+ return `<div class="tfm" id="tfm-${id}" data-arw>
+ <div class="tfmh"><b>✍️ Test for me</b><small>${opts.must?"اكتب الجملتين صح عشان تتأكد إنك فهمت، ده إجباري قبل ما تكمل":"اكتب الجملتين عشان تتأكد إنك فهمت"}</small></div>
+ ${tasks.map((t,k)=>`<div class="tfmt" id="tfm-${id}-${k}"><div class="tins"><span class="qn">${k+1}</span><span class="arh" data-keep>${t.ins}</span><span class="enx" data-keep>${t.insEn}</span></div>
+ <div class="tgiven ${t.givenAr?"":"en"}" ${t.givenAr?'data-keep dir="rtl"':'dir="ltr"'}>${esc(t.given).replace(/___/g,'<span class="blank"></span>')}</div>
+ <textarea class="tfin" rows="2" dir="ltr" spellcheck="false" autocapitalize="sentences" placeholder="Write your sentence here..." aria-label="اكتب جملتك"></textarea>
+ <div class="row"><button class="btn" onclick="tfmCheck('${id}',${k})">صحّح جملتي</button></div><div class="tfb" aria-live="polite"></div></div>`).join("")}
+ <div class="tfmend"></div>${opts.must?"":`<button class="linkbtn" onclick="tfmRenew('${id}')">🔄 جملتين جداد</button>`}</div>`}
+function tfmRenew(id){const s=TFM[id],el=$("#tfm-"+id);if(!s||!el)return;const tmp=document.createElement("div");tmp.innerHTML=tfmBox(id,s.pool,s.opts);el.replaceWith(tmp.firstElementChild)}
+function tfmCheck(id,k){const s=TFM[id],box=$(`#tfm-${id}-${k}`);if(!s||!box||s.ok[k])return;const t=s.tasks[k],inp=box.querySelector(".tfin"),v=inp.value.trim(),fb=box.querySelector(".tfb");
+ if(wc(v)<2){fb.innerHTML=`<div class="fb bad">اكتب جملة كاملة أولًا.</div>`;inp.focus();return}
+ const good=t.ans.some(a=>tnorm(a)===tnorm(v));
+ if(good){s.ok[k]=true;inp.readOnly=true;inp.classList.remove("wrong");inp.classList.add("right");box.classList.add("done");box.querySelector(".btn").remove();
+  fb.innerHTML=`<div class="fb good"><strong>${praiseTxt()}</strong>${s.tries[k]?'<span class="arh" data-keep>صحّحت غلطتك بنفسك، وده أهم من الإجابة الصح من أول مرة.</span><span class="enx" data-keep>You fixed your own mistake, and that matters even more than getting it right the first time.</span>':""}</div>`;
+  if(TTS)say(t.ans[0]);S.xp+=5;save();
+  if(s.ok.every(Boolean)){const end=$("#tfm-"+id+" .tfmend");if(end)end.innerHTML=`<div class="fb good tfmall"><strong>🎉 <span class="arh" data-keep>برافو! كتبت الجملتين صح، يعني فهمت القاعدة.</span><span class="enx" data-keep>Bravo! Both sentences are correct, so you understand the rule.</span></strong></div>`;confetti(60);if(s.opts.onDone)s.opts.onDone()}
+  return}
+ s.tries[k]++;inp.classList.add("wrong");setTimeout(()=>inp.classList.remove("wrong"),900);
+ const best=t.ans.map(a=>diffWords(v,a)).sort((x,y)=>y.pct-x.pct)[0];
+ fb.innerHTML=`<div class="fb bad"><strong><span class="arh" data-keep>قربت! فيه حاجة محتاجة تتصلح</span><span class="enx" data-keep>Almost! Something needs fixing</span></strong>
+ <div class="tfcmp"><small><span class="arh" data-keep>ده جملتك: الكلمات الخضرا صح، والحمرا غلط أو في مكان غلط:</span><span class="enx" data-keep>Your sentence: green words are right; red words are wrong or in the wrong place:</span></small><div class="diff">${best.html}</div></div>
+ ${t.why?`<div class="tfwhy" data-keep dir="rtl">💡 ${t.why}</div>`:""}
+ ${s.tries[k]>=2?`<div class="tfans"><small><span class="arh" data-keep>الجملة الصحيحة، اكتبها بنفسك في المربع:</span><span class="enx" data-keep>The correct sentence. Type it yourself in the box:</span></small><div class="en" dir="ltr"><b>${esc(t.ans[0])}</b> ${sayBtn(t.ans[0])}</div></div>`:`<small><span class="arh" data-keep>عدّل جملتك في المربع واضغط «صحّح جملتي» مرة تانية.</span><span class="enx" data-keep>Edit your sentence in the box and check it again.</span></small>`}</div>`;
+ inp.focus()}
+
+/* ---------- richer question generators ---------- */
+const gapSent=q=>(q&&q[0].includes("___")&&!/[\u0600-\u06FF]/.test(q[1]))?cleanHint(q[0]).replace(/___/g,q[1]).replace(/\s+/g," "):null;
+function typedGapQ(q){return{t:"spell",tag:"Grammar: type it",prompt:`Type the missing word(s).<span class="qsent en">${esc(cleanHint(q[0])).replace(/___/g,'<span class="blank"></span>')}</span>`,ans:q[1],why:q[3]}}
+function errorQ(q){const ok=gapSent(q);if(!ok)return null;const wrong=pick(q[2].filter(w=>!/[\u0600-\u06FF]/.test(w)&&w.trim()&&w!==q[1]),1)[0];if(!wrong)return null;
+ const bad=cleanHint(q[0]).replace(/___/g,wrong).replace(/\s+/g," ");const words=[...new Set(bad.replace(/[.,!?“”"]/g,"").split(/\s+/).filter(w=>w&&!wrong.split(/\s+/).includes(w)))];
+ const dis=pick(words,3);if(dis.length<3)return null;
+ return mcq("Find the mistake",`Which part of this sentence is wrong?<span class="qsent en">${esc(bad)}</span>`,wrong,dis,`<span class="en">✓ ${esc(ok)}</span><br>${q[3]}`)}
+function translateQ(e,i){const en=e[0],wr=new Set(),l=L[i];
+ l.q.forEach(q=>{if(!gapSent(q))return;const re=new RegExp("\\b"+q[1].replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\b");if(re.test(en))q[2].forEach(w=>{if(!/[\u0600-\u06FF]/.test(w)&&w!==q[1])wr.add(en.replace(re,w))})});
+ let g=0;const ws=en.split(/\s+/);while(wr.size<3&&g++<30){const x=shuffle(ws).join(" ");if(x!==en)wr.add(x)}
+ if(wr.size<3)return null;return mcq("Translation",`Choose the correct English for:<span class="qsent" data-keep dir="rtl">«${esc(e[1])}»</span>`,en,pick([...wr],3),`<span class="en">${esc(en)}</span>`)}
+function levelDialogLines(i,exceptLesson){const r=lvIdx(i),out=[];for(let k=r*LN;k<r*LN+LN;k++)if(k!==exceptLesson)L[k].d.forEach(x=>out.push(x[0]));return out}
+function replyQ(i,byEar){const d=L[i].d,a=Math.random()<.5?0:2,ans=d[a+1][0];
+ const pool=[...d.filter((_,j)=>j!==a&&j!==a+1).map(x=>x[0]),...levelDialogLines(i,i)].filter(x=>x!==ans&&x!==d[a][0]);
+ const q=mcq("Conversation",byEar?`Listen to the speaker, then choose the best reply.`:`Choose the best reply.<span class="qsent en">A: ${esc(d[a][0])}</span>`,ans,pick(pool,3),`<span class="en">A: ${esc(d[a][0])}<br>B: ${esc(ans)}</span>`);
+ if(byEar)q.listen=d[a][0];return q}
+function videoRecallQ(i){const v=L[i].vid,q=pick(v[2],1)[0];return mcq("Video recall",`From the video <b class="en">“${esc(v[0])}”</b>:<span class="qsent en">${esc(q[0])}</span>`,q[1],q[2],"")}
+function reviewQ(p){const l=L[p],gq2=shuffle(l.q.filter(gapSent));const kinds=[()=>gq(pick(l.q,1)[0]),()=>gq2[0]&&errorQ(gq2[0]),()=>translateQ(pick(l.g[2],1)[0],p),()=>vReverse(pick(l.v,1)[0],l),()=>lessonWords(p).length&&vMeaningX(pick(lessonWords(p),1)[0],p)];
+ for(const f of shuffle(kinds)){const q=f();if(q){q.tag=`Review: lesson ${p%LN+1} (${lvOf(p).c})`;return q}}return gq(l.q[0])}
+
+/* ---------- lesson exam: 20 questions drawn from large pools, different every attempt ---------- */
+function buildExam(i){const l=L[i],v=shuffle(l.v),lw=shuffle(lessonWords(i)),ss=shuffle(shortSents(i,3,9)),ls=shuffle(shortSents(i,4,9)),all=[...new Set(lessonSentAll(i))],gs=shuffle(l.q.filter(gapSent));
+ const vocab=shuffle([vSpell(v[0]),gapQ(v[1]),vListen(v[2],l),...lw.slice(0,3).map(w=>vMeaningX(w,i)),vReverse(v[3],l),vSpell(v[4]),gapQ(v[5])]).slice(0,6);
+ const gram=shuffle([...shuffle([3,4,5]).slice(0,2).map(k=>gq(l.q[k])),gs[0]&&typedGapQ(gs[0]),...gs.slice(1,4).map(errorQ),...shuffle(l.g[2]).slice(0,3).map(e=>translateQ(e,i))].filter(Boolean)).slice(0,7);
+ const listen=[ss[0]&&dictQ(ss[0]),all.length>=4&&hearQ(ss[1]||all[0],all),replyQ(i,Math.random()<.5),videoRecallQ(i)].filter(Boolean);
+ const other=[ls[0]&&orderQ(ls[0])].filter(Boolean);
+ const review=[];if(i>0)review.push(reviewQ(i-1));if(i>1)review.push(reviewQ(Math.floor(Math.random()*(i-1))));
+ let qs=[...vocab,...gram,...listen,...other,...review];
+ const extra=shuffle([gq(l.q[0]),gq(l.q[1]),gq(l.q[2]),vMeaning(v[6],l),vListen(v[7],l),replyQ(i,true),...lw.slice(3,6).map(w=>vMeaningX(w,i))]);
+ while(qs.length<20&&extra.length)qs.push(extra.shift());
+ return shuffle(qs).slice(0,20)}
 
 /* ---------- every word used in a lesson ---------- */
 const STOPW=new Set(["a","an","the","s","t","and","or","of","to","d","ll","m","re","ve"]);
